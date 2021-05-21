@@ -127,7 +127,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
             }
         });
 
-        jbEliminar.setText("Eliminar cliente");
+        jbEliminar.setText("Eliminar propietario");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbEliminarActionPerformed(evt);
@@ -157,7 +157,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(jbGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbVolver)
@@ -264,7 +264,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
     private void jvVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jvVerActionPerformed
         mc.setMascota(selectMascotaList());
-        dispose();
+        //dispose();
         PerfilMascota pm = new PerfilMascota(parent, true);
         pm.setVisible(true);
     }//GEN-LAST:event_jvVerActionPerformed
@@ -278,7 +278,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNombreActionPerformed
 
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddActionPerformed
-        dispose();
+//        dispose();
         RegistroMascota rp = new RegistroMascota(parent, true);
         rp.setVisible(true);
     }//GEN-LAST:event_jbAddActionPerformed
@@ -301,7 +301,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         if (ok == 0) {
             pc.deletePropietario(prop);
-            this.dispose();
+            dispose();
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
 

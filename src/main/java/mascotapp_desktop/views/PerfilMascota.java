@@ -6,13 +6,27 @@
 package mascotapp_desktop.views;
 
 import java.awt.Frame;
+import java.time.*;
+import java.time.format.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.CitaController;
+import mascotapp_desktop.controllers.DesparasitacionController;
+import mascotapp_desktop.controllers.HistoriaController;
 import mascotapp_desktop.controllers.MascotaController;
+import mascotapp_desktop.controllers.PropietarioController;
+import mascotapp_desktop.controllers.VacunaController;
 import mascotapp_desktop.models.Cita;
+import mascotapp_desktop.models.Desparasitacion;
+import mascotapp_desktop.models.Historia;
 import mascotapp_desktop.models.Mascota;
+import mascotapp_desktop.models.Propietario;
+import mascotapp_desktop.models.Vacuna;
+import mascotapp_desktop.models.enums.EnfermedadVacuna;
 import mascotapp_desktop.models.enums.Motivo;
 
 /**
@@ -32,16 +46,30 @@ public class PerfilMascota extends javax.swing.JDialog {
         initComponents();
         setParent(parent);
 
+        hc = new HistoriaController();
         cc = new CitaController();
         mc = new MascotaController();
+        pc = new PropietarioController();
+        vc = new VacunaController();
+        dc = new DesparasitacionController();
+
+        historia = hc.getHistoria();
         masc = mc.getMascota();
         cita = cc.getCita();
+        vacuna = vc.getVacuna();
+        desp = dc.getDesparasitacion();
 
         getAtributosMasc();
 
         citasMasc = cc.getCitasByMascota(masc.getId());
-        
+        historiasMasc = hc.getHistoriasByMascota(masc.getId());
+        vacunasMasc = vc.getVacunasByMascota(masc.getId());
+        desparasMasc = dc.getDesparasitacionesByMascota(masc.getId());
+
+        addHistoriaList();
         addCitaList();
+        addVacunaList();
+        addDesparasitacionList();
         cargarComboBox();
 
     }
@@ -57,7 +85,7 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         bgGrupoBotones = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        jpPerfil = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtfNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -77,25 +105,26 @@ public class PerfilMascota extends javax.swing.JDialog {
         jbEliminarMascota = new javax.swing.JButton();
         jdcFechaNac = new com.toedter.calendar.JDateChooser();
         jtfEspecie = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        jpHistorias = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jtfEnfermedad = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        jtaTratamiento = new javax.swing.JTextArea();
+        jdcFechaHistoria = new com.toedter.calendar.JDateChooser();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jButton13 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        jlListadoHistorias = new javax.swing.JList<>();
+        jbBorrarHistoria = new javax.swing.JButton();
+        jbEditarHistoria = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
+        jbNuevaHistoria = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jbGuardarHistoria = new javax.swing.JButton();
+        jbVolverHistoria = new javax.swing.JButton();
+        jpCitas = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jlListado = new javax.swing.JList<>();
@@ -114,6 +143,48 @@ public class PerfilMascota extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtaDescripcion = new javax.swing.JTextArea();
         jdcFecha = new com.toedter.calendar.JDateChooser();
+        jpVacunas = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jlListadoVacunas = new javax.swing.JList<>();
+        jPanel11 = new javax.swing.JPanel();
+        jbNuevaVacuna = new javax.swing.JButton();
+        jbEliminarVacuna = new javax.swing.JButton();
+        jbEditarVacuna = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jbVolverVacuna = new javax.swing.JButton();
+        jbGuardarVacuna = new javax.swing.JButton();
+        jcbEnfermedadVacuna = new javax.swing.JComboBox<>();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtaObservacionesVacunas = new javax.swing.JTextArea();
+        jdcFechaVacuna = new com.toedter.calendar.JDateChooser();
+        jLabel20 = new javax.swing.JLabel();
+        jdcProximaVacuna = new com.toedter.calendar.JDateChooser();
+        jpDesparasitaciones = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jlListadoDesp = new javax.swing.JList<>();
+        jPanel14 = new javax.swing.JPanel();
+        jbNuevaDesp = new javax.swing.JButton();
+        jbEliminarDesp = new javax.swing.JButton();
+        jbEditarDesp = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jbVolverDesp = new javax.swing.JButton();
+        jbGuardarDesp = new javax.swing.JButton();
+        jcbTipoDesp = new javax.swing.JComboBox<>();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jtaObservacionesDesp = new javax.swing.JTextArea();
+        jdcFechaDesp = new com.toedter.calendar.JDateChooser();
+        jLabel25 = new javax.swing.JLabel();
+        jdcProximaDesp = new com.toedter.calendar.JDateChooser();
 
         bgGrupoBotones.add(jrbMacho);
         bgGrupoBotones.add(jrbHembra);
@@ -195,16 +266,16 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         jtfEspecie.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpPerfilLayout = new javax.swing.GroupLayout(jpPerfil);
+        jpPerfil.setLayout(jpPerfilLayout);
+        jpPerfilLayout.setHorizontalGroup(
+            jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPerfilLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbEliminarMascota)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,19 +284,19 @@ public class PerfilMascota extends javax.swing.JDialog {
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPerfilLayout.createSequentialGroup()
                                 .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                                 .addComponent(jbEditarMascota))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPerfilLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jbGuardarMascota)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jbVolver))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jpPerfilLayout.createSequentialGroup()
+                                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jpPerfilLayout.createSequentialGroup()
                                         .addComponent(jrbMacho)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jrbHembra))
@@ -237,57 +308,62 @@ public class PerfilMascota extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpPerfilLayout.setVerticalGroup(
+            jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPerfilLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbEditarMascota))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtfChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtfEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtfRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jtfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jrbMacho)
                     .addComponent(jrbHembra))
                 .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbVolver)
                     .addComponent(jbGuardarMascota)
                     .addComponent(jbEliminarMascota)))
         );
 
-        jTabbedPane1.addTab("Perfil", jPanel1);
+        jTabbedPane1.addTab("Perfil", jpPerfil);
 
         jLabel10.setText("Fecha:");
 
-        jLabel12.setText("Motivo:");
+        jLabel12.setText("Enfermedad:");
 
         jLabel13.setText("Tratamiento:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        jtfEnfermedad.setEnabled(false);
+
+        jtaTratamiento.setColumns(20);
+        jtaTratamiento.setRows(5);
+        jtaTratamiento.setEnabled(false);
+        jScrollPane3.setViewportView(jtaTratamiento);
+
+        jdcFechaHistoria.setEnabled(false);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -297,13 +373,13 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addGap(4, 4, 4)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addGap(22, 22, 22)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3)
-                    .addComponent(jTextField3)
-                    .addComponent(jDateChooser4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jtfEnfermedad)
+                    .addComponent(jdcFechaHistoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -316,23 +392,40 @@ public class PerfilMascota extends javax.swing.JDialog {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel12))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jdcFechaHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtfEnfermedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jScrollPane4.setViewportView(jList2);
+        jScrollPane4.setViewportView(jlListadoHistorias);
 
-        jButton13.setText("X");
+        jbBorrarHistoria.setText("X");
+        jbBorrarHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBorrarHistoriaActionPerformed(evt);
+            }
+        });
 
-        jButton12.setText("Editar");
+        jbEditarHistoria.setText("Editar");
+        jbEditarHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarHistoriaActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("Listado Historias:");
+
+        jbNuevaHistoria.setText("Nueva");
+        jbNuevaHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevaHistoriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -341,18 +434,17 @@ public class PerfilMascota extends javax.swing.JDialog {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton12)
-                            .addComponent(jButton13))
-                        .addGap(22, 22, 22))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbBorrarHistoria)
+                            .addComponent(jbNuevaHistoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbEditarHistoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,18 +454,31 @@ public class PerfilMascota extends javax.swing.JDialog {
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                            .addComponent(jButton13)
+                            .addComponent(jbBorrarHistoria)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton12)))
+                            .addComponent(jbNuevaHistoria)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jbEditarHistoria)))
                     .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jButton11.setText("Guardar");
+        jbGuardarHistoria.setText("Guardar");
+        jbGuardarHistoria.setEnabled(false);
+        jbGuardarHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarHistoriaActionPerformed(evt);
+            }
+        });
 
-        jButton10.setText("Volver");
+        jbVolverHistoria.setText("Volver");
+        jbVolverHistoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVolverHistoriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -383,9 +488,9 @@ public class PerfilMascota extends javax.swing.JDialog {
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addGap(31, 31, 31)
-                    .addComponent(jButton11)
+                    .addComponent(jbGuardarHistoria)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton10)
+                    .addComponent(jbVolverHistoria)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel10Layout.setVerticalGroup(
@@ -395,26 +500,26 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addGap(8, 8, 8)
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton10)
-                        .addComponent(jButton11))
+                        .addComponent(jbVolverHistoria)
+                        .addComponent(jbGuardarHistoria))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpHistoriasLayout = new javax.swing.GroupLayout(jpHistorias);
+        jpHistorias.setLayout(jpHistoriasLayout);
+        jpHistoriasLayout.setHorizontalGroup(
+            jpHistoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpHistoriasLayout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(jpHistoriasLayout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jpHistoriasLayout.setVerticalGroup(
+            jpHistoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpHistoriasLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
@@ -422,7 +527,7 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Historias", jPanel3);
+        jTabbedPane1.addTab("Historias", jpHistorias);
 
         jScrollPane1.setViewportView(jlListado);
 
@@ -582,28 +687,414 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addGap(5, 5, 5))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpCitasLayout = new javax.swing.GroupLayout(jpCitas);
+        jpCitas.setLayout(jpCitasLayout);
+        jpCitasLayout.setHorizontalGroup(
+            jpCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCitasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpCitasLayout.setVerticalGroup(
+            jpCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCitasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Citas", jPanel2);
+        jTabbedPane1.addTab("Citas", jpCitas);
+
+        jScrollPane5.setViewportView(jlListadoVacunas);
+
+        jbNuevaVacuna.setText("Nueva");
+        jbNuevaVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevaVacunaActionPerformed(evt);
+            }
+        });
+
+        jbEliminarVacuna.setText("Eliminar");
+        jbEliminarVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarVacunaActionPerformed(evt);
+            }
+        });
+
+        jbEditarVacuna.setText("Editar");
+        jbEditarVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarVacunaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jbEditarVacuna)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbEliminarVacuna)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbNuevaVacuna)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(0, 24, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbEditarVacuna)
+                    .addComponent(jbEliminarVacuna)
+                    .addComponent(jbNuevaVacuna)))
+        );
+
+        jLabel16.setText("Listado Vacunas:");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(244, 244, 244))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel17.setText("Enfermedad:");
+
+        jLabel18.setText("Observaciones:");
+
+        jLabel19.setText("Fecha Vacuna:");
+
+        jbVolverVacuna.setText("Volver");
+        jbVolverVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVolverVacunaActionPerformed(evt);
+            }
+        });
+
+        jbGuardarVacuna.setText("Guardar");
+        jbGuardarVacuna.setEnabled(false);
+        jbGuardarVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarVacunaActionPerformed(evt);
+            }
+        });
+
+        jcbEnfermedadVacuna.setEditable(true);
+        jcbEnfermedadVacuna.setEnabled(false);
+        jcbEnfermedadVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEnfermedadVacunaActionPerformed(evt);
+            }
+        });
+
+        jtaObservacionesVacunas.setColumns(20);
+        jtaObservacionesVacunas.setRows(5);
+        jtaObservacionesVacunas.setEnabled(false);
+        jScrollPane6.setViewportView(jtaObservacionesVacunas);
+
+        jdcFechaVacuna.setEnabled(false);
+
+        jLabel20.setText("Próxima Vacuna:");
+
+        jdcProximaVacuna.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                            .addComponent(jbGuardarVacuna)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jbVolverVacuna))
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jcbEnfermedadVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane6)
+                                .addComponent(jdcFechaVacuna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jdcProximaVacuna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jcbEnfermedadVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdcFechaVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdcProximaVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbVolverVacuna)
+                    .addComponent(jbGuardarVacuna))
+                .addGap(5, 5, 5))
+        );
+
+        javax.swing.GroupLayout jpVacunasLayout = new javax.swing.GroupLayout(jpVacunas);
+        jpVacunas.setLayout(jpVacunasLayout);
+        jpVacunasLayout.setHorizontalGroup(
+            jpVacunasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpVacunasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpVacunasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jpVacunasLayout.setVerticalGroup(
+            jpVacunasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpVacunasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Vacunas", jpVacunas);
+
+        jScrollPane7.setViewportView(jlListadoDesp);
+
+        jbNuevaDesp.setText("Nueva");
+        jbNuevaDesp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevaDespActionPerformed(evt);
+            }
+        });
+
+        jbEliminarDesp.setText("Eliminar");
+        jbEliminarDesp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarDespActionPerformed(evt);
+            }
+        });
+
+        jbEditarDesp.setText("Editar");
+        jbEditarDesp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarDespActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jbEditarDesp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbEliminarDesp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbNuevaDesp)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addGap(0, 24, Short.MAX_VALUE)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbEditarDesp)
+                    .addComponent(jbEliminarDesp)
+                    .addComponent(jbNuevaDesp)))
+        );
+
+        jLabel21.setText("Listado Desparasitaciones:");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jLabel22.setText("Presentación:");
+
+        jLabel23.setText("Observaciones:");
+
+        jLabel24.setText("Fecha Vacuna:");
+
+        jbVolverDesp.setText("Volver");
+        jbVolverDesp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVolverDespActionPerformed(evt);
+            }
+        });
+
+        jbGuardarDesp.setText("Guardar");
+        jbGuardarDesp.setEnabled(false);
+        jbGuardarDesp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarDespActionPerformed(evt);
+            }
+        });
+
+        jcbTipoDesp.setEditable(true);
+        jcbTipoDesp.setEnabled(false);
+        jcbTipoDesp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbTipoDespActionPerformed(evt);
+            }
+        });
+
+        jtaObservacionesDesp.setColumns(20);
+        jtaObservacionesDesp.setRows(5);
+        jtaObservacionesDesp.setEnabled(false);
+        jScrollPane8.setViewportView(jtaObservacionesDesp);
+
+        jdcFechaDesp.setEnabled(false);
+
+        jLabel25.setText("Próxima Vacuna:");
+
+        jdcProximaDesp.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                            .addComponent(jbGuardarDesp)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jbVolverDesp))
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jcbTipoDesp, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane8)
+                                .addComponent(jdcFechaDesp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jdcProximaDesp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(jcbTipoDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdcFechaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdcProximaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbVolverDesp)
+                    .addComponent(jbGuardarDesp))
+                .addGap(5, 5, 5))
+        );
+
+        javax.swing.GroupLayout jpDesparasitacionesLayout = new javax.swing.GroupLayout(jpDesparasitaciones);
+        jpDesparasitaciones.setLayout(jpDesparasitacionesLayout);
+        jpDesparasitacionesLayout.setHorizontalGroup(
+            jpDesparasitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDesparasitacionesLayout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(jpDesparasitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 42, Short.MAX_VALUE))
+        );
+        jpDesparasitacionesLayout.setVerticalGroup(
+            jpDesparasitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDesparasitacionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Desparasitaciones", jpDesparasitaciones);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -611,7 +1102,7 @@ public class PerfilMascota extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -626,8 +1117,8 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jbVolverCitaActionPerformed
 
     private void jbEditarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarCitaActionPerformed
-        nueva = false;
-        editParamsCita();
+        varBCita = false;
+        //editParamsCita();
         getDatosCita();
     }//GEN-LAST:event_jbEditarCitaActionPerformed
 
@@ -677,11 +1168,11 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbMotivosActionPerformed
 
     private void jbGuardarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarCitaActionPerformed
-                
-        if(nueva==true){
-                nuevaCita();
-            
-        }else{
+
+        if (varBCita == true) {
+            nuevaCita();
+
+        } else {
             updateCita();
         }
         limpiarAtributosCita();
@@ -689,27 +1180,475 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jbGuardarCitaActionPerformed
 
     private void jbNuevaCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaCitaActionPerformed
-        nueva = true;
+        varBCita = true;
         editParamsCita();
     }//GEN-LAST:event_jbNuevaCitaActionPerformed
 
     private void jbEliminarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarCitaActionPerformed
-        
+
         int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar la cita?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
 
         if (ok == 0) {
-            cc.deleteCita(cita);
+            cc.deleteCita(selectCitaList());
             jlListado.setModel(addCitaList());
         }
     }//GEN-LAST:event_jbEliminarCitaActionPerformed
 
-   
+    private void jbEditarHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarHistoriaActionPerformed
+        //editParamsHistoria();
+        getDatosHistoria();
+        varBHist = false;
+    }//GEN-LAST:event_jbEditarHistoriaActionPerformed
 
+    private void jbNuevaHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaHistoriaActionPerformed
+        editParamsHistoria();
+        varBHist = true;
+    }//GEN-LAST:event_jbNuevaHistoriaActionPerformed
 
-   
-    
+    private void jbBorrarHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarHistoriaActionPerformed
+
+        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar esta historia?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
+
+        if (ok == 0) {
+            hc.deleteHistoria(selectHistoriaList());
+            jlListado.setModel(addHistoriaList());
+        }
+    }//GEN-LAST:event_jbBorrarHistoriaActionPerformed
+
+    private void jbVolverHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverHistoriaActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbVolverHistoriaActionPerformed
+
+    private void jbGuardarHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarHistoriaActionPerformed
+        if (varBHist == true) {
+            nuevaHistoria();
+            addHistoriaList();
+
+        } else {
+            historia = selectHistoriaList();
+            updateHistoria();
+            addHistoriaList();
+        }
+        limpiarAtributosHistoria();
+        notEditParamsHistoria();
+    }//GEN-LAST:event_jbGuardarHistoriaActionPerformed
+
+    private void jbNuevaVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaVacunaActionPerformed
+        editParamsVacuna();
+        varBVac = true;
+    }//GEN-LAST:event_jbNuevaVacunaActionPerformed
+
+    private void jbEliminarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarVacunaActionPerformed
+
+        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar esta vacuna?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
+
+        if (ok == 0) {
+            vc.deleteVacuna(selectVacunaList());
+            jlListadoVacunas.setModel(addVacunaList());
+        }
+    }//GEN-LAST:event_jbEliminarVacunaActionPerformed
+
+    private void jbEditarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarVacunaActionPerformed
+        getDatosVacuna();
+        varBVac = false;
+    }//GEN-LAST:event_jbEditarVacunaActionPerformed
+
+    private void jbVolverVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverVacunaActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbVolverVacunaActionPerformed
+
+    private void jbGuardarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarVacunaActionPerformed
+        if (varBVac == true) {
+            nuevaVacuna();
+            addVacunaList();
+
+        } else {
+            vacuna = selectVacunaList();
+            updateVacuna();
+            addVacunaList();
+        }
+        limpiarAtributosVacuna();
+        notEditParamsVacuna();
+    }//GEN-LAST:event_jbGuardarVacunaActionPerformed
+
+    private void jcbEnfermedadVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEnfermedadVacunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbEnfermedadVacunaActionPerformed
+
+    private void jbNuevaDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaDespActionPerformed
+        editParamsDesparasitacion();
+        varBDesp = true;
+    }//GEN-LAST:event_jbNuevaDespActionPerformed
+
+    private void jbEliminarDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarDespActionPerformed
+
+        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar esta desparasitación?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
+
+        if (ok == 0) {
+            dc.deleteDesparasitacion(selectDesparasitacionList());
+            jlListadoDesp.setModel(addDesparasitacionList());
+        }
+    }//GEN-LAST:event_jbEliminarDespActionPerformed
+
+    private void jbEditarDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarDespActionPerformed
+        getDatosDesparasitacion();
+        varBDesp = false;
+    }//GEN-LAST:event_jbEditarDespActionPerformed
+
+    private void jbVolverDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverDespActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbVolverDespActionPerformed
+
+    private void jbGuardarDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarDespActionPerformed
+        if (varBDesp == true) {
+            nuevaDesparasitacion();
+            addDesparasitacionList();
+
+        } else {
+            desp = selectDesparasitacionList();
+            updateDesparasitacion();
+            addDesparasitacionList();
+        }
+        limpiarAtributosDesparasitacion();
+        notEditParamsDesparasitacion();
+    }//GEN-LAST:event_jbGuardarDespActionPerformed
+
+    private void jcbTipoDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoDespActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbTipoDespActionPerformed
+
+    //----------- MÉTODOS PARA HISTORIA ----------------------------------
+    private void editParamsHistoria() {
+        jtfEnfermedad.setEnabled(true);
+        jtaTratamiento.setEnabled(true);
+        jdcFechaHistoria.setEnabled(true);
+        jbGuardarHistoria.setEnabled(true);
+    }
+
+    private DefaultListModel addHistoriaList() {
+        DefaultListModel modelList = new DefaultListModel();
+        jlListadoHistorias.setModel(modelList);
+//        System.out.println("id cita --> " + cita.getId());
+
+        historiasMasc = hc.getHistoriasByMascota(masc.getId());
+
+        if (!historiasMasc.isEmpty()) {
+            for (Historia h : historiasMasc) {
+                if (h != null) {
+                    modelList.addElement(convertFecha(h.getFecha()) + " --> " + h.getEnfermedad());
+                } else {
+                    modelList.addElement("");
+                }
+            }
+        } else {
+            modelList.addElement("");
+        }
+
+        return modelList;
+    }
+
+    private void getDatosHistoria() {
+        editParamsHistoria();
+
+//        Historia nHist = selectHistoriaList();
+//
+//        jtfEnfermedad.setText(nHist.getEnfermedad());
+//        jtaTratamiento.setText(nHist.getTratamiento());
+//        jdcFechaHistoria.setCalendar(nHist.getFecha());
+        historia = selectHistoriaList();
+
+        jtfEnfermedad.setText(historia.getEnfermedad());
+        jtaTratamiento.setText(historia.getTratamiento());
+        jdcFechaHistoria.setCalendar(historia.getFecha());
+
+    }
+
+    private void nuevaHistoria() {
+
+        historia = new Historia();
+
+        historia.setEnfermedad(jtfEnfermedad.getText());
+        historia.setTratamiento(jtaTratamiento.getText());
+        historia.setFecha(jdcFechaHistoria.getCalendar());
+
+        if (historia != null) {
+            hc.addHistoria(historia);
+        }
+
+        jlListadoHistorias.setModel(addHistoriaList());
+
+    }
+
+    private void updateHistoria() {
+
+        historia.setEnfermedad(jtfEnfermedad.getText());
+        historia.setTratamiento(jtaTratamiento.getText());
+        historia.setFecha(jdcFechaHistoria.getCalendar());
+
+        if (historia != null) {
+            hc.updateHistoria(historia);
+        }
+
+    }
+
+    private Historia selectHistoriaList() {
+                DefaultListModel modelList = (DefaultListModel) jlListadoHistorias.getModel();
+        int index = jlListadoHistorias.getSelectedIndex(); 
+               
+        String recurso = "";
+        if (index != -1){
+           if(!historiasMasc.isEmpty()){
+            recurso = "/" + historiasMasc.get(index).getId();
+            }else{
+               JOptionPane.showMessageDialog(this, "No hay historias para esta mascota");
+           }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una historia de la lista");
+        }
+        return hc.getHistoria(recurso);
+    }
+
+    private void limpiarAtributosHistoria() {
+        jtfEnfermedad.setText("");
+        jtaTratamiento.setText("");
+        jdcFechaHistoria.getCalendar().clear();
+
+    }
+
+    private void notEditParamsHistoria() {
+        jtfEnfermedad.setEnabled(false);
+        jtaTratamiento.setEnabled(false);
+        jdcFechaHistoria.setEnabled(false);
+    }
+
+    //----------- MÉTODOS PARA VACUNA ----------------------------------
+    private void editParamsVacuna() {
+        jcbEnfermedadVacuna.setEnabled(true);
+        jtaObservacionesVacunas.setEnabled(true);
+        jdcFechaVacuna.setEnabled(true);
+        jdcProximaVacuna.setEnabled(true);
+        jbGuardarVacuna.setEnabled(true);
+    }
+
+    private DefaultListModel addVacunaList() {
+        DefaultListModel modelList = new DefaultListModel();
+        jlListadoVacunas.setModel(modelList);
+//        System.out.println("id cita --> " + cita.getId());
+
+        vacunasMasc = vc.getVacunasByMascota(masc.getId());
+        Collections.sort(vacunasMasc, new Comparator<Vacuna>() {
+            @Override
+            public int compare(Vacuna o1, Vacuna o2) {
+                return o1.getEnfermedad().compareTo(o2.getEnfermedad());
+            }
+        });
+        
+        if (!vacunasMasc.isEmpty()) {
+            for (Vacuna v : vacunasMasc) {
+                if (v != null && !vacunasMasc.contains(v.getEnfermedad())) {
+                    modelList.addElement(v.getEnfermedad()+ " --> " +convertFecha(v.getProximaFecha()));
+                } 
+//                else {
+//                    modelList.addElement("");
+//                }
+            }
+        } else {
+            modelList.addElement("");
+        }
+
+        return modelList;
+    }
+
+    private void getDatosVacuna() {
+        editParamsVacuna();
+
+        vacuna = selectVacunaList();
+        if (vacuna != null) {
+            jcbEnfermedadVacuna.setSelectedItem(vacuna.getEnfermedad());
+            jtaObservacionesVacunas.setText(vacuna.getObservaciones());
+            jdcFechaVacuna.setCalendar(vacuna.getFecha());
+            jdcProximaVacuna.setCalendar(vacuna.getProximaFecha());
+        }
+    }
+
+    private void nuevaVacuna() {
+
+        vacuna = new Vacuna();
+
+        vacuna.setEnfermedad(jcbEnfermedadVacuna.getItemAt(jcbEnfermedadVacuna.getSelectedIndex()));
+        vacuna.setObservaciones(jtaObservacionesVacunas.getText());
+        vacuna.setFecha(jdcFechaVacuna.getCalendar());
+        vacuna.setProximaFecha(jdcProximaVacuna.getCalendar());
+
+        if (vacuna != null) {
+            vc.addVacuna(vacuna);
+        }
+
+        jlListadoVacunas.setModel(addVacunaList());
+
+    }
+
+    private void updateVacuna() {
+
+        vacuna.setEnfermedad(jcbEnfermedadVacuna.getItemAt(jcbEnfermedadVacuna.getSelectedIndex()));
+        vacuna.setObservaciones(jtaObservacionesVacunas.getText());
+        vacuna.setFecha(jdcFechaVacuna.getCalendar());
+        vacuna.setProximaFecha(jdcProximaVacuna.getCalendar());
+
+        if (vacuna != null) {
+            vc.updateVacuna(vacuna);
+        }
+
+    }
+
+    private Vacuna selectVacunaList() {
+        DefaultListModel modelList = (DefaultListModel) jlListadoVacunas.getModel();
+        int index = jlListadoVacunas.getSelectedIndex();
+               
+        String recurso = "";
+        if (index != -1){
+           if(!vacunasMasc.isEmpty()){
+            recurso = "/" + vacunasMasc.get(index).getId();
+            }else{
+               JOptionPane.showMessageDialog(this, "No hay vacunas para esta mascota");
+           }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una vacuna de la lista");
+        }
+        return vc.getVacuna(recurso);
+    }
+
+    private void limpiarAtributosVacuna() {
+        jcbEnfermedadVacuna.setSelectedIndex(0);
+        jtaObservacionesVacunas.setText("");
+        jdcFechaVacuna.getCalendar().clear();
+        jdcProximaVacuna.getCalendar().clear();
+
+    }
+
+    private void notEditParamsVacuna() {
+        jcbEnfermedadVacuna.setEnabled(false);
+        jtaObservacionesVacunas.setEnabled(false);
+        jdcFechaVacuna.setEnabled(false);
+        jdcProximaVacuna.setEnabled(false);
+    }
+
+    //----------- MÉTODOS PARA DESPARASITACIÓN ----------------------------------
+    private void editParamsDesparasitacion() {
+        jcbTipoDesp.setEnabled(true);
+        jtaObservacionesDesp.setEnabled(true);
+        jdcFechaDesp.setEnabled(true);
+        jdcProximaDesp.setEnabled(true);
+        jbGuardarDesp.setEnabled(true);
+    }
+
+    private DefaultListModel addDesparasitacionList() {
+        DefaultListModel modelList = new DefaultListModel();
+        jlListadoDesp.setModel(modelList);
+//        System.out.println("id cita --> " + cita.getId());
+
+        desparasMasc = dc.getDesparasitacionesByMascota(masc.getId());
+
+        Collections.sort(desparasMasc, new Comparator<Desparasitacion>() {
+            @Override
+            public int compare(Desparasitacion o1, Desparasitacion o2) {
+                return o1.getTipo().compareTo(o2.getTipo());
+            }
+        });
+        
+        if (!desparasMasc.isEmpty()) {
+            for (Desparasitacion d : desparasMasc) {
+                if (d != null) {
+                    modelList.addElement(convertFecha(d.getFecha()) + " --> " + d.getTipo());
+                } else {
+                    modelList.addElement("");
+                }
+            }
+        } else {
+            modelList.addElement("");
+        }
+
+        return modelList;
+    }
+
+    private void getDatosDesparasitacion() {
+        editParamsDesparasitacion();
+
+        desp = selectDesparasitacionList();
+
+        jcbTipoDesp.setSelectedItem(desp.getTipo());
+        jtaObservacionesDesp.setText(desp.getObservaciones());
+        jdcFechaDesp.setCalendar(desp.getFecha());
+        jdcProximaDesp.setCalendar(desp.getProximaFecha());
+
+    }
+
+    private void nuevaDesparasitacion() {
+
+        desp = new Desparasitacion();
+
+        desp.setTipo(jcbTipoDesp.getItemAt(jcbTipoDesp.getSelectedIndex()));
+        desp.setObservaciones(jtaObservacionesDesp.getText());
+        desp.setFecha(jdcFechaDesp.getCalendar());
+        desp.setProximaFecha(jdcProximaDesp.getCalendar());
+
+        if (desp != null) {
+            dc.addDesparasitacion(desp);
+        }
+
+        jlListadoDesp.setModel(addDesparasitacionList());
+
+    }
+
+    private void updateDesparasitacion() {
+
+        desp.setTipo(jcbTipoDesp.getItemAt(jcbTipoDesp.getSelectedIndex()));
+        desp.setObservaciones(jtaObservacionesDesp.getText());
+        desp.setFecha(jdcFechaDesp.getCalendar());
+        desp.setProximaFecha(jdcProximaDesp.getCalendar());
+
+        if (desp != null) {
+            dc.updateDesparasitacion(desp);
+        }
+
+    }
+
+    private Desparasitacion selectDesparasitacionList() {
+                DefaultListModel modelList = (DefaultListModel) jlListadoDesp.getModel();
+        int index = jlListadoDesp.getSelectedIndex();
+        Vacuna v = null; 
+               
+        String recurso = "";
+        if (index != -1){
+           if(!desparasMasc.isEmpty()){
+            recurso = "/" + desparasMasc.get(index).getId();
+            }else{
+               JOptionPane.showMessageDialog(this, "No hay desparasitaciones para esta mascota");
+           }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una desparasitación de la lista");
+        }
+
+        return dc.getDesparasitacion(recurso);
+    }
+
+    private void limpiarAtributosDesparasitacion() {
+        jcbTipoDesp.setSelectedIndex(0);
+        jtaObservacionesDesp.setText("");
+        jdcFechaDesp.getCalendar().clear();
+        jdcProximaDesp.getCalendar().clear();
+
+    }
+
+    private void notEditParamsDesparasitacion() {
+        jcbTipoDesp.setEnabled(false);
+        jtaObservacionesDesp.setEnabled(false);
+        jdcFechaDesp.setEnabled(false);
+        jdcProximaDesp.setEnabled(false);
+        jbGuardarDesp.setEnabled(false);
+    }
+
 //------------ MÉTODOS PARA MASCOTA ----------------
-    
     private void getAtributosMasc() {
         jtfNombre.setText(masc.getNombre());
         jtfRaza.setText(masc.getRaza());
@@ -722,6 +1661,11 @@ public class PerfilMascota extends javax.swing.JDialog {
         } else if (masc.getSexo().equalsIgnoreCase("H")) {
             bgGrupoBotones.setSelected(jrbHembra.getModel(), true);
         }
+
+        prop = masc.getPropietario();
+        pc.setPropietario(prop);
+
+        mc.setMascota(masc);
 
     }
 
@@ -736,12 +1680,17 @@ public class PerfilMascota extends javax.swing.JDialog {
         bgGrupoBotones.setSelected(jrbHembra.getModel(), false);
 
     }
-    
-     private void updateMasc() {
+
+    private void updateMasc() {
         masc.setNombre(jtfNombre.getText());
         masc.setEspecie(jtfEspecie.getText());
         masc.setNum_chip(jtfChip.getText());
         masc.setRaza(jtfRaza.getText());
+
+        //Para añadir 1 día a la fecha que Calendar obtiene
+//        Calendar fecha = jdcFechaNac.getCalendar();
+//        fecha.add(Calendar.DATE, 1);
+//        masc.setFecha_nac(fecha);
         masc.setFecha_nac(jdcFechaNac.getCalendar());
 
         if (jrbMacho.isSelected()) {
@@ -776,32 +1725,39 @@ public class PerfilMascota extends javax.swing.JDialog {
     }
 
     // ----------- MÉTODOS PARA CITA ----------------------------------
-    
     private void cargarComboBox() {
 
         Motivo[] motivosList = Motivo.values();
-        
+
         jcbMotivos.addItem("");
-        
+
         for (Motivo mot : motivosList) {
             jcbMotivos.addItem(mot.toString());
         }
+
+        EnfermedadVacuna[] enfermedadVList = EnfermedadVacuna.values();
+        jcbEnfermedadVacuna.addItem("");
+
+        for (EnfermedadVacuna vac : enfermedadVList) {
+            jcbEnfermedadVacuna.addItem(vac.toString());
+        }
+
     }
-    
-    private void editParamsCita(){
+
+    private void editParamsCita() {
         jcbMotivos.setEnabled(true);
         jdcFecha.setEnabled(true);
         jtaDescripcion.setEnabled(true);
         jbGuardarCita.setEnabled(true);
     }
-    
-        private void notEditParamsCita(){
+
+    private void notEditParamsCita() {
         jcbMotivos.setEnabled(false);
         jdcFecha.setEnabled(false);
         jtaDescripcion.setEnabled(false);
         jbGuardarCita.setEnabled(false);
     }
-    
+
     private void getDatosCita() {
         editParamsCita();
         Cita nCita = selectCitaList();
@@ -809,33 +1765,36 @@ public class PerfilMascota extends javax.swing.JDialog {
         jcbMotivos.setSelectedItem(nCita.getMotivo());
         jtaDescripcion.setText(nCita.getObservaciones());
         jdcFecha.setCalendar(nCita.getFecha());
-        
+
     }
 
     private void nuevaCita() {
-        
+
         cita.setMotivo(jcbMotivos.getItemAt(jcbMotivos.getSelectedIndex()));
         cita.setObservaciones(jtaDescripcion.getText());
         cita.setFecha(jdcFecha.getCalendar());
-        
-        if(cita!=null)
-        cc.addCita(cita);
-        
-        nueva = true;
+
+        if (cita != null) {
+            cc.addCita(cita);
+        }
+
+        //varBCita = true;
     }
+
     private void updateCita() {
-        
+
         cita.setMotivo(jcbMotivos.getItemAt(0));
         cita.setObservaciones(jtaDescripcion.getText());
         cita.setFecha(jdcFecha.getCalendar());
-        
-        if(cita!=null)
-        cc.updateCita(cita);
-        
-        nueva = true;
+
+        if (cita != null) {
+            cc.updateCita(cita);
+        }
+
+        //varBCita = true;
     }
-    
-     private DefaultListModel addCitaList() {
+
+    private DefaultListModel addCitaList() {
         DefaultListModel modelList = new DefaultListModel();
         jlListado.setModel(modelList);
 //        System.out.println("id cita --> " + cita.getId());
@@ -844,7 +1803,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         if (!citasMasc.isEmpty()) {
             for (Cita c : citasMasc) {
                 if (c != null) {
-                    modelList.addElement(c.getFecha().getTime() + " --> " + c.getMotivo());
+                    modelList.addElement(convertFecha(c.getFecha()) + " --> " + c.getMotivo());
                 } else {
                     modelList.addElement("");
                 }
@@ -862,18 +1821,31 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         return cc.getCita(recurso);
     }
-    
-    private void limpiarAtributosCita(){
+
+    private void limpiarAtributosCita() {
         jcbMotivos.setSelectedIndex(0);
         jtaDescripcion.setText("");
         jdcFecha.getCalendar().clear();
-        
+
     }
-    
+
 // --------------- Métodos generales -------------------------------
-    
     private void setParent(Frame parent) {
         this.parent = parent;
+    }
+
+    private String convertFecha(Calendar calendar) {
+        //String fecha1_str;
+        // Date date = new Date();
+
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Instant instant = calendar.toInstant();
+        LocalDate localDate = instant
+                .atZone(defaultZoneId).toLocalDate();
+
+        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        return localDate.format(sdf);
     }
 
     /**
@@ -920,11 +1892,6 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgGrupoBotones;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -932,7 +1899,17 @@ public class PerfilMascota extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -940,40 +1917,78 @@ public class PerfilMascota extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton jbBorrarHistoria;
     private javax.swing.JButton jbEditarCita;
+    private javax.swing.JButton jbEditarDesp;
+    private javax.swing.JButton jbEditarHistoria;
     private javax.swing.JButton jbEditarMascota;
+    private javax.swing.JButton jbEditarVacuna;
     private javax.swing.JButton jbEliminarCita;
+    private javax.swing.JButton jbEliminarDesp;
     private javax.swing.JButton jbEliminarMascota;
+    private javax.swing.JButton jbEliminarVacuna;
     private javax.swing.JButton jbGuardarCita;
+    private javax.swing.JButton jbGuardarDesp;
+    private javax.swing.JButton jbGuardarHistoria;
     private javax.swing.JButton jbGuardarMascota;
+    private javax.swing.JButton jbGuardarVacuna;
     private javax.swing.JButton jbNuevaCita;
+    private javax.swing.JButton jbNuevaDesp;
+    private javax.swing.JButton jbNuevaHistoria;
+    private javax.swing.JButton jbNuevaVacuna;
     private javax.swing.JButton jbVolver;
     private javax.swing.JButton jbVolverCita;
+    private javax.swing.JButton jbVolverDesp;
+    private javax.swing.JButton jbVolverHistoria;
+    private javax.swing.JButton jbVolverVacuna;
+    private javax.swing.JComboBox<String> jcbEnfermedadVacuna;
     private javax.swing.JComboBox<String> jcbMotivos;
+    private javax.swing.JComboBox<String> jcbTipoDesp;
     private com.toedter.calendar.JDateChooser jdcFecha;
+    private com.toedter.calendar.JDateChooser jdcFechaDesp;
+    private com.toedter.calendar.JDateChooser jdcFechaHistoria;
     private com.toedter.calendar.JDateChooser jdcFechaNac;
+    private com.toedter.calendar.JDateChooser jdcFechaVacuna;
+    private com.toedter.calendar.JDateChooser jdcProximaDesp;
+    private com.toedter.calendar.JDateChooser jdcProximaVacuna;
     private javax.swing.JList<String> jlListado;
+    private javax.swing.JList<String> jlListadoDesp;
+    private javax.swing.JList<String> jlListadoHistorias;
+    private javax.swing.JList<String> jlListadoVacunas;
+    private javax.swing.JPanel jpCitas;
+    private javax.swing.JPanel jpDesparasitaciones;
+    private javax.swing.JPanel jpHistorias;
+    private javax.swing.JPanel jpPerfil;
+    private javax.swing.JPanel jpVacunas;
     private javax.swing.JRadioButton jrbHembra;
     private javax.swing.JRadioButton jrbMacho;
     private javax.swing.JTextArea jtaDescripcion;
+    private javax.swing.JTextArea jtaObservacionesDesp;
+    private javax.swing.JTextArea jtaObservacionesVacunas;
+    private javax.swing.JTextArea jtaTratamiento;
     private javax.swing.JTextField jtfChip;
+    private javax.swing.JTextField jtfEnfermedad;
     private javax.swing.JTextField jtfEspecie;
     private javax.swing.JTextField jtfNombre;
     private javax.swing.JTextField jtfPeso;
@@ -981,9 +1996,27 @@ public class PerfilMascota extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     private MascotaController mc;
     private CitaController cc;
+    private HistoriaController hc;
+    private PropietarioController pc;
+    private VacunaController vc;
+    private DesparasitacionController dc;
+
     private Frame parent;
+
     private Mascota masc;
     private Cita cita;
+    private Vacuna vacuna;
+    private Historia historia;
+    private Propietario prop;
+    private Desparasitacion desp;
+
     private List<Cita> citasMasc;
-    private boolean nueva;
+    private List<Historia> historiasMasc;
+    private List<Vacuna> vacunasMasc;
+    private List<Desparasitacion> desparasMasc;
+
+    private boolean varBCita;
+    private boolean varBHist;
+    private boolean varBVac;
+    private boolean varBDesp;
 }

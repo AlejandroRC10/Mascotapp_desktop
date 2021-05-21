@@ -27,15 +27,21 @@ public class Vacuna {
         
         @JsonProperty("observaciones")
 	private String observaciones;
+        
+        private Mascota mascota;
 
-    public Vacuna(String enfermedad, Calendar fecha, Calendar proximaFecha, String observaciones) {
+    public Vacuna(String enfermedad, Calendar fecha, Calendar proximaFecha, String observaciones, Mascota mascota) {
         this.enfermedad = enfermedad;
         this.fecha = fecha;
         this.proximaFecha = proximaFecha;
         this.observaciones = observaciones;
+        this.mascota = mascota;
     }
-        
-        
+
+    public Vacuna() {
+    }
+    
+    
 
     public Long getId() {
         return id;
@@ -77,10 +83,20 @@ public class Vacuna {
         this.observaciones = observaciones;
     }
 
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+    }
+
     @Override
     public String toString() {
-        return "Vacuna{" + "id=" + id + ", enfermedad=" + enfermedad + ", fecha=" + fecha + ", proximaFecha=" + proximaFecha + ", observaciones=" + observaciones + '}';
+        return "Vacuna{" + "id=" + id + ", enfermedad=" + enfermedad + ", fecha=" + fecha + ", proximaFecha=" + proximaFecha + ", observaciones=" + observaciones + ", mascota=" + mascota + '}';
     }
+
+ 
         
         
 }

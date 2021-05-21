@@ -6,6 +6,7 @@
 package mascotapp_desktop.views;
 
 import java.awt.Frame;
+import java.util.Calendar;
 import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.models.Mascota;
 
@@ -37,6 +38,7 @@ public class RegistroMascota extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgBotones = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtfNombre = new javax.swing.JTextField();
@@ -55,6 +57,9 @@ public class RegistroMascota extends javax.swing.JDialog {
         jrbHembra = new javax.swing.JRadioButton();
         jdcFechaNac = new com.toedter.calendar.JDateChooser();
         jtfEspecie = new javax.swing.JTextField();
+
+        bgBotones.add(jrbMacho);
+        bgBotones.add(jrbHembra);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -235,6 +240,9 @@ public class RegistroMascota extends javax.swing.JDialog {
             masc.setSexo("H");
         }
         
+//        Calendar fecha = jdcFechaNac.getCalendar();
+//        fecha.add(Calendar.DATE, 1);
+//        masc.setFecha_nac(fecha);
         masc.setFecha_nac(jdcFechaNac.getCalendar());
         
         mc.addMascota(masc);
@@ -292,6 +300,7 @@ public class RegistroMascota extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgBotones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

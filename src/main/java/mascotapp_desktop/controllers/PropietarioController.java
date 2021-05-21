@@ -56,8 +56,9 @@ public class PropietarioController implements PropietarioControllerInterface{
         
         try {
             URL url = curl.getURL("propietarios?dni=", dni);
-            //prop = 
+            
               if(curl.existEntity(url.toString())){
+                  prop = curl.getJSON_MAPPER().readValue(url, Propietario.class); 
                   return true;
               }
             

@@ -27,14 +27,23 @@ public class Desparasitacion {
     
     @JsonProperty("observaciones")
     private String observaciones;
+    
+    private Mascota mascota;
 
-    public Desparasitacion(String tipo, Calendar fecha, Calendar proximaFecha, String observaciones) {
+    public Desparasitacion(Long id, String tipo, Calendar fecha, Calendar proximaFecha, String observaciones, Mascota mascota) {
+        this.id = id;
         this.tipo = tipo;
         this.fecha = fecha;
         this.proximaFecha = proximaFecha;
         this.observaciones = observaciones;
+        this.mascota = mascota;
     }
 
+    public Desparasitacion() {
+    }
+
+
+    
     public Long getId() {
         return id;
     }
@@ -75,8 +84,17 @@ public class Desparasitacion {
         this.observaciones = observaciones;
     }
 
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+    }
+
     @Override
     public String toString() {
-        return "Desparasitacion{" + "id=" + id + ", tipo=" + tipo + ", fecha=" + fecha + ", proximaFecha=" + proximaFecha + ", observaciones=" + observaciones + '}';
-    } 
+        return "Desparasitacion{" + "id=" + id + ", tipo=" + tipo + ", fecha=" + fecha + ", proximaFecha=" + proximaFecha + ", observaciones=" + observaciones + ", mascota=" + mascota + '}';
+    }
+
 }

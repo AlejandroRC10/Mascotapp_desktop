@@ -85,6 +85,10 @@ public class MascotaController implements MascotaControllerInterface {
             url = curl.getURL("mascotas/", Long.toString(masc.getId()));
             try {
                 curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
+                
+                System.out.println("Estoy en update Mascota para ver la fecha que mando --> "+masc.getFecha_nac().toString());
+                System.out.println("Estoy en update Mascota para ver la fecha que mando --> "+masc.getFecha_nac());
+
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

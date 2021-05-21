@@ -24,11 +24,17 @@ public class Historia {
     
     @JsonProperty("tratamiento")
     private String tratamiento;
+    
+    private Mascota mascota;
 
-    public Historia(Calendar fecha, String enfermedad, String tratamiento) {
+    public Historia(Calendar fecha, String enfermedad, String tratamiento, Mascota mascota) {
         this.fecha = fecha;
         this.enfermedad = enfermedad;
         this.tratamiento = tratamiento;
+        this.mascota = mascota;
+    }
+
+    public Historia() {
     }
 
     public long getId() {
@@ -63,9 +69,19 @@ public class Historia {
         this.tratamiento = tratamiento;
     }
 
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+    }
+
     @Override
     public String toString() {
-        return "Historia{" + "id=" + id + ", fecha=" + fecha + ", enfermedad=" + enfermedad + ", tratamiento=" + tratamiento + '}';
+        return "Historia{" + "id=" + id + ", fecha=" + fecha + ", enfermedad=" + enfermedad + ", tratamiento=" + tratamiento + ", mascota=" + mascota + '}';
     }
+
+
     
 }

@@ -88,38 +88,33 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
      */
     @Override
     public String postJson(String url, String json) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+        post.addHeader("Content-Type", "application/json;charset=UTF-8");
+        StringEntity se = new StringEntity(json, "UTF-8");
+        post.setEntity(se);
+        System.out.println("(post) Entidad que se envía----->>> " + json);
+        CloseableHttpResponse httpResponse = null;
         try {
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpPost post = new HttpPost(url);
-            post.addHeader("Content-Type", "application/json");
-
-            StringEntity se = new StringEntity(json);
-            post.setEntity(se);
-            System.out.println("(post) Entidad que se envía----->>> " + json);
-            CloseableHttpResponse httpResponse = null;
-            try {
-                httpResponse = httpClient.execute(post);
-                int statusCode = httpResponse.getStatusLine().getStatusCode();
-                if (httpResponse != null && statusCode == HttpStatus.SC_CREATED) {
-                    HttpEntity entity = httpResponse.getEntity();
-
-                    if (entity != null) {
-                       
-                        return EntityUtils.toString(entity, "utf-8");
-                    }
-                }
-
-            } catch (IOException ex) {
-                Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    closeHttpClient(httpClient);
-                } catch (IOException ex) {
-                    Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
+            httpResponse = httpClient.execute(post);
+            int statusCode = httpResponse.getStatusLine().getStatusCode();
+            if (httpResponse != null && statusCode == HttpStatus.SC_CREATED) {
+                HttpEntity entity = httpResponse.getEntity();
+                
+                if (entity != null) {
+                    
+                    return EntityUtils.toString(entity, "utf-8");
                 }
             }
-        } catch (UnsupportedEncodingException ex) {
+            
+        } catch (IOException ex) {
             Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                closeHttpClient(httpClient);
+            } catch (IOException ex) {
+                Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
@@ -297,7 +292,7 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpDelete delete = new HttpDelete(url);
-        delete.addHeader("Content-Type", "application/json");
+        delete.addHeader("Content-Type", "application/json;charset=UTF-8");
 
 //            StringEntity se = new StringEntity(json);
 //            delete.setEntity(se);
