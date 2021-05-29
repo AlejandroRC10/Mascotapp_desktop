@@ -48,6 +48,7 @@ public class MascotaController implements MascotaControllerInterface {
         try {
             //URL url = curl.getURL("mascotas/", id);
             URL url = curl.getURL("mascotas", id);
+            System.out.println("-----------> url "+ url.toString());
             masc = curl.getJSON_MAPPER().readValue(url, Mascota.class);
 
         } catch (MalformedURLException ex) {
@@ -68,7 +69,7 @@ public class MascotaController implements MascotaControllerInterface {
             url = curl.getURL("mascotas/", propId);
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
+                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
             } catch (IOException ex) {
                 Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -82,9 +83,10 @@ public class MascotaController implements MascotaControllerInterface {
     @Override
     public void updateMascota(Mascota masc) {
         try {
-            url = curl.getURL("mascotas/", Long.toString(masc.getId()));
+            String id = Long.toString(masc.getId());
+            url = curl.getURL("mascotas/", id);
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
+                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
                 
                 System.out.println("Estoy en update Mascota para ver la fecha que mando --> "+masc.getFecha_nac().toString());
                 System.out.println("Estoy en update Mascota para ver la fecha que mando --> "+masc.getFecha_nac());
@@ -104,7 +106,7 @@ public class MascotaController implements MascotaControllerInterface {
         try {
             url = curl.getURL("mascotas/", Long.toString(prop.getId()));
             try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -138,6 +140,7 @@ public class MascotaController implements MascotaControllerInterface {
     @Override
     public List<Mascota> getMascotasByPropietario(Long id) {
         System.out.println("holaaa estoy en --> getMascotasByPropietario");
+        List<Mascota>listaMascotas = null;
         try {
             String peticion = "mascotas";
             String recurso = "?prop_id=" + Long.toString(id);
@@ -146,6 +149,11 @@ public class MascotaController implements MascotaControllerInterface {
 
             URL url = curl.getURL(peticion, recurso);
             mascotas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Mascota.class));
+            if(mascotas!=null){
+                listaMascotas = mascotas;
+            }else{
+                listaMascotas = new ArrayList();
+            }
             //System.out.println(clientes.toString());
         } catch (MalformedURLException ex) {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,7 +161,7 @@ public class MascotaController implements MascotaControllerInterface {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return mascotas;
+        return listaMascotas;
     }
 
     public Mascota getMascota() {

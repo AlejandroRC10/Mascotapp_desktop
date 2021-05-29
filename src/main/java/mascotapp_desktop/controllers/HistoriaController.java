@@ -33,7 +33,7 @@ public class HistoriaController implements HistoriaControllerInterface{
 
     public HistoriaController() {
         this.mc = new MascotaController();
-        this.historias = new ArrayList<>();
+        this.historias = new ArrayList();
     }
 
     /**
@@ -67,7 +67,7 @@ public class HistoriaController implements HistoriaControllerInterface{
             url = curl.getURL("historias/", mascId);
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(hist));
+                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(hist));
             } catch (IOException ex) {
                 Logger.getLogger(HistoriaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -83,7 +83,7 @@ public class HistoriaController implements HistoriaControllerInterface{
         try {
             url = curl.getURL("historias/", Long.toString(hist.getId()));
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(hist));
+                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(hist));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(HistoriaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -98,7 +98,7 @@ public class HistoriaController implements HistoriaControllerInterface{
         try {
             url = curl.getURL("historias/", Long.toString(hist.getId()));
             try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(hist));
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(hist));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(HistoriaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

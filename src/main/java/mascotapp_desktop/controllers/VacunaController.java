@@ -33,7 +33,7 @@ public class VacunaController implements VacunaControllerInterface {
 
     public VacunaController() {
         this.mc = new MascotaController();
-        this.vacunas = new ArrayList<>();
+        this.vacunas = new ArrayList();
     }
 
     /**
@@ -46,9 +46,10 @@ public class VacunaController implements VacunaControllerInterface {
 
         try {
             //URL url = curl.getURL("mascotas/", id);
-            if (!id.isBlank()) {
+            if (!id.isEmpty() && id!=null) {
                 URL url = curl.getURL("vacunas", id);
                 vac = curl.getJSON_MAPPER().readValue(url, Vacuna.class);
+            } else {
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -68,7 +69,7 @@ public class VacunaController implements VacunaControllerInterface {
             url = curl.getURL("vacunas/", mascId);
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
+                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
             } catch (IOException ex) {
                 Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -84,7 +85,7 @@ public class VacunaController implements VacunaControllerInterface {
         try {
             url = curl.getURL("vacunas/", Long.toString(vac.getId()));
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
+                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -99,7 +100,7 @@ public class VacunaController implements VacunaControllerInterface {
         try {
             url = curl.getURL("vacunas/", Long.toString(vac.getId()));
             try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

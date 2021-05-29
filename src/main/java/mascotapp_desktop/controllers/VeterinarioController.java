@@ -8,12 +8,16 @@ package mascotapp_desktop.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import mascotapp_desktop.util.MascotappUtilImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.awt.Component;
+import java.awt.Frame;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.interfaces.VeterinarioControllerInterface;
 import mascotapp_desktop.models.Mascota;
 import mascotapp_desktop.models.Veterinario;
@@ -45,15 +49,22 @@ public class VeterinarioController implements VeterinarioControllerInterface {
         return vet;
     }
 
+    /**
+     *
+     * @param vet
+     * @return
+     */
     @Override
-    public void addVeterinario(Veterinario vet) {
+    public boolean addVeterinario(Veterinario vet) {
 
         try {
 
             url = curl.getURL("veterinarios", "");
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vet));
+                if (curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vet))!= null){
+                    return true;
+                } 
             } catch (IOException ex) {
                 Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -61,20 +72,23 @@ public class VeterinarioController implements VeterinarioControllerInterface {
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 //        catch (JsonProcessingException ex) {
 //            Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
+        return false;
     }
 
     @Override
-    public void updateVeterinario(Veterinario vet) {
+    public boolean updateVeterinario(Veterinario vet) {
         try {
             url = curl.getURL("veterinarios/", Long.toString(vet.getId()));
             System.out.println("vetId ---------->> " + vet.getId());
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vet));
+                
+               if(curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vet)) != "ERROR"){
+                   return true;
+               }
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -83,13 +97,14 @@ public class VeterinarioController implements VeterinarioControllerInterface {
         } catch (MalformedURLException ex) {
             Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
 
     public void deleteVeterinario(Veterinario vet) {
         try {
             url = curl.getURL("veterinarios/", Long.toString(vet.getId()));
             try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vet));
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vet));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -101,26 +116,25 @@ public class VeterinarioController implements VeterinarioControllerInterface {
     }
 
     public boolean login(Map<String, String> login) {
-           try {
+        try {
 
             url = curl.getURL("veterinarios/", "login");
 
             try {
-                if(curl.loginJSON(url.toString(), curl.getJSON_MAPPER().writeValueAsString(login))){                    
-                    System.out.println("------->>>  "+curl.getJSON_MAPPER().writeValueAsString(login));
+                
+                if (curl.loginJSON(url.toString(), curl.getJSON_MAPPER().writeValueAsString(login))) {
+                    System.out.println("------->>>  " + curl.getJSON_MAPPER().writeValueAsString(login));
                     return true;
                 }
             } catch (IOException ex) {
                 Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
             }
-           // curl.getJSON_MAPPER().writeValueAsString(vet);
+            // curl.getJSON_MAPPER().writeValueAsString(vet);
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(VeterinarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
-           
-           
+
         //String recurso = "usuario=" + usuario + "&password=" + password;
 //        try {
 //
@@ -144,14 +158,13 @@ public class VeterinarioController implements VeterinarioControllerInterface {
         return false;
 
     }
-    
-    public Veterinario getVeterinario(){
+
+    public Veterinario getVeterinario() {
         return veterinario;
     }
-    
-    public void setVeterinario(Veterinario vet){
+
+    public void setVeterinario(Veterinario vet) {
         this.veterinario = vet;
     }
-
 
 }

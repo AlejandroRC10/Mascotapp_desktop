@@ -20,12 +20,15 @@ import mascotapp_desktop.models.Veterinario;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la ventana de Perfil de Propietario
  */
 public class PerfilPropietario extends javax.swing.JDialog {
 
     /**
-     * Creates new form PerfilCliente
+     * Crea el formulario para PerfilPropietario
      *
      * @param parent
      * @param modal
@@ -77,6 +80,12 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+
+        jLabel1.setFont(jPanel1.getFont());
+        jLabel1.setForeground(jPanel1.getForeground());
         jLabel1.setText("Nombre:");
 
         jtfNombre.setEditable(false);
@@ -86,24 +95,35 @@ public class PerfilPropietario extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(jPanel1.getFont());
+        jLabel2.setForeground(jPanel1.getForeground());
         jLabel2.setText("Apellidos:");
 
         jtfApellidos.setEditable(false);
 
+        jLabel5.setFont(jPanel1.getFont());
+        jLabel5.setForeground(jPanel1.getForeground());
         jLabel5.setText("Email:");
 
         jtfEmail.setEditable(false);
 
+        jLabel6.setFont(jPanel1.getFont());
+        jLabel6.setForeground(jPanel1.getForeground());
         jLabel6.setText("Teléfono:");
 
         jtfTelefono.setEditable(false);
 
+        jLabel7.setFont(jPanel1.getFont());
+        jLabel7.setForeground(jPanel1.getForeground());
         jLabel7.setText("DNI:");
 
         jtfDni.setEditable(false);
 
+        jbGuardar.setFont(jPanel1.getFont());
+        jbGuardar.setForeground(jbEditar.getForeground());
         jbGuardar.setText("Guardar");
 
+        jbVolver.setFont(jPanel1.getFont());
         jbVolver.setText("Volver");
         jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,8 +138,12 @@ public class PerfilPropietario extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jlListado);
 
+        jLabel3.setFont(jPanel1.getFont());
+        jLabel3.setForeground(jPanel1.getForeground());
         jLabel3.setText("Mascotas:");
 
+        jbEditar.setFont(jPanel1.getFont());
+        jbEditar.setForeground(new java.awt.Color(51, 102, 0));
         jbEditar.setText("Editar datos");
         jbEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +151,8 @@ public class PerfilPropietario extends javax.swing.JDialog {
             }
         });
 
+        jbEliminar.setFont(jPanel1.getFont());
+        jbEliminar.setForeground(jbEditar.getForeground());
         jbEliminar.setText("Eliminar propietario");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +160,8 @@ public class PerfilPropietario extends javax.swing.JDialog {
             }
         });
 
+        jbAdd.setFont(jPanel1.getFont());
+        jbAdd.setForeground(jbEditar.getForeground());
         jbAdd.setText("+");
         jbAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +169,8 @@ public class PerfilPropietario extends javax.swing.JDialog {
             }
         });
 
+        jvVer.setFont(jPanel1.getFont());
+        jvVer.setForeground(jbEditar.getForeground());
         jvVer.setText("ver");
         jvVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +187,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addComponent(jbGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbVolver)
@@ -165,7 +195,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -177,7 +207,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 70, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +234,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
                     .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbEditar))
                 .addGap(12, 12, 12)
@@ -226,15 +256,14 @@ public class PerfilPropietario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jbAdd)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jvVer))
+                        .addComponent(jbAdd, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addGap(67, 67, 67)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jvVer)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbVolver)
                     .addComponent(jbGuardar)
@@ -260,13 +289,18 @@ public class PerfilPropietario extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jvVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jvVerActionPerformed
-        mc.setMascota(selectMascotaList());
-        //dispose();
-        PerfilMascota pm = new PerfilMascota(parent, true);
-        pm.setVisible(true);
+        Mascota m = selectMascotaList();
+
+        if (m != null) {
+            mc.setMascota(m);
+            PerfilMascota pm = new PerfilMascota(parent, true);
+            pm.setVisible(true);
+        }
+
     }//GEN-LAST:event_jvVerActionPerformed
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
@@ -278,7 +312,6 @@ public class PerfilPropietario extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNombreActionPerformed
 
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddActionPerformed
-//        dispose();
         RegistroMascota rp = new RegistroMascota(parent, true);
         rp.setVisible(true);
     }//GEN-LAST:event_jbAddActionPerformed
@@ -296,7 +329,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
     }
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        
+
         int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar este propietario?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
 
         if (ok == 0) {
@@ -305,24 +338,39 @@ public class PerfilPropietario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
+    /**
+     * Método que obtiene los atributos del Propietario y los muestra al usuario
+     */
     private void getAtributosProp() {
-        jtfNombre.setText(prop.getNombre());
-        jtfApellidos.setText(prop.getApellidos());
-        jtfEmail.setText(prop.getEmail());
-        jtfTelefono.setText(prop.getTelefono());
-        jtfDni.setText(prop.getDni());
+
+        if (prop != null) {
+            jtfNombre.setText(prop.getNombre());
+            jtfApellidos.setText(prop.getApellidos());
+            jtfEmail.setText(prop.getEmail());
+            jtfTelefono.setText(prop.getTelefono());
+            jtfDni.setText(prop.getDni());
+        }
 
         addMascotaList();
     }
 
+    /**
+     * Método que cambia el Frame padre por el que le entra por parámetro
+     *
+     * @param parent
+     */
     private void setParent(Frame parent) {
         this.parent = parent;
     }
 
+    /**
+     * Método que añade objetos Mascota a la lista
+     *
+     * @return modelo de lista (DefaultListModel)
+     */
     private DefaultListModel addMascotaList() {
         DefaultListModel modelList = new DefaultListModel();
         jlListado.setModel(modelList);
-        System.out.println("id propietario --> " + prop.getId());
 
         mascotasProp = mc.getMascotasByPropietario(prop.getId());
 
@@ -341,11 +389,29 @@ public class PerfilPropietario extends javax.swing.JDialog {
         return modelList;
     }
 
+    /**
+     * Método que obtiene el objeto Mascota del registro seleccionado en la
+     * lista
+     *
+     * @return objeto Mascota seleccionado
+     */
     private Mascota selectMascotaList() {
         DefaultListModel modelList = (DefaultListModel) jlListado.getModel();
-        //String recurso = "?prop_id=" + pc.getPropietario().getId() + "&nombre=" + jlListado.getSelectedValue();
-        
-        return mascotasProp.get(jlListado.getSelectedIndex());
+        int index = jlListado.getSelectedIndex();
+
+        String recurso = "";
+        if (index != -1) {
+            if (!mascotasProp.isEmpty()) {
+                recurso = "/" + mascotasProp.get(index).getId();
+                return mc.getMascota(recurso);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay mascotas para este propietario");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una mascota de la lista");
+        }
+        System.out.println("-----------> index lista: " + index);
+        return null;
     }
 
     /**

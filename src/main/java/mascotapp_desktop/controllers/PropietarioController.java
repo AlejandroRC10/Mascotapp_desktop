@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mascotapp_desktop.controllers.interfaces.PropietarioControllerInterface;
 import mascotapp_desktop.models.Propietario;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
 
 /**
  *
@@ -51,14 +53,21 @@ public class PropietarioController implements PropietarioControllerInterface{
     }
     
         @Override
-    public boolean getPropietarioByDni(String dni){
+    public boolean getPropietarioByDniAndVetId(String dni, Long id){
         Propietario prop = null;
         
         try {
-            URL url = curl.getURL("propietarios?dni=", dni);
+            URL url = curl.getURL("propietarios?dni="+dni+"&vet_id="+id, "");
             
-              if(curl.existEntity(url.toString())){
+             // if(curl.existEntity(url.toString())){
+             CloseableHttpResponse chr = curl.peticionGET(url.toString());
+            int status = chr.getStatusLine().getStatusCode();
+                if (status == HttpStatus.SC_OK) {
                   prop = curl.getJSON_MAPPER().readValue(url, Propietario.class); 
+                  
+                  PropietarioController pc = new PropietarioController();
+
+                    pc.setPropietario(prop);
                   return true;
               }
             
@@ -80,7 +89,7 @@ public class PropietarioController implements PropietarioControllerInterface{
             url = curl.getURL("propietarios/", vetId);
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
+                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
             } catch (IOException ex) {
                 Logger.getLogger(PropietarioController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -96,7 +105,7 @@ public class PropietarioController implements PropietarioControllerInterface{
         try {
             url = curl.getURL("propietarios/", Long.toString(prop.getId()));
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
+                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(PropietarioController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -111,7 +120,7 @@ public class PropietarioController implements PropietarioControllerInterface{
         try {
             url = curl.getURL("propietarios/", Long.toString(prop.getId()));
             try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(PropietarioController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

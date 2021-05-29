@@ -24,5 +24,5 @@ public interface PropietarioControllerInterface {
 
     public boolean login(Map<String, String> login);
     
-    public boolean getPropietarioByDni(String dni);
+    public boolean getPropietarioByDniAndVetId(String dni, Long id);
 }

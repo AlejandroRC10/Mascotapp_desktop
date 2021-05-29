@@ -5,15 +5,25 @@
  */
 package mascotapp_desktop.util;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Interface que define los métodos de la clase de utilidades del proyecto
+ * Mascotapp_desktop
  */
 public interface MascotappUtilInterface {
+
+    public String peticionPOST(String url, String json);
+
+    public String peticionPUT(String url, String json);
+
+    public String peticionDELETE(String url, String json);
     
-    public String postJson(String url, String json);
-    public String putJson(String url, String json);
-    public String getJson(String url, String json);
-    public String deleteJson(String url, String json);
-    public boolean existEntity(String var);
+    public CloseableHttpResponse peticionGET(String url);
+
+    //public boolean existEntity(String var);
 }

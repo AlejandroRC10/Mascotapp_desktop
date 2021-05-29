@@ -14,9 +14,9 @@ import mascotapp_desktop.models.Veterinario;
  */
 public interface VeterinarioControllerInterface {
     
-    public void addVeterinario(Veterinario vet);
+    public boolean addVeterinario(Veterinario vet);
 
-    public void updateVeterinario(Veterinario vet);
+    public boolean updateVeterinario(Veterinario vet);
 
     public Veterinario getVeterinario(String id);
 

@@ -6,6 +6,7 @@
 package mascotapp_desktop.views;
 
 import java.awt.Frame;
+import java.awt.HeadlessException;
 import java.time.*;
 import java.time.format.*;
 import java.util.Calendar;
@@ -28,15 +29,19 @@ import mascotapp_desktop.models.Propietario;
 import mascotapp_desktop.models.Vacuna;
 import mascotapp_desktop.models.enums.EnfermedadVacuna;
 import mascotapp_desktop.models.enums.Motivo;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la ventana de Perfil de Mascota
  */
 public class PerfilMascota extends javax.swing.JDialog {
 
     /**
-     * Creates new form PerfilMascota
+     * Crea el formulario para PerfilMascota
      *
      * @param parent
      * @param modal
@@ -46,21 +51,31 @@ public class PerfilMascota extends javax.swing.JDialog {
         initComponents();
         setParent(parent);
 
-        hc = new HistoriaController();
-        cc = new CitaController();
-        mc = new MascotaController();
-        pc = new PropietarioController();
-        vc = new VacunaController();
-        dc = new DesparasitacionController();
-
-        historia = hc.getHistoria();
-        masc = mc.getMascota();
-        cita = cc.getCita();
-        vacuna = vc.getVacuna();
-        desp = dc.getDesparasitacion();
-
+        initControllers();
+        initModels();
         getAtributosMasc();
+        initListas();
+        cargarComboBox();
+        initBooleans();
 
+    }
+
+    /**
+     * Mëtodo para inicializar las variables booleanas de los métodos 'Guardar'.
+     * Indican si el objeto se va a crear o actualizar
+     */
+    private void initBooleans() {
+        varBCita = true;
+        varBHist = true;
+        varBVac = true;
+        varBDesp = true;
+    }
+
+    /**
+     * Método que inicializa las listas (Citas - Vacunas - Historias -
+     * Desparasitaciones) Añade los valores a los modelos de lista
+     */
+    private void initListas() {
         citasMasc = cc.getCitasByMascota(masc.getId());
         historiasMasc = hc.getHistoriasByMascota(masc.getId());
         vacunasMasc = vc.getVacunasByMascota(masc.getId());
@@ -70,8 +85,35 @@ public class PerfilMascota extends javax.swing.JDialog {
         addCitaList();
         addVacunaList();
         addDesparasitacionList();
-        cargarComboBox();
+    }
 
+    /**
+     * Método que inicializa los modelos (Historia - Mascota - Cita - Vacuna -
+     * Desparasitaciones)
+     */
+    private void initModels() {
+        historia = hc.getHistoria();
+        masc = mc.getMascota();
+        cita = cc.getCita();
+        vacuna = vc.getVacuna();
+        desp = dc.getDesparasitacion();
+    }
+
+    /**
+     * Método que inicializa los Controllers necesarios para realizar las
+     * operaciones de esta clase (HistoriaController - CitaController -
+     * MascotaController - PropietarioController - VacunaController -
+     * DesparasitacionController)
+     *
+     */
+    private void initControllers() {
+        hc = new HistoriaController();
+        cc = new CitaController();
+        mc = new MascotaController();
+        pc = new PropietarioController();
+        vc = new VacunaController();
+        dc = new DesparasitacionController();
+        mui = new MascotappUtilImpl();
     }
 
     /**
@@ -142,7 +184,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         jcbMotivos = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtaDescripcion = new javax.swing.JTextArea();
-        jdcFecha = new com.toedter.calendar.JDateChooser();
+        jdcFechaCita = new com.toedter.calendar.JDateChooser();
         jpVacunas = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -168,13 +210,12 @@ public class PerfilMascota extends javax.swing.JDialog {
         jPanel13 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jlListadoDesp = new javax.swing.JList<>();
+        jLabel21 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jbNuevaDesp = new javax.swing.JButton();
         jbEliminarDesp = new javax.swing.JButton();
         jbEditarDesp = new javax.swing.JButton();
-        jLabel21 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jbVolverDesp = new javax.swing.JButton();
@@ -185,12 +226,22 @@ public class PerfilMascota extends javax.swing.JDialog {
         jdcFechaDesp = new com.toedter.calendar.JDateChooser();
         jLabel25 = new javax.swing.JLabel();
         jdcProximaDesp = new com.toedter.calendar.JDateChooser();
+        jLabel22 = new javax.swing.JLabel();
 
         bgGrupoBotones.add(jrbMacho);
         bgGrupoBotones.add(jrbHembra);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jTabbedPane1.setBackground(new java.awt.Color(0, 102, 0));
+        jTabbedPane1.setForeground(new java.awt.Color(51, 102, 0));
+        jTabbedPane1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+
+        jpPerfil.setBackground(jTabbedPane1.getBackground());
+        jpPerfil.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(jTabbedPane1.getFont());
+        jLabel1.setForeground(jpPerfil.getForeground());
         jLabel1.setText("Nombre:");
 
         jtfNombre.setEnabled(false);
@@ -200,12 +251,18 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(jTabbedPane1.getFont());
+        jLabel2.setForeground(jpPerfil.getForeground());
         jLabel2.setText("Nº Chip:");
 
         jtfChip.setEnabled(false);
 
+        jLabel3.setFont(jTabbedPane1.getFont());
+        jLabel3.setForeground(jpPerfil.getForeground());
         jLabel3.setText("Especie:");
 
+        jLabel4.setFont(jTabbedPane1.getFont());
+        jLabel4.setForeground(jpPerfil.getForeground());
         jLabel4.setText("Raza:");
 
         jtfRaza.setEnabled(false);
@@ -215,14 +272,21 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(jTabbedPane1.getFont());
+        jLabel5.setForeground(jpPerfil.getForeground());
         jLabel5.setText("Peso:");
 
         jtfPeso.setEnabled(false);
 
+        jLabel6.setFont(jTabbedPane1.getFont());
+        jLabel6.setForeground(jpPerfil.getForeground());
         jLabel6.setText("Sexo:");
 
+        jLabel7.setFont(jTabbedPane1.getFont());
+        jLabel7.setForeground(jpPerfil.getForeground());
         jLabel7.setText("Fecha nacimiento:");
 
+        jbVolver.setFont(jTabbedPane1.getFont());
         jbVolver.setText("Volver");
         jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,6 +294,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbGuardarMascota.setFont(jTabbedPane1.getFont());
+        jbGuardarMascota.setForeground(jTabbedPane1.getForeground());
         jbGuardarMascota.setText("Guardar");
         jbGuardarMascota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,6 +303,10 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jrbMacho.setBackground(jTabbedPane1.getBackground());
+        bgGrupoBotones.add(jrbMacho);
+        jrbMacho.setFont(jTabbedPane1.getFont());
+        jrbMacho.setForeground(jpPerfil.getForeground());
         jrbMacho.setText("Macho");
         jrbMacho.setEnabled(false);
         jrbMacho.addActionListener(new java.awt.event.ActionListener() {
@@ -245,9 +315,15 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jrbHembra.setBackground(jTabbedPane1.getBackground());
+        bgGrupoBotones.add(jrbHembra);
+        jrbHembra.setFont(jTabbedPane1.getFont());
+        jrbHembra.setForeground(jpPerfil.getForeground());
         jrbHembra.setText("Hembra");
         jrbHembra.setEnabled(false);
 
+        jbEditarMascota.setFont(jTabbedPane1.getFont());
+        jbEditarMascota.setForeground(jTabbedPane1.getForeground());
         jbEditarMascota.setText("Editar datos");
         jbEditarMascota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,6 +331,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEliminarMascota.setFont(jTabbedPane1.getFont());
+        jbEliminarMascota.setForeground(jTabbedPane1.getForeground());
         jbEliminarMascota.setText("Eliminar mascota");
         jbEliminarMascota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,7 +358,7 @@ public class PerfilMascota extends javax.swing.JDialog {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -350,10 +428,23 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Perfil", jpPerfil);
 
-        jLabel10.setText("Fecha:");
+        jpHistorias.setBackground(jTabbedPane1.getBackground());
+        jpHistorias.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel12.setText("Enfermedad:");
+        jPanel7.setBackground(jTabbedPane1.getBackground());
 
+        jPanel9.setBackground(jTabbedPane1.getBackground());
+
+        jLabel10.setFont(jTabbedPane1.getFont());
+        jLabel10.setForeground(jpPerfil.getForeground());
+        jLabel10.setText("Fecha*:");
+
+        jLabel12.setFont(jTabbedPane1.getFont());
+        jLabel12.setForeground(jpPerfil.getForeground());
+        jLabel12.setText("Enfermedad*:");
+
+        jLabel13.setFont(jTabbedPane1.getFont());
+        jLabel13.setForeground(jpPerfil.getForeground());
         jLabel13.setText("Tratamiento:");
 
         jtfEnfermedad.setEnabled(false);
@@ -372,10 +463,10 @@ public class PerfilMascota extends javax.swing.JDialog {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3)
                     .addComponent(jtfEnfermedad)
@@ -399,11 +490,13 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane4.setViewportView(jlListadoHistorias);
 
+        jbBorrarHistoria.setFont(jTabbedPane1.getFont());
+        jbBorrarHistoria.setForeground(jTabbedPane1.getForeground());
         jbBorrarHistoria.setText("X");
         jbBorrarHistoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,6 +504,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEditarHistoria.setFont(jTabbedPane1.getFont());
+        jbEditarHistoria.setForeground(jTabbedPane1.getForeground());
         jbEditarHistoria.setText("Editar");
         jbEditarHistoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -418,8 +513,12 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jLabel14.setFont(jTabbedPane1.getFont());
+        jLabel14.setForeground(jpPerfil.getForeground());
         jLabel14.setText("Listado Historias:");
 
+        jbNuevaHistoria.setFont(jTabbedPane1.getFont());
+        jbNuevaHistoria.setForeground(jTabbedPane1.getForeground());
         jbNuevaHistoria.setText("Nueva");
         jbNuevaHistoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -442,9 +541,9 @@ public class PerfilMascota extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jbBorrarHistoria)
-                            .addComponent(jbNuevaHistoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbNuevaHistoria, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jbEditarHistoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,6 +564,10 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel10.setBackground(jTabbedPane1.getBackground());
+
+        jbGuardarHistoria.setFont(jTabbedPane1.getFont());
+        jbGuardarHistoria.setForeground(jTabbedPane1.getForeground());
         jbGuardarHistoria.setText("Guardar");
         jbGuardarHistoria.setEnabled(false);
         jbGuardarHistoria.addActionListener(new java.awt.event.ActionListener() {
@@ -473,6 +576,7 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbVolverHistoria.setFont(jTabbedPane1.getFont());
         jbVolverHistoria.setText("Volver");
         jbVolverHistoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -484,7 +588,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
+            .addGap(0, 201, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addGap(31, 31, 31)
@@ -495,7 +599,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 48, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addGap(8, 8, 8)
@@ -510,27 +614,38 @@ public class PerfilMascota extends javax.swing.JDialog {
         jpHistoriasLayout.setHorizontalGroup(
             jpHistoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpHistoriasLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jpHistoriasLayout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jpHistoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpHistoriasLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpHistoriasLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jpHistoriasLayout.setVerticalGroup(
             jpHistoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpHistoriasLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(34, 34, 34)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(40, 40, 40)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Historias", jpHistorias);
 
+        jpCitas.setBackground(jTabbedPane1.getBackground());
+        jpCitas.setForeground(new java.awt.Color(255, 255, 255));
+
+        jPanel5.setBackground(jTabbedPane1.getBackground());
+
         jScrollPane1.setViewportView(jlListado);
 
+        jPanel6.setBackground(jTabbedPane1.getBackground());
+
+        jbNuevaCita.setFont(jTabbedPane1.getFont());
+        jbNuevaCita.setForeground(jTabbedPane1.getForeground());
         jbNuevaCita.setText("Nueva");
         jbNuevaCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -538,6 +653,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEliminarCita.setFont(jTabbedPane1.getFont());
+        jbEliminarCita.setForeground(jTabbedPane1.getForeground());
         jbEliminarCita.setText("Eliminar");
         jbEliminarCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -545,6 +662,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEditarCita.setFont(jTabbedPane1.getFont());
+        jbEditarCita.setForeground(jTabbedPane1.getForeground());
         jbEditarCita.setText("Editar");
         jbEditarCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -575,6 +694,8 @@ public class PerfilMascota extends javax.swing.JDialog {
                     .addComponent(jbNuevaCita)))
         );
 
+        jLabel15.setFont(jTabbedPane1.getFont());
+        jLabel15.setForeground(jpPerfil.getForeground());
         jLabel15.setText("Listado Citas:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -604,12 +725,21 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel8.setText("Motivo:");
+        jPanel4.setBackground(jTabbedPane1.getBackground());
 
+        jLabel8.setFont(jTabbedPane1.getFont());
+        jLabel8.setForeground(jpPerfil.getForeground());
+        jLabel8.setText("Motivo*:");
+
+        jLabel9.setFont(jTabbedPane1.getFont());
+        jLabel9.setForeground(jpPerfil.getForeground());
         jLabel9.setText("Descripción:");
 
-        jLabel11.setText("Fecha:");
+        jLabel11.setFont(jTabbedPane1.getFont());
+        jLabel11.setForeground(jpPerfil.getForeground());
+        jLabel11.setText("Fecha*:");
 
+        jbVolverCita.setFont(jTabbedPane1.getFont());
         jbVolverCita.setText("Volver");
         jbVolverCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -617,6 +747,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbGuardarCita.setFont(jTabbedPane1.getFont());
+        jbGuardarCita.setForeground(jTabbedPane1.getForeground());
         jbGuardarCita.setText("Guardar");
         jbGuardarCita.setEnabled(false);
         jbGuardarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -638,7 +770,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         jtaDescripcion.setEnabled(false);
         jScrollPane2.setViewportView(jtaDescripcion);
 
-        jdcFecha.setEnabled(false);
+        jdcFechaCita.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -660,7 +792,7 @@ public class PerfilMascota extends javax.swing.JDialog {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jcbMotivos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2)
-                            .addComponent(jdcFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jdcFechaCita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -678,7 +810,7 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jdcFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -705,13 +837,22 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Citas", jpCitas);
 
+        jpVacunas.setBackground(jTabbedPane1.getBackground());
+        jpVacunas.setForeground(new java.awt.Color(255, 255, 255));
+
+        jPanel8.setBackground(jTabbedPane1.getBackground());
+
         jScrollPane5.setViewportView(jlListadoVacunas);
 
+        jPanel11.setBackground(jTabbedPane1.getBackground());
+
+        jbNuevaVacuna.setFont(jTabbedPane1.getFont());
+        jbNuevaVacuna.setForeground(jTabbedPane1.getForeground());
         jbNuevaVacuna.setText("Nueva");
         jbNuevaVacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -719,6 +860,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEliminarVacuna.setFont(jTabbedPane1.getFont());
+        jbEliminarVacuna.setForeground(jTabbedPane1.getForeground());
         jbEliminarVacuna.setText("Eliminar");
         jbEliminarVacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -726,6 +869,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEditarVacuna.setFont(jTabbedPane1.getFont());
+        jbEditarVacuna.setForeground(jTabbedPane1.getForeground());
         jbEditarVacuna.setText("Editar");
         jbEditarVacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -756,6 +901,8 @@ public class PerfilMascota extends javax.swing.JDialog {
                     .addComponent(jbNuevaVacuna)))
         );
 
+        jLabel16.setFont(jTabbedPane1.getFont());
+        jLabel16.setForeground(jpPerfil.getForeground());
         jLabel16.setText("Listado Vacunas:");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -785,12 +932,21 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel12.setBackground(jTabbedPane1.getBackground());
+
+        jLabel17.setFont(jTabbedPane1.getFont());
+        jLabel17.setForeground(jpPerfil.getForeground());
         jLabel17.setText("Enfermedad:");
 
+        jLabel18.setFont(jTabbedPane1.getFont());
+        jLabel18.setForeground(jpPerfil.getForeground());
         jLabel18.setText("Observaciones:");
 
+        jLabel19.setFont(jTabbedPane1.getFont());
+        jLabel19.setForeground(jpPerfil.getForeground());
         jLabel19.setText("Fecha Vacuna:");
 
+        jbVolverVacuna.setFont(jTabbedPane1.getFont());
         jbVolverVacuna.setText("Volver");
         jbVolverVacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -798,6 +954,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbGuardarVacuna.setFont(jTabbedPane1.getFont());
+        jbGuardarVacuna.setForeground(jTabbedPane1.getForeground());
         jbGuardarVacuna.setText("Guardar");
         jbGuardarVacuna.setEnabled(false);
         jbGuardarVacuna.addActionListener(new java.awt.event.ActionListener() {
@@ -821,6 +979,8 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         jdcFechaVacuna.setEnabled(false);
 
+        jLabel20.setFont(jTabbedPane1.getFont());
+        jLabel20.setForeground(jpPerfil.getForeground());
         jLabel20.setText("Próxima Vacuna:");
 
         jdcProximaVacuna.setEnabled(false);
@@ -841,7 +1001,7 @@ public class PerfilMascota extends javax.swing.JDialog {
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, Short.MAX_VALUE))
                                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -873,7 +1033,7 @@ public class PerfilMascota extends javax.swing.JDialog {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jdcProximaVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbVolverVacuna)
                     .addComponent(jbGuardarVacuna))
@@ -903,8 +1063,21 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Vacunas", jpVacunas);
 
+        jpDesparasitaciones.setBackground(jTabbedPane1.getBackground());
+        jpDesparasitaciones.setForeground(new java.awt.Color(255, 255, 255));
+
+        jPanel13.setBackground(jTabbedPane1.getBackground());
+
         jScrollPane7.setViewportView(jlListadoDesp);
 
+        jLabel21.setFont(jTabbedPane1.getFont());
+        jLabel21.setForeground(jpDesparasitaciones.getForeground());
+        jLabel21.setText("Listado Desparasitaciones:");
+
+        jPanel14.setBackground(jTabbedPane1.getBackground());
+
+        jbNuevaDesp.setFont(jTabbedPane1.getFont());
+        jbNuevaDesp.setForeground(jTabbedPane1.getForeground());
         jbNuevaDesp.setText("Nueva");
         jbNuevaDesp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -912,6 +1085,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEliminarDesp.setFont(jTabbedPane1.getFont());
+        jbEliminarDesp.setForeground(jTabbedPane1.getForeground());
         jbEliminarDesp.setText("Eliminar");
         jbEliminarDesp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -919,6 +1094,8 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbEditarDesp.setFont(jTabbedPane1.getFont());
+        jbEditarDesp.setForeground(jTabbedPane1.getForeground());
         jbEditarDesp.setText("Editar");
         jbEditarDesp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -931,57 +1108,59 @@ public class PerfilMascota extends javax.swing.JDialog {
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jbEditarDesp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbEliminarDesp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbNuevaDesp)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jbNuevaDesp))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addGap(0, 24, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbEditarDesp)
                     .addComponent(jbEliminarDesp)
                     .addComponent(jbNuevaDesp)))
         );
 
-        jLabel21.setText("Listado Desparasitaciones:");
-
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel21)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jLabel22.setText("Presentación:");
+        jPanel15.setBackground(jTabbedPane1.getBackground());
 
+        jLabel23.setFont(jTabbedPane1.getFont());
+        jLabel23.setForeground(jpDesparasitaciones.getForeground());
         jLabel23.setText("Observaciones:");
 
+        jLabel24.setFont(jTabbedPane1.getFont());
+        jLabel24.setForeground(jpDesparasitaciones.getForeground());
         jLabel24.setText("Fecha Vacuna:");
 
         jbVolverDesp.setText("Volver");
@@ -991,6 +1170,7 @@ public class PerfilMascota extends javax.swing.JDialog {
             }
         });
 
+        jbGuardarDesp.setForeground(jTabbedPane1.getForeground());
         jbGuardarDesp.setText("Guardar");
         jbGuardarDesp.setEnabled(false);
         jbGuardarDesp.addActionListener(new java.awt.event.ActionListener() {
@@ -1014,9 +1194,15 @@ public class PerfilMascota extends javax.swing.JDialog {
 
         jdcFechaDesp.setEnabled(false);
 
+        jLabel25.setFont(jTabbedPane1.getFont());
+        jLabel25.setForeground(jpDesparasitaciones.getForeground());
         jLabel25.setText("Próxima Vacuna:");
 
         jdcProximaDesp.setEnabled(false);
+
+        jLabel22.setFont(jTabbedPane1.getFont());
+        jLabel22.setForeground(jpDesparasitaciones.getForeground());
+        jLabel22.setText("Presentación:");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -1024,53 +1210,52 @@ public class PerfilMascota extends javax.swing.JDialog {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel15Layout.createSequentialGroup()
-                            .addComponent(jbGuardarDesp)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jbVolverDesp))
-                        .addGroup(jPanel15Layout.createSequentialGroup()
-                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
-                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jcbTipoDesp, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane8)
-                                .addComponent(jdcFechaDesp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jdcProximaDesp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                        .addComponent(jbGuardarDesp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbVolverDesp))
+                    .addComponent(jcbTipoDesp, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane8)
+                    .addComponent(jdcFechaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcProximaDesp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(jcbTipoDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel23)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdcFechaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdcProximaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbVolverDesp)
-                    .addComponent(jbGuardarDesp))
-                .addGap(5, 5, 5))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(jcbTipoDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel23)
+                        .addGap(69, 69, 69)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jdcFechaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jdcProximaDesp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbVolverDesp)
+                            .addComponent(jbGuardarDesp))))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jpDesparasitacionesLayout = new javax.swing.GroupLayout(jpDesparasitaciones);
@@ -1078,20 +1263,22 @@ public class PerfilMascota extends javax.swing.JDialog {
         jpDesparasitacionesLayout.setHorizontalGroup(
             jpDesparasitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpDesparasitacionesLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addGroup(jpDesparasitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 98, Short.MAX_VALUE))
+            .addGroup(jpDesparasitacionesLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 91, Short.MAX_VALUE))
         );
         jpDesparasitacionesLayout.setVerticalGroup(
             jpDesparasitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpDesparasitacionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(58, 58, 58))
         );
 
         jTabbedPane1.addTab("Desparasitaciones", jpDesparasitaciones);
@@ -1100,9 +1287,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1110,6 +1295,7 @@ public class PerfilMascota extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbVolverCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverCitaActionPerformed
@@ -1118,7 +1304,6 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     private void jbEditarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarCitaActionPerformed
         varBCita = false;
-        //editParamsCita();
         getDatosCita();
     }//GEN-LAST:event_jbEditarCitaActionPerformed
 
@@ -1139,29 +1324,40 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNombreActionPerformed
 
     private void jbEditarMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarMascotaActionPerformed
-        editParams();
+        editParamsMascota();
     }//GEN-LAST:event_jbEditarMascotaActionPerformed
 
     private void jbGuardarMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarMascotaActionPerformed
 
         updateMasc();
-        notEditParams();
 
     }//GEN-LAST:event_jbGuardarMascotaActionPerformed
 
     private void jbEliminarMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarMascotaActionPerformed
 
+        eliminarMascota();
+
+    }//GEN-LAST:event_jbEliminarMascotaActionPerformed
+
+    /**
+     * Método para realizar una petición para eliminar un objeto Mascota
+     *
+     * @throws HeadlessException
+     */
+    private void eliminarMascota() throws HeadlessException {
         int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar esta mascota?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
 
         if (ok == 0) {
-            mc.deleteMascota(masc);
-            this.dispose();
 
-            PerfilPropietario pp = new PerfilPropietario(parent, true);
-            pp.setVisible(true);
+            if (masc != null) {
+                mc.deleteMascota(masc);
+                this.dispose();
+
+                PerfilPropietario pp = new PerfilPropietario(parent, true);
+                pp.setVisible(true);
+            }
         }
-
-    }//GEN-LAST:event_jbEliminarMascotaActionPerformed
+    }
 
     private void jcbMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMotivosActionPerformed
 
@@ -1169,15 +1365,29 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     private void jbGuardarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarCitaActionPerformed
 
-        if (varBCita == true) {
-            nuevaCita();
-
-        } else {
-            updateCita();
-        }
-        limpiarAtributosCita();
-        notEditParamsCita();
+        guardarCita();
     }//GEN-LAST:event_jbGuardarCitaActionPerformed
+
+    /**
+     * Método para realizar una petición para eliminar un objeto Mascota
+     *
+     * @throws HeadlessException
+     */
+    private void guardarCita() throws HeadlessException {
+        if (!jcbMotivos.getSelectedItem().toString().isBlank() && jdcFechaCita.getCalendar() != null) {
+
+            if (varBCita == true) {
+                nuevaCita();
+
+            } else {
+                updateCita();
+            }
+            limpiarAtributosCita();
+            notEditParamsCita();
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void jbNuevaCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaCitaActionPerformed
         varBCita = true;
@@ -1186,16 +1396,28 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     private void jbEliminarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarCitaActionPerformed
 
-        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar la cita?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
-
-        if (ok == 0) {
-            cc.deleteCita(selectCitaList());
-            jlListado.setModel(addCitaList());
-        }
+        eliminarCita();
     }//GEN-LAST:event_jbEliminarCitaActionPerformed
 
+    /**
+     * Método para realizar una petición para eliminar una cita
+     *
+     * @throws HeadlessException
+     */
+    private void eliminarCita() throws HeadlessException {
+        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar la cita?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
+        Cita c = selectCitaList();
+        if (ok == 0) {
+
+            if (c != null) {
+                cc.deleteCita(c);
+                jlListado.setModel(addCitaList());
+            }
+        }
+    }
+
     private void jbEditarHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarHistoriaActionPerformed
-        //editParamsHistoria();
+
         getDatosHistoria();
         varBHist = false;
     }//GEN-LAST:event_jbEditarHistoriaActionPerformed
@@ -1208,10 +1430,12 @@ public class PerfilMascota extends javax.swing.JDialog {
     private void jbBorrarHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarHistoriaActionPerformed
 
         int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar esta historia?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
-
+        Historia h = selectHistoriaList();
         if (ok == 0) {
-            hc.deleteHistoria(selectHistoriaList());
-            jlListado.setModel(addHistoriaList());
+            if (h != null) {
+                hc.deleteHistoria(h);
+                jlListado.setModel(addHistoriaList());
+            }
         }
     }//GEN-LAST:event_jbBorrarHistoriaActionPerformed
 
@@ -1220,17 +1444,21 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jbVolverHistoriaActionPerformed
 
     private void jbGuardarHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarHistoriaActionPerformed
-        if (varBHist == true) {
-            nuevaHistoria();
-            addHistoriaList();
+        if (!jtfEnfermedad.getText().isBlank() && jdcFechaHistoria.getCalendar() != null) {
+            if (varBHist == true) {
+                nuevaHistoria();
+                addHistoriaList();
 
+            } else {
+                historia = selectHistoriaList();
+                updateHistoria();
+                addHistoriaList();
+            }
+            limpiarAtributosHistoria();
+            notEditParamsHistoria();
         } else {
-            historia = selectHistoriaList();
-            updateHistoria();
-            addHistoriaList();
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarAtributosHistoria();
-        notEditParamsHistoria();
     }//GEN-LAST:event_jbGuardarHistoriaActionPerformed
 
     private void jbNuevaVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaVacunaActionPerformed
@@ -1258,18 +1486,33 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jbVolverVacunaActionPerformed
 
     private void jbGuardarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarVacunaActionPerformed
-        if (varBVac == true) {
-            nuevaVacuna();
-            addVacunaList();
-
-        } else {
-            vacuna = selectVacunaList();
-            updateVacuna();
-            addVacunaList();
-        }
-        limpiarAtributosVacuna();
-        notEditParamsVacuna();
+        guardarVacuna();
     }//GEN-LAST:event_jbGuardarVacunaActionPerformed
+
+    private void guardarVacuna() throws HeadlessException {
+        if (!jcbEnfermedadVacuna.getSelectedItem().toString().isBlank() && jdcFechaVacuna.getCalendar() != null && jdcProximaVacuna.getCalendar() != null) {
+            if (jdcFechaVacuna.getCalendar().equals(Calendar.getInstance()) || jdcFechaVacuna.getCalendar().before(Calendar.getInstance())) {
+                if (jdcProximaVacuna.getCalendar().equals(Calendar.getInstance()) || jdcProximaVacuna.getCalendar().before(Calendar.getInstance())) {
+                    if (varBVac == true) {
+                        nuevaVacuna();
+                        addVacunaList();
+                    } else {
+                        vacuna = selectVacunaList();
+                        updateVacuna();
+                        addVacunaList();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "La fecha de la próxima vacuna debe ser posterior a la fecha de hoy", "Campos fecha", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La fecha de vacunación debe ser anterior a la fecha de hoy", "Campos fecha", JOptionPane.ERROR_MESSAGE);
+            }
+            limpiarAtributosVacuna();
+            notEditParamsVacuna();
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void jcbEnfermedadVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEnfermedadVacunaActionPerformed
         // TODO add your handling code here:
@@ -1283,10 +1526,12 @@ public class PerfilMascota extends javax.swing.JDialog {
     private void jbEliminarDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarDespActionPerformed
 
         int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a de eliminar esta desparasitación?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
-
+        Desparasitacion desp = selectDesparasitacionList();
         if (ok == 0) {
-            dc.deleteDesparasitacion(selectDesparasitacionList());
-            jlListadoDesp.setModel(addDesparasitacionList());
+            if (desp != null) {
+                dc.deleteDesparasitacion(desp);
+                jlListadoDesp.setModel(addDesparasitacionList());
+            }
         }
     }//GEN-LAST:event_jbEliminarDespActionPerformed
 
@@ -1300,24 +1545,40 @@ public class PerfilMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jbVolverDespActionPerformed
 
     private void jbGuardarDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarDespActionPerformed
-        if (varBDesp == true) {
-            nuevaDesparasitacion();
-            addDesparasitacionList();
-
-        } else {
-            desp = selectDesparasitacionList();
-            updateDesparasitacion();
-            addDesparasitacionList();
-        }
-        limpiarAtributosDesparasitacion();
-        notEditParamsDesparasitacion();
+        guardarDesparasitacion();
     }//GEN-LAST:event_jbGuardarDespActionPerformed
+
+    /**
+     * Método para guardar una Desparasitacion
+     *
+     * @throws HeadlessException
+     */
+    private void guardarDesparasitacion() throws HeadlessException {
+        if (!jcbTipoDesp.getSelectedItem().toString().isBlank() && jdcFechaDesp.getCalendar() != null && jdcProximaDesp.getCalendar() != null) {
+            if (varBDesp == true) {
+                nuevaDesparasitacion();
+                addDesparasitacionList();
+
+            } else {
+                desp = selectDesparasitacionList();
+                updateDesparasitacion();
+                addDesparasitacionList();
+            }
+            limpiarAtributosDesparasitacion();
+            notEditParamsDesparasitacion();
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void jcbTipoDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoDespActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbTipoDespActionPerformed
 
     //----------- MÉTODOS PARA HISTORIA ----------------------------------
+    /**
+     * Mëtodo para hacer editables los campos del formulario Historia
+     */
     private void editParamsHistoria() {
         jtfEnfermedad.setEnabled(true);
         jtaTratamiento.setEnabled(true);
@@ -1325,89 +1586,115 @@ public class PerfilMascota extends javax.swing.JDialog {
         jbGuardarHistoria.setEnabled(true);
     }
 
+    /**
+     * Método que añade objetos Historia a la lista
+     *
+     * @return modelo de lista (DefaultListModel)
+     */
     private DefaultListModel addHistoriaList() {
         DefaultListModel modelList = new DefaultListModel();
         jlListadoHistorias.setModel(modelList);
-//        System.out.println("id cita --> " + cita.getId());
 
-        historiasMasc = hc.getHistoriasByMascota(masc.getId());
+        if (masc != null) {
+            historiasMasc = hc.getHistoriasByMascota(masc.getId());
 
-        if (!historiasMasc.isEmpty()) {
-            for (Historia h : historiasMasc) {
-                if (h != null) {
-                    modelList.addElement(convertFecha(h.getFecha()) + " --> " + h.getEnfermedad());
-                } else {
-                    modelList.addElement("");
+            if (!historiasMasc.isEmpty()) {
+                for (Historia h : historiasMasc) {
+                    if (h != null) {
+                        modelList.addElement(convertFecha(h.getFecha()) + " --> " + h.getEnfermedad());
+                    } else {
+                        modelList.addElement("");
+                    }
                 }
+            } else {
+                modelList.addElement("");
             }
-        } else {
-            modelList.addElement("");
         }
 
         return modelList;
     }
 
+    /**
+     * Método para obtener los datos de la Historia seleccionada de la lista
+     */
     private void getDatosHistoria() {
         editParamsHistoria();
 
-//        Historia nHist = selectHistoriaList();
-//
-//        jtfEnfermedad.setText(nHist.getEnfermedad());
-//        jtaTratamiento.setText(nHist.getTratamiento());
-//        jdcFechaHistoria.setCalendar(nHist.getFecha());
         historia = selectHistoriaList();
 
-        jtfEnfermedad.setText(historia.getEnfermedad());
-        jtaTratamiento.setText(historia.getTratamiento());
-        jdcFechaHistoria.setCalendar(historia.getFecha());
-
+        if (historia != null) {
+            jtfEnfermedad.setText(historia.getEnfermedad());
+            jtaTratamiento.setText(historia.getTratamiento());
+            jdcFechaHistoria.setCalendar(historia.getFecha());
+        }
     }
 
+    /**
+     * Método para crear una Historia nueva
+     */
     private void nuevaHistoria() {
 
         historia = new Historia();
 
-        historia.setEnfermedad(jtfEnfermedad.getText());
-        historia.setTratamiento(jtaTratamiento.getText());
-        historia.setFecha(jdcFechaHistoria.getCalendar());
+        if (!jtfEnfermedad.getText().isBlank() && jdcFechaHistoria.getCalendar() != null) {
+            historia.setEnfermedad(jtfEnfermedad.getText());
+            historia.setTratamiento(jtaTratamiento.getText());
+            historia.setFecha(jdcFechaHistoria.getCalendar());
 
-        if (historia != null) {
-            hc.addHistoria(historia);
+            if (historia != null) {
+                hc.addHistoria(historia);
+            }
+
+            jlListadoHistorias.setModel(addHistoriaList());
+
         }
-
-        jlListadoHistorias.setModel(addHistoriaList());
-
     }
 
+    /**
+     * Método para actualizar una Historia
+     */
     private void updateHistoria() {
 
-        historia.setEnfermedad(jtfEnfermedad.getText());
-        historia.setTratamiento(jtaTratamiento.getText());
-        historia.setFecha(jdcFechaHistoria.getCalendar());
+        if (!jtfEnfermedad.getText().isBlank() && jdcFechaHistoria.getCalendar() != null) {
+            historia.setEnfermedad(jtfEnfermedad.getText());
+            historia.setTratamiento(jtaTratamiento.getText());
+            historia.setFecha(jdcFechaHistoria.getCalendar());
 
-        if (historia != null) {
-            hc.updateHistoria(historia);
+            if (historia != null) {
+                hc.updateHistoria(historia);
+            }
+
+            jlListadoHistorias.setModel(addHistoriaList());
         }
-
     }
 
+    /**
+     * Método que obtiene el objeto Mascota del registro seleccionado en la
+     * lista
+     *
+     * @return objeto Historia seleccionado
+     */
     private Historia selectHistoriaList() {
-                DefaultListModel modelList = (DefaultListModel) jlListadoHistorias.getModel();
-        int index = jlListadoHistorias.getSelectedIndex(); 
-               
+        DefaultListModel modelList = (DefaultListModel) jlListadoHistorias.getModel();
+        int index = jlListadoHistorias.getSelectedIndex();
+
         String recurso = "";
-        if (index != -1){
-           if(!historiasMasc.isEmpty()){
-            recurso = "/" + historiasMasc.get(index).getId();
-            }else{
-               JOptionPane.showMessageDialog(this, "No hay historias para esta mascota");
-           }
+        if (index != -1) {
+            if (!historiasMasc.isEmpty()) {
+                recurso = "/" + historiasMasc.get(index).getId();
+                hc.getHistoria(recurso);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay historias para esta mascota");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una historia de la lista");
         }
-        return hc.getHistoria(recurso);
+        return null;
     }
 
+    /**
+     * Método que limpia los campos de registro de Historia
+     */
     private void limpiarAtributosHistoria() {
         jtfEnfermedad.setText("");
         jtaTratamiento.setText("");
@@ -1415,6 +1702,9 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método que hace no editables los campos de registro de Historia
+     */
     private void notEditParamsHistoria() {
         jtfEnfermedad.setEnabled(false);
         jtaTratamiento.setEnabled(false);
@@ -1422,6 +1712,9 @@ public class PerfilMascota extends javax.swing.JDialog {
     }
 
     //----------- MÉTODOS PARA VACUNA ----------------------------------
+    /**
+     * Método que hace editables los campos de registro de Vacuna
+     */
     private void editParamsVacuna() {
         jcbEnfermedadVacuna.setEnabled(true);
         jtaObservacionesVacunas.setEnabled(true);
@@ -1430,10 +1723,14 @@ public class PerfilMascota extends javax.swing.JDialog {
         jbGuardarVacuna.setEnabled(true);
     }
 
+    /**
+     * Mëtodo que añade elementos (Vacuna) a la lista
+     *
+     * @return el modelo de lista (DefaultListModel)
+     */
     private DefaultListModel addVacunaList() {
         DefaultListModel modelList = new DefaultListModel();
         jlListadoVacunas.setModel(modelList);
-//        System.out.println("id cita --> " + cita.getId());
 
         vacunasMasc = vc.getVacunasByMascota(masc.getId());
         Collections.sort(vacunasMasc, new Comparator<Vacuna>() {
@@ -1442,12 +1739,12 @@ public class PerfilMascota extends javax.swing.JDialog {
                 return o1.getEnfermedad().compareTo(o2.getEnfermedad());
             }
         });
-        
+
         if (!vacunasMasc.isEmpty()) {
             for (Vacuna v : vacunasMasc) {
                 if (v != null && !vacunasMasc.contains(v.getEnfermedad())) {
-                    modelList.addElement(v.getEnfermedad()+ " --> " +convertFecha(v.getProximaFecha()));
-                } 
+                    modelList.addElement(v.getEnfermedad() + " --> " + convertFecha(v.getProximaFecha()));
+                }
 //                else {
 //                    modelList.addElement("");
 //                }
@@ -1459,6 +1756,10 @@ public class PerfilMascota extends javax.swing.JDialog {
         return modelList;
     }
 
+    /**
+     * Método para obtener los datos de un objeto Vacuna y mostrarlos al usuario
+     * en los campos
+     */
     private void getDatosVacuna() {
         editParamsVacuna();
 
@@ -1471,6 +1772,9 @@ public class PerfilMascota extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Mëtodo para añadir un nuevo objeto Vacuna
+     */
     private void nuevaVacuna() {
 
         vacuna = new Vacuna();
@@ -1488,6 +1792,9 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Mëtodo para actualizar un objeto Vacuna
+     */
     private void updateVacuna() {
 
         vacuna.setEnfermedad(jcbEnfermedadVacuna.getItemAt(jcbEnfermedadVacuna.getSelectedIndex()));
@@ -1499,25 +1806,36 @@ public class PerfilMascota extends javax.swing.JDialog {
             vc.updateVacuna(vacuna);
         }
 
+        jlListadoVacunas.setModel(addVacunaList());
+
     }
 
+    /**
+     * Método que obtiene el objeto Vacuna del registro seleccionado en la lista
+     *
+     * @return el objeto Vacuna seleccionado
+     */
     private Vacuna selectVacunaList() {
         DefaultListModel modelList = (DefaultListModel) jlListadoVacunas.getModel();
         int index = jlListadoVacunas.getSelectedIndex();
-               
+
         String recurso = "";
-        if (index != -1){
-           if(!vacunasMasc.isEmpty()){
-            recurso = "/" + vacunasMasc.get(index).getId();
-            }else{
-               JOptionPane.showMessageDialog(this, "No hay vacunas para esta mascota");
-           }
+        if (index != -1) {
+            if (!vacunasMasc.isEmpty()) {
+                recurso = "/" + vacunasMasc.get(index).getId();
+                vc.getVacuna(recurso);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay vacunas para esta mascota");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una vacuna de la lista");
         }
-        return vc.getVacuna(recurso);
+        return null;
     }
 
+    /**
+     * Método para limpiar los campos del formulario de Vacuna
+     */
     private void limpiarAtributosVacuna() {
         jcbEnfermedadVacuna.setSelectedIndex(0);
         jtaObservacionesVacunas.setText("");
@@ -1526,6 +1844,9 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método para hacer no editables los campos del formulario de Vacuna
+     */
     private void notEditParamsVacuna() {
         jcbEnfermedadVacuna.setEnabled(false);
         jtaObservacionesVacunas.setEnabled(false);
@@ -1534,6 +1855,9 @@ public class PerfilMascota extends javax.swing.JDialog {
     }
 
     //----------- MÉTODOS PARA DESPARASITACIÓN ----------------------------------
+    /**
+     * Método para hacer editables los campos del formulario de Desparasitacion
+     */
     private void editParamsDesparasitacion() {
         jcbTipoDesp.setEnabled(true);
         jtaObservacionesDesp.setEnabled(true);
@@ -1542,47 +1866,61 @@ public class PerfilMascota extends javax.swing.JDialog {
         jbGuardarDesp.setEnabled(true);
     }
 
+    /**
+     * Mëtodo para añadir objetos Desparasitacion a la lista
+     *
+     * @return el modelo de lista (DefaultListModel)
+     */
     private DefaultListModel addDesparasitacionList() {
         DefaultListModel modelList = new DefaultListModel();
         jlListadoDesp.setModel(modelList);
-//        System.out.println("id cita --> " + cita.getId());
 
-        desparasMasc = dc.getDesparasitacionesByMascota(masc.getId());
+        if (masc != null) {
+            desparasMasc = dc.getDesparasitacionesByMascota(masc.getId());
 
-        Collections.sort(desparasMasc, new Comparator<Desparasitacion>() {
-            @Override
-            public int compare(Desparasitacion o1, Desparasitacion o2) {
-                return o1.getTipo().compareTo(o2.getTipo());
-            }
-        });
-        
-        if (!desparasMasc.isEmpty()) {
-            for (Desparasitacion d : desparasMasc) {
-                if (d != null) {
-                    modelList.addElement(convertFecha(d.getFecha()) + " --> " + d.getTipo());
-                } else {
-                    modelList.addElement("");
+            Collections.sort(desparasMasc, new Comparator<Desparasitacion>() {
+                @Override
+                public int compare(Desparasitacion o1, Desparasitacion o2) {
+                    return o1.getTipo().compareTo(o2.getTipo());
                 }
-            }
-        } else {
-            modelList.addElement("");
-        }
+            });
 
+            if (!desparasMasc.isEmpty()) {
+                for (Desparasitacion d : desparasMasc) {
+                    if (d != null) {
+                        modelList.addElement(convertFecha(d.getFecha()) + " --> " + d.getTipo());
+                    } else {
+                        modelList.addElement("");
+                    }
+                }
+            } else {
+                modelList.addElement("");
+            }
+        }
         return modelList;
     }
 
+    /**
+     * Método para obtener los datos del objeto Desparasitacion seleccionado en
+     * la lista
+     */
     private void getDatosDesparasitacion() {
         editParamsDesparasitacion();
 
         desp = selectDesparasitacionList();
 
-        jcbTipoDesp.setSelectedItem(desp.getTipo());
-        jtaObservacionesDesp.setText(desp.getObservaciones());
-        jdcFechaDesp.setCalendar(desp.getFecha());
-        jdcProximaDesp.setCalendar(desp.getProximaFecha());
+        if (desp != null) {
+            jcbTipoDesp.setSelectedItem(desp.getTipo());
+            jtaObservacionesDesp.setText(desp.getObservaciones());
+            jdcFechaDesp.setCalendar(desp.getFecha());
+            jdcProximaDesp.setCalendar(desp.getProximaFecha());
+        }
 
     }
 
+    /**
+     * Método para crear un nuevo objeto Desparasitacion
+     */
     private void nuevaDesparasitacion() {
 
         desp = new Desparasitacion();
@@ -1600,6 +1938,9 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método para actualizar un objeto Desparasitacion
+     */
     private void updateDesparasitacion() {
 
         desp.setTipo(jcbTipoDesp.getItemAt(jcbTipoDesp.getSelectedIndex()));
@@ -1613,25 +1954,33 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método para obtener el objeto Desparasitacion seleccionado de la lista
+     *
+     * @return el objeto Desparasitacion seleccionado
+     */
     private Desparasitacion selectDesparasitacionList() {
-                DefaultListModel modelList = (DefaultListModel) jlListadoDesp.getModel();
+        DefaultListModel modelList = (DefaultListModel) jlListadoDesp.getModel();
         int index = jlListadoDesp.getSelectedIndex();
-        Vacuna v = null; 
-               
+
         String recurso = "";
-        if (index != -1){
-           if(!desparasMasc.isEmpty()){
-            recurso = "/" + desparasMasc.get(index).getId();
-            }else{
-               JOptionPane.showMessageDialog(this, "No hay desparasitaciones para esta mascota");
-           }
+        if (index != -1) {
+            if (!desparasMasc.isEmpty()) {
+                recurso = "/" + desparasMasc.get(index).getId();
+                dc.getDesparasitacion(recurso);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay desparasitaciones para esta mascota");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una desparasitación de la lista");
         }
 
-        return dc.getDesparasitacion(recurso);
+        return null;
     }
 
+    /**
+     * Método para limpiar los campos del formulario de Desparasitacion
+     */
     private void limpiarAtributosDesparasitacion() {
         jcbTipoDesp.setSelectedIndex(0);
         jtaObservacionesDesp.setText("");
@@ -1640,6 +1989,9 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método para hacer no editables los campos del formulario Desparasitacion
+     */
     private void notEditParamsDesparasitacion() {
         jcbTipoDesp.setEnabled(false);
         jtaObservacionesDesp.setEnabled(false);
@@ -1649,26 +2001,33 @@ public class PerfilMascota extends javax.swing.JDialog {
     }
 
 //------------ MÉTODOS PARA MASCOTA ----------------
+    /**
+     * Método que muestra los atributos del objeto Mascota al usuario
+     */
     private void getAtributosMasc() {
-        jtfNombre.setText(masc.getNombre());
-        jtfRaza.setText(masc.getRaza());
-        jtfEspecie.setText(masc.getEspecie());
-        jtfChip.setText(masc.getNum_chip());
-        jtfPeso.setText(Double.toString(masc.getPeso()));
-        jdcFechaNac.setCalendar(masc.getFecha_nac());
-        if (masc.getSexo().equalsIgnoreCase("M")) {
-            bgGrupoBotones.setSelected(jrbMacho.getModel(), true);
-        } else if (masc.getSexo().equalsIgnoreCase("H")) {
-            bgGrupoBotones.setSelected(jrbHembra.getModel(), true);
+        if (masc != null) {
+            jtfNombre.setText(masc.getNombre());
+            jtfRaza.setText(masc.getRaza());
+            jtfEspecie.setText(masc.getEspecie());
+            jtfChip.setText(masc.getNum_chip());
+            jtfPeso.setText(Double.toString(masc.getPeso()));
+            jdcFechaNac.setCalendar(masc.getFecha_nac());
+            if (masc.getSexo().equalsIgnoreCase("M")) {
+                bgGrupoBotones.setSelected(jrbMacho.getModel(), true);
+            } else if (masc.getSexo().equalsIgnoreCase("H")) {
+                bgGrupoBotones.setSelected(jrbHembra.getModel(), true);
+            }
+
+            prop = masc.getPropietario();
+            pc.setPropietario(prop);
+
+            mc.setMascota(masc);
         }
-
-        prop = masc.getPropietario();
-        pc.setPropietario(prop);
-
-        mc.setMascota(masc);
-
     }
 
+    /**
+     * Método para limpiar los campos del formulario de Mascota
+     */
     private void limpiarAtributosMasc() {
         jtfNombre.setText("");
         jtfRaza.setText("");
@@ -1681,28 +2040,74 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método para actualizar un objeto Mascota
+     */
     private void updateMasc() {
-        masc.setNombre(jtfNombre.getText());
-        masc.setEspecie(jtfEspecie.getText());
-        masc.setNum_chip(jtfChip.getText());
-        masc.setRaza(jtfRaza.getText());
+        String nombre = jtfNombre.getText();
+        String especie = jtfEspecie.getText();
+        String numChip = jtfChip.getText();
+        String raza = jtfRaza.getText();
+        String peso = jtfPeso.getText();
 
-        //Para añadir 1 día a la fecha que Calendar obtiene
-//        Calendar fecha = jdcFechaNac.getCalendar();
-//        fecha.add(Calendar.DATE, 1);
-//        masc.setFecha_nac(fecha);
-        masc.setFecha_nac(jdcFechaNac.getCalendar());
+        if (masc != null) {
 
-        if (jrbMacho.isSelected()) {
-            masc.setSexo("M");
-        } else if (jrbHembra.isSelected()) {
-            masc.setSexo("H");
+            if (!jtfNombre.getText().isBlank()
+                    && !jtfEspecie.getText().isBlank()
+                    && !jtfChip.getText().isBlank()
+                    && (jrbMacho.isSelected() || jrbHembra.isSelected())
+                    && jdcFechaNac.getCalendar() != null) {
+
+                if (mui.validarTexto(nombre)) {
+                    if (mui.validarTexto(especie)) {
+                        if (raza.isBlank() || mui.validarTexto(raza)) {
+                            if (mui.validarAlfanumerico(numChip)) {
+                                if (peso.isBlank() || mui.validarPeso(peso)) {
+                                    masc.setNombre(jtfNombre.getText());
+                                    masc.setEspecie(jtfEspecie.getText());
+                                    masc.setNum_chip(jtfChip.getText());
+                                    masc.setRaza(jtfRaza.getText());
+                                    masc.setPeso(Double.parseDouble(jtfPeso.getText()));
+                                    masc.setFecha_nac(jdcFechaNac.getCalendar());
+
+                                    if (jrbMacho.isSelected()) {
+                                        masc.setSexo("M");
+                                    } else if (jrbHembra.isSelected()) {
+                                        masc.setSexo("H");
+                                    }
+
+                                    mc.updateMascota(masc);
+
+                                    notEditParamsMascota();
+
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato incorrecto o caracteres no numéricos\n\t*Formatos válidos: 'X' o 'X.X'", "CAMPO PESO", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfanuméricos", "CAMPO CHIP", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO RAZA", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO ESPECIE", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(parent, "No se ha podido actualizar la mascota", "WARNING", JOptionPane.ERROR_MESSAGE);
         }
 
-        mc.updateMascota(masc);
     }
 
-    private void editParams() {
+    /**
+     * Método para hacer editables los campos del formulario Mascota
+     */
+    private void editParamsMascota() {
         jtfNombre.setEnabled(true);
         jtfRaza.setEnabled(true);
         jtfEspecie.setEnabled(true);
@@ -1713,7 +2118,10 @@ public class PerfilMascota extends javax.swing.JDialog {
         jrbHembra.setEnabled(true);
     }
 
-    private void notEditParams() {
+    /**
+     * Método para hacer no editables los campos del formulario Mascota
+     */
+    private void notEditParamsMascota() {
         jtfNombre.setEnabled(false);
         jtfRaza.setEnabled(false);
         jtfEspecie.setEnabled(false);
@@ -1725,6 +2133,10 @@ public class PerfilMascota extends javax.swing.JDialog {
     }
 
     // ----------- MÉTODOS PARA CITA ----------------------------------
+    /**
+     * Método para cargar los ComboBox con los valores de los Enums (Motivo y
+     * EnfermedadVacuna)
+     */
     private void cargarComboBox() {
 
         Motivo[] motivosList = Motivo.values();
@@ -1744,62 +2156,80 @@ public class PerfilMascota extends javax.swing.JDialog {
 
     }
 
+    /**
+     * Método para hacer editables los campos del formulario de Cita
+     */
     private void editParamsCita() {
         jcbMotivos.setEnabled(true);
-        jdcFecha.setEnabled(true);
+        jdcFechaCita.setEnabled(true);
         jtaDescripcion.setEnabled(true);
         jbGuardarCita.setEnabled(true);
     }
 
+    /**
+     * Método para hacer no editables los campos del formulario de Cita
+     */
     private void notEditParamsCita() {
         jcbMotivos.setEnabled(false);
-        jdcFecha.setEnabled(false);
+        jdcFechaCita.setEnabled(false);
         jtaDescripcion.setEnabled(false);
         jbGuardarCita.setEnabled(false);
     }
 
+    /**
+     * Método para obtener los datos del objeto Cita seleccionado y mostrarlos
+     * al usuario en los campos del formulario
+     */
     private void getDatosCita() {
         editParamsCita();
         Cita nCita = selectCitaList();
 
-        jcbMotivos.setSelectedItem(nCita.getMotivo());
-        jtaDescripcion.setText(nCita.getObservaciones());
-        jdcFecha.setCalendar(nCita.getFecha());
-
+        if (nCita != null) {
+            jcbMotivos.setSelectedItem(nCita.getMotivo());
+            jtaDescripcion.setText(nCita.getObservaciones());
+            jdcFechaCita.setCalendar(nCita.getFecha());
+        }
     }
 
+    /**
+     * Método para crear un nuevo objeto Cita
+     */
     private void nuevaCita() {
 
         cita.setMotivo(jcbMotivos.getItemAt(jcbMotivos.getSelectedIndex()));
         cita.setObservaciones(jtaDescripcion.getText());
-        cita.setFecha(jdcFecha.getCalendar());
+        cita.setFecha(jdcFechaCita.getCalendar());
 
         if (cita != null) {
             cc.addCita(cita);
         }
 
-        //varBCita = true;
     }
 
+    /**
+     * Método para actualizar un objeto Cita
+     */
     private void updateCita() {
 
         cita.setMotivo(jcbMotivos.getItemAt(0));
         cita.setObservaciones(jtaDescripcion.getText());
-        cita.setFecha(jdcFecha.getCalendar());
+        cita.setFecha(jdcFechaCita.getCalendar());
 
         if (cita != null) {
             cc.updateCita(cita);
         }
 
-        //varBCita = true;
     }
 
+    /**
+     * Método para añadir objetos Cita a la lista
+     *
+     * @return el modelo de lista (DefaultListModel)
+     */
     private DefaultListModel addCitaList() {
         DefaultListModel modelList = new DefaultListModel();
         jlListado.setModel(modelList);
-//        System.out.println("id cita --> " + cita.getId());
 
-        //citasMasc = cc.getCitasByMascota(cita.getId());
         if (!citasMasc.isEmpty()) {
             for (Cita c : citasMasc) {
                 if (c != null) {
@@ -1815,28 +2245,57 @@ public class PerfilMascota extends javax.swing.JDialog {
         return modelList;
     }
 
+    /**
+     * Método para obtener el objeto Cita del registro seleccionado en la lista
+     *
+     * @return el objeto Cita seleccionado
+     */
     private Cita selectCitaList() {
         DefaultListModel modelList = (DefaultListModel) jlListado.getModel();
-        String recurso = "/" + citasMasc.get(jlListado.getSelectedIndex()).getId();
+        int index = jlListado.getSelectedIndex();
+        String recurso = "";
+        if (index != -1) {
+            if (!citasMasc.isEmpty()) {
+                recurso = "/" + citasMasc.get(index).getId();
+                cc.getCita(recurso);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay citas para esta mascota");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una cita de la lista");
+        }
 
-        return cc.getCita(recurso);
+        return null;
+
     }
 
+    /**
+     * Método para limpiar los campos del formulario de Cita
+     */
     private void limpiarAtributosCita() {
         jcbMotivos.setSelectedIndex(0);
         jtaDescripcion.setText("");
-        jdcFecha.getCalendar().clear();
+        jdcFechaCita.getCalendar().clear();
 
     }
 
 // --------------- Métodos generales -------------------------------
+    /**
+     * Método que cambia el Frame padre por el que le entra por parámetro
+     *
+     * @param parent
+     */
     private void setParent(Frame parent) {
         this.parent = parent;
     }
 
+    /**
+     * Método para dar formato al campo Fecha
+     *
+     * @param calendar fecha a formatear
+     * @return String con la fecha formateada
+     */
     private String convertFecha(Calendar calendar) {
-        //String fecha1_str;
-        // Date date = new Date();
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
         Instant instant = calendar.toInstant();
@@ -1965,7 +2424,7 @@ public class PerfilMascota extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jcbEnfermedadVacuna;
     private javax.swing.JComboBox<String> jcbMotivos;
     private javax.swing.JComboBox<String> jcbTipoDesp;
-    private com.toedter.calendar.JDateChooser jdcFecha;
+    private com.toedter.calendar.JDateChooser jdcFechaCita;
     private com.toedter.calendar.JDateChooser jdcFechaDesp;
     private com.toedter.calendar.JDateChooser jdcFechaHistoria;
     private com.toedter.calendar.JDateChooser jdcFechaNac;
@@ -2000,6 +2459,7 @@ public class PerfilMascota extends javax.swing.JDialog {
     private PropietarioController pc;
     private VacunaController vc;
     private DesparasitacionController dc;
+    private MascotappUtilImpl mui;
 
     private Frame parent;
 

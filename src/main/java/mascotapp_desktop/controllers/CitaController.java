@@ -33,7 +33,7 @@ public class CitaController implements CitaControllerInterface {
 
     public CitaController() {
         this.mc = new MascotaController();
-        this.citas = new ArrayList<>();
+        this.citas = new ArrayList();
     }
 
     /**
@@ -67,7 +67,7 @@ public class CitaController implements CitaControllerInterface {
             url = curl.getURL("citas/", mascId);
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(cita));
+                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(cita));
             } catch (IOException ex) {
                 Logger.getLogger(CitaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -83,7 +83,7 @@ public class CitaController implements CitaControllerInterface {
         try {
             url = curl.getURL("citas/", Long.toString(cita.getId()));
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(cita));
+                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(cita));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(CitaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -98,7 +98,7 @@ public class CitaController implements CitaControllerInterface {
         try {
             url = curl.getURL("citas/", Long.toString(cita.getId()));
             try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(cita));
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(cita));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(CitaController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

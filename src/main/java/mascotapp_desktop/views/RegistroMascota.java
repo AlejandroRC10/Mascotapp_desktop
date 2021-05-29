@@ -6,9 +6,12 @@
 package mascotapp_desktop.views;
 
 import java.awt.Frame;
+import java.awt.HeadlessException;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.models.Mascota;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
@@ -27,6 +30,7 @@ public class RegistroMascota extends javax.swing.JDialog {
         initComponents();
         setParent(parent);
         mc = new MascotaController();
+        mui = new MascotappUtilImpl();
     }
 
     /**
@@ -63,7 +67,13 @@ public class RegistroMascota extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Nombre:");
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+
+        jLabel1.setFont(jPanel1.getFont());
+        jLabel1.setForeground(jPanel1.getForeground());
+        jLabel1.setText("Nombre*:");
 
         jtfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,10 +81,16 @@ public class RegistroMascota extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Nº Chip:");
+        jLabel2.setFont(jPanel1.getFont());
+        jLabel2.setForeground(jPanel1.getForeground());
+        jLabel2.setText("Nº Chip*:");
 
-        jLabel3.setText("Especie:");
+        jLabel3.setFont(jPanel1.getFont());
+        jLabel3.setForeground(jPanel1.getForeground());
+        jLabel3.setText("Especie*:");
 
+        jLabel4.setFont(jPanel1.getFont());
+        jLabel4.setForeground(jPanel1.getForeground());
         jLabel4.setText("Raza:");
 
         jtfRaza.addActionListener(new java.awt.event.ActionListener() {
@@ -83,12 +99,19 @@ public class RegistroMascota extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(jPanel1.getFont());
+        jLabel5.setForeground(jPanel1.getForeground());
         jLabel5.setText("Peso:");
 
-        jLabel6.setText("Sexo:");
+        jLabel6.setFont(jPanel1.getFont());
+        jLabel6.setForeground(jPanel1.getForeground());
+        jLabel6.setText("Sexo*:");
 
-        jLabel7.setText("Fecha nacimiento:");
+        jLabel7.setFont(jPanel1.getFont());
+        jLabel7.setForeground(jPanel1.getForeground());
+        jLabel7.setText("Fecha nacimiento*:");
 
+        jbVolver.setFont(jPanel1.getFont());
         jbVolver.setText("Volver");
         jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +119,8 @@ public class RegistroMascota extends javax.swing.JDialog {
             }
         });
 
+        jbGuardar.setFont(jPanel1.getFont());
+        jbGuardar.setForeground(new java.awt.Color(51, 102, 0));
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +128,9 @@ public class RegistroMascota extends javax.swing.JDialog {
             }
         });
 
+        jrbMacho.setBackground(jPanel1.getBackground());
+        jrbMacho.setFont(jPanel1.getFont());
+        jrbMacho.setForeground(jPanel1.getForeground());
         jrbMacho.setText("Macho");
         jrbMacho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,17 +138,15 @@ public class RegistroMascota extends javax.swing.JDialog {
             }
         });
 
+        jrbHembra.setBackground(jPanel1.getBackground());
+        jrbHembra.setFont(jPanel1.getFont());
+        jrbHembra.setForeground(jPanel1.getForeground());
         jrbHembra.setText("Hembra");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jbGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbVolver))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -147,30 +173,35 @@ public class RegistroMascota extends javax.swing.JDialog {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jrbHembra)
                             .addGap(0, 0, Short.MAX_VALUE)))
-                    .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addComponent(jbGuardar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbVolver)
+                .addGap(8, 8, 8))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jtfChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtfEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jtfRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jtfChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jtfEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jtfRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -180,13 +211,17 @@ public class RegistroMascota extends javax.swing.JDialog {
                             .addComponent(jLabel6)
                             .addComponent(jrbMacho)
                             .addComponent(jrbHembra))
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbVolver)
-                    .addComponent(jbGuardar)))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jdcFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 27, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbVolver))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -207,6 +242,7 @@ public class RegistroMascota extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrbMachoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMachoActionPerformed
@@ -226,37 +262,74 @@ public class RegistroMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNombreActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        masc = new Mascota();
-        
-        masc.setNombre(jtfNombre.getText());
-        masc.setEspecie(jtfEspecie.getText());
-        masc.setRaza(jtfRaza.getText());
-        masc.setNum_chip(jtfChip.getText());
-        masc.setPeso(Double.parseDouble(jtfPeso.getText()));
-        
-        if(jrbMacho.isSelected()){
-            masc.setSexo("M");
-        }else if(jrbHembra.isSelected()){
-            masc.setSexo("H");
-        }
-        
-//        Calendar fecha = jdcFechaNac.getCalendar();
-//        fecha.add(Calendar.DATE, 1);
-//        masc.setFecha_nac(fecha);
-        masc.setFecha_nac(jdcFechaNac.getCalendar());
-        
-        mc.addMascota(masc);
-        mc.setMascota(masc);
-        
-        this.dispose();
-        
-        PerfilMascota pm = new PerfilMascota(parent, true);
-        pm.setVisible(true);
+        guardarMascota();
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-        private void setParent(Frame parent) {
+    private void guardarMascota() throws NumberFormatException, HeadlessException {
+        masc = new Mascota();
+
+        if (!jtfNombre.getText().isBlank()
+                && !jtfEspecie.getText().isBlank()
+                && !jtfChip.getText().isBlank()
+                && (jrbMacho.isSelected() || jrbHembra.isSelected())
+                && jdcFechaNac.getCalendar() != null) {
+
+            if (mui.validarTexto(jtfNombre.getText())) {
+                if (mui.validarTexto(jtfEspecie.getText())) {
+                    if (jtfRaza.getText().isBlank() || mui.validarTexto(jtfRaza.getText())) {
+                        if (mui.validarAlfanumerico(jtfChip.getText())) {
+                            if (jtfPeso.getText().isBlank() || mui.validarPeso(jtfPeso.getText())) {
+
+                                masc.setNombre(jtfNombre.getText());
+                                masc.setEspecie(jtfEspecie.getText());
+                                masc.setRaza(jtfRaza.getText());
+                                masc.setNum_chip(jtfChip.getText());
+                                if(!jtfPeso.getText().isBlank()){
+                                    masc.setPeso(Double.parseDouble(jtfPeso.getText()));
+                                }else{
+                                    masc.setPeso(0.0);
+                                }
+                                
+                                if (jrbMacho.isSelected()) {
+                                    masc.setSexo("M");
+                                } else if (jrbHembra.isSelected()) {
+                                    masc.setSexo("H");
+                                }
+
+                                masc.setFecha_nac(jdcFechaNac.getCalendar());
+
+                                mc.addMascota(masc);
+                                mc.setMascota(masc);
+
+                                this.dispose();
+
+                                PerfilMascota pm = new PerfilMascota(parent, true);
+                                pm.setVisible(true);
+
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato incorrecto o caracteres no numéricos\n\t*Formatos válidos: 'X' o 'X.X'", "CAMPO PESO", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no numéricos", "CAMPO CHIP", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO RAZA", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO ESPECIE", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void setParent(Frame parent) {
         this.parent = parent;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -286,6 +359,7 @@ public class RegistroMascota extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 RegistroMascota dialog = new RegistroMascota(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -320,7 +394,8 @@ public class RegistroMascota extends javax.swing.JDialog {
     private javax.swing.JTextField jtfPeso;
     private javax.swing.JTextField jtfRaza;
     // End of variables declaration//GEN-END:variables
-private Mascota masc;
-private MascotaController mc;
-private Frame parent;
+    private Mascota masc;
+    private MascotaController mc;
+    private Frame parent;
+    private MascotappUtilImpl mui;
 }

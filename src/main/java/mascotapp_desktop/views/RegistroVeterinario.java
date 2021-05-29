@@ -9,6 +9,7 @@ import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.VeterinarioController;
 import mascotapp_desktop.models.Veterinario;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
@@ -26,6 +27,7 @@ public class RegistroVeterinario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         vc = new VeterinarioController();
+        mui = new MascotappUtilImpl();
     }
 
     /**
@@ -61,6 +63,12 @@ public class RegistroVeterinario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+
+        jLabel1.setFont(jPanel1.getFont());
+        jLabel1.setForeground(jPanel1.getForeground());
         jLabel1.setText("Nombre:");
 
         jtfNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -69,10 +77,16 @@ public class RegistroVeterinario extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(jPanel1.getFont());
+        jLabel2.setForeground(jPanel1.getForeground());
         jLabel2.setText("Apellidos:");
 
+        jLabel3.setFont(jPanel1.getFont());
+        jLabel3.setForeground(jPanel1.getForeground());
         jLabel3.setText("Nº Col.");
 
+        jLabel4.setFont(jPanel1.getFont());
+        jLabel4.setForeground(jPanel1.getForeground());
         jLabel4.setText("Nombre clínica:");
 
         jtfNomClinica.addActionListener(new java.awt.event.ActionListener() {
@@ -81,16 +95,27 @@ public class RegistroVeterinario extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(jPanel1.getFont());
+        jLabel5.setForeground(jPanel1.getForeground());
         jLabel5.setText("Dirección:");
 
+        jLabel6.setFont(jPanel1.getFont());
+        jLabel6.setForeground(jPanel1.getForeground());
         jLabel6.setText("Teléfono:");
 
+        jLabel7.setFont(jPanel1.getFont());
+        jLabel7.setForeground(jPanel1.getForeground());
         jLabel7.setText("Usuario:");
 
+        jLabel8.setFont(jPanel1.getFont());
+        jLabel8.setForeground(jPanel1.getForeground());
         jLabel8.setText("Contraseña:");
 
+        jLabel9.setFont(jPanel1.getFont());
+        jLabel9.setForeground(jPanel1.getForeground());
         jLabel9.setText("Repetir contraseña:");
 
+        jbCancelar.setFont(jPanel1.getFont());
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +123,8 @@ public class RegistroVeterinario extends javax.swing.JDialog {
             }
         });
 
+        jbGuardar.setFont(jPanel1.getFont());
+        jbGuardar.setForeground(new java.awt.Color(51, 102, 0));
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,37 +144,37 @@ public class RegistroVeterinario extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpfPasswordRepeat))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(jtfNomClinica, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(jtfApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(jtfNumCol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jpfPassword))))
-                .addContainerGap(86, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jbGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbCancelar))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbGuardar)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jpfPasswordRepeat))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(23, 23, 23)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(jtfNomClinica, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(jtfApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(jtfNumCol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jpfPassword)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbCancelar)
+                .addGap(4, 4, 4))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,9 +206,9 @@ public class RegistroVeterinario extends javax.swing.JDialog {
                             .addComponent(jLabel6)
                             .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfUsuario)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -189,10 +216,11 @@ public class RegistroVeterinario extends javax.swing.JDialog {
                         .addGap(24, 24, 24)
                         .addComponent(jLabel9))
                     .addComponent(jpfPasswordRepeat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCancelar)
-                    .addComponent(jbGuardar)))
+                    .addComponent(jbGuardar)
+                    .addComponent(jbCancelar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,17 +230,17 @@ public class RegistroVeterinario extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNombreActionPerformed
@@ -231,25 +259,64 @@ public class RegistroVeterinario extends javax.swing.JDialog {
         registerVet();
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-    public void registerVet() throws NumberFormatException, HeadlessException {
+    public void registerVet() {
+
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfPasswordRepeat.getPassword());
-        
-        vet = new Veterinario();
-        vet.setNombre(jtfNombre.getText());
-        vet.setApellidos(jtfApellidos.getText());
-        vet.setDireccion(jtfDireccion.getText());
-        vet.setNom_clinica(jtfNomClinica.getText());
-        vet.setNumColegiado(Integer.parseInt(jtfNumCol.getText()));
-        vet.setUsuario(jtfUsuario.getText());
-        vet.setTelefono(jtfTelefono.getText());
-        
-        if (password.equals(password2)) {
-            vet.setPassword(password);
-            vc.addVeterinario(vet);
-            this.dispose();
+
+        if (!jtfNombre.getText().isBlank()
+                && !jtfApellidos.getText().isBlank()
+                && !jtfDireccion.getText().isBlank()
+                && !jtfNumCol.getText().isBlank()
+                && !jtfUsuario.getText().isBlank()
+                && !jtfTelefono.getText().isBlank()
+                && !password.isBlank()
+                && !password2.isBlank()) {
+
+            if (mui.validarTexto(jtfNombre.getText())) {
+                if (mui.validarTexto(jtfApellidos.getText())) {
+                    if (mui.validarTexto(jtfDireccion.getText())) {
+                        if (mui.validarDigitos(jtfNumCol.getText())) {
+                            if (mui.validarTelefono(jtfTelefono.getText())) {
+
+                                vet = new Veterinario();
+                                vet.setNombre(jtfNombre.getText());
+                                vet.setApellidos(jtfApellidos.getText());
+                                vet.setDireccion(jtfDireccion.getText());
+                                vet.setNom_clinica(jtfNomClinica.getText());
+                                vet.setNumColegiado(Integer.parseInt(jtfNumCol.getText()));
+                                vet.setUsuario(jtfUsuario.getText());
+                                vet.setTelefono(jtfTelefono.getText());
+
+                                if (password.equals(password2)) {
+                                    vet.setPassword(password);
+                                    if (vc.addVeterinario(vet)) {
+                                        JOptionPane.showMessageDialog(this, "Usuario registrado correctamente", "Mascotapp Registro", JOptionPane.INFORMATION_MESSAGE);
+                                        this.dispose();
+                                    } else {
+                                        JOptionPane.showMessageDialog(this, "Es posible que el 'Usuario' o 'NºCol.' introducidos ya existan", "Mascotapp Registro", JOptionPane.ERROR_MESSAGE);
+                                    }
+
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Registro", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato incorrecto o caracteres no numéricos\n\t*Formatos válidos: 'X' o 'X.X'", "CAMPO PESO", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no numéricos", "CAMPO CHIP", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO RAZA", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO ESPECIE", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -324,6 +391,7 @@ public class RegistroVeterinario extends javax.swing.JDialog {
     private javax.swing.JTextField jtfTelefono;
     private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
-   private VeterinarioController vc;
+    private VeterinarioController vc;
     private Veterinario vet;
+    private MascotappUtilImpl mui;
 }

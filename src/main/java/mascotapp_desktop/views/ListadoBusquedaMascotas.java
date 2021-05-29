@@ -6,7 +6,10 @@
 package mascotapp_desktop.views;
 
 import java.awt.Frame;
+import java.awt.HeadlessException;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.models.Mascota;
@@ -26,9 +29,9 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
     public ListadoBusquedaMascotas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         setParent(parent);
-        
+
         mc = new MascotaController();
         listaMascotas = mc.getMascotas();
         //System.out.println(mc.getMascotas());
@@ -44,12 +47,24 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabla = new javax.swing.JTable();
         jbVer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 0));
+        setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+        setForeground(new java.awt.Color(255, 255, 255));
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane1.setForeground(new java.awt.Color(51, 102, 0));
+
+        jtTabla.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(51, 102, 0)));
+        jtTabla.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+        jtTabla.setForeground(new java.awt.Color(0, 102, 0));
         jtTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -66,8 +81,17 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jtTabla.setAlignmentY(0.0F);
+        jtTabla.setGridColor(new java.awt.Color(51, 102, 0));
+        jtTabla.setOpaque(false);
+        jtTabla.setSelectionBackground(new java.awt.Color(51, 153, 0));
+        jtTabla.setSelectionForeground(new java.awt.Color(204, 255, 204));
+        jtTabla.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jtTabla.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(jtTabla);
 
+        jbVer.setFont(new java.awt.Font("Sylfaen", 1, 14)); // NOI18N
+        jbVer.setForeground(new java.awt.Color(51, 102, 0));
         jbVer.setText("Ver");
         jbVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,41 +99,84 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 409, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jbVer)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(24, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 305, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jbVer)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbVer)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(jbVer)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerActionPerformed
-        mc.setMascota(selectMascotaList());
-        dispose();
-        PerfilMascota pm = new PerfilMascota(parent, true);
-        pm.setVisible(true);
+        verMascota();
     }//GEN-LAST:event_jbVerActionPerformed
-    
-    private Mascota selectMascotaList() {
-        return listaMascotas.get(jtTabla.getSelectedRow());
+
+    private void verMascota() throws HeadlessException {
+        Mascota m = selectMascotaList();
+
+        if (m != null) {
+            mc.setMascota(m);
+            dispose();
+            PerfilMascota pm = new PerfilMascota(parent, true);
+            pm.setVisible(true);
+        }
     }
-    
+
+    private Mascota selectMascotaList() {
+
+//        DefaultListModel modelList = (DefaultListModel) jtTabla.getModel();
+        int index = jtTabla.getSelectedRow();
+
+        if (index != -1) {
+            if (!listaMascotas.isEmpty()) {
+                return listaMascotas.get(index);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay mascotas con ese nombre");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(parent, "Debe seleccionar una mascota de la lista", "WARNING", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return null;
+    }
+
     public AbstractTableModel getModeloTablaMascota(List<Mascota> listaMascotas) {
         final int COLUMNAS_NUMERO = 3;
         final String[] COLUMNAS_NOMBRES = {"Nombre", "Nº Chip", "Propietario"};
@@ -211,6 +278,7 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbVer;
     private javax.swing.JTable jtTabla;

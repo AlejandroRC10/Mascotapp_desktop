@@ -7,6 +7,7 @@ package mascotapp_desktop.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,16 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.interfaces.DesparasitacionControllerInterface;
 import mascotapp_desktop.models.Desparasitacion;
 import mascotapp_desktop.util.MascotappUtilImpl;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
 
 /**
  *
  * @author alex_
  */
-public class DesparasitacionController implements DesparasitacionControllerInterface{
-     private MascotappUtilImpl curl = new MascotappUtilImpl();
+public class DesparasitacionController implements DesparasitacionControllerInterface {
+
+    private MascotappUtilImpl curl = new MascotappUtilImpl();
     private ObjectMapper om;
     private URL url;
     private static Desparasitacion desparasitacion;
@@ -32,7 +37,7 @@ public class DesparasitacionController implements DesparasitacionControllerInter
 
     public DesparasitacionController() {
         this.mc = new MascotaController();
-        this.desparasitaciones = new ArrayList<>();
+        this.desparasitaciones = new ArrayList();
     }
 
     /**
@@ -40,25 +45,33 @@ public class DesparasitacionController implements DesparasitacionControllerInter
      * @param id
      * @return
      */
-     @Override
+    @Override
     public Desparasitacion getDesparasitacion(String id) {
-        Desparasitacion des=  null;
+        Desparasitacion des = null;
 
         try {
             //URL url = curl.getURL("mascotas/", id);
             URL url = curl.getURL("desparasitaciones", id);
-            des = curl.getJSON_MAPPER().readValue(url, Desparasitacion.class);
 
+            om = curl.getJSON_MAPPER();
+
+            CloseableHttpResponse chr = curl.peticionGET(url.toString());
+            int status = chr.getStatusLine().getStatusCode();
+            if (status == HttpStatus.SC_OK) {
+                des = curl.getJSON_MAPPER().readValue(url, Desparasitacion.class);
+            }
         } catch (MalformedURLException ex) {
             Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return des;
-    }
-
+        
+    return des;
+}
+        
     @Override
-    public void addDesparasitacion(Desparasitacion vac) {
+    public void addDesparasitacion(Desparasitacion vac
+    ) {
         //pc = new PropietarioController();
         String mascId = Long.toString(mc.getMascota().getId());
 
@@ -67,7 +80,7 @@ public class DesparasitacionController implements DesparasitacionControllerInter
             url = curl.getURL("desparasitaciones/", mascId);
 
             try {
-                curl.postJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
+                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
             } catch (IOException ex) {
                 Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -79,27 +92,12 @@ public class DesparasitacionController implements DesparasitacionControllerInter
     }
 
     @Override
-    public void updateDesparasitacion(Desparasitacion des) {
+    public void updateDesparasitacion(Desparasitacion des
+    ) {
         try {
             url = curl.getURL("vacunas/", Long.toString(des.getId()));
             try {
-                curl.putJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(des));
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-     @Override
-    public void deleteDesparasitacion(Desparasitacion des) {
-        try {
-            url = curl.getURL("desparasitaciones/", Long.toString(des.getId()));
-            try {
-                curl.deleteJson(url.toString(), curl.getJSON_MAPPER().writeValueAsString(des));
+                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(des));
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -111,18 +109,40 @@ public class DesparasitacionController implements DesparasitacionControllerInter
     }
 
     @Override
-    public List<Desparasitacion> getDesparasitacionesByMascota(Long id) {
+    public void deleteDesparasitacion(Desparasitacion des
+    ) {
+        try {
+            url = curl.getURL("desparasitaciones/", Long.toString(des.getId()));
+            try {
+                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(des));
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public List<Desparasitacion> getDesparasitacionesByMascota(Long id
+    ) {
         System.out.println("holaaa estoy en --> getDesparasitacionesByMascota");
         try {
             String peticion = "desparasitaciones?mascota_id=";
             if (id != null) {
-                String recurso = Long.toString(id);
-
                 om = curl.getJSON_MAPPER();
-
+                String recurso = Long.toString(id);
                 URL url = curl.getURL(peticion, recurso);
-                desparasitaciones = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Desparasitacion.class));
-                //System.out.println(clientes.toString());
+
+                CloseableHttpResponse chr = curl.peticionGET(url.toString());
+                int status = chr.getStatusLine().getStatusCode();
+                if (status == HttpStatus.SC_OK) {
+
+                    // System.out.println(om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Desparasitacion.class)).toString());
+                    desparasitaciones = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Desparasitacion.class));
+                }
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(DesparasitacionController.class.getName()).log(Level.SEVERE, null, ex);

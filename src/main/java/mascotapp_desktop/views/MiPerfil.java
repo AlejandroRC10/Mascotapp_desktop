@@ -72,6 +72,12 @@ public class MiPerfil extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+
+        jLabel1.setFont(jPanel1.getFont());
+        jLabel1.setForeground(jPanel1.getForeground());
         jLabel1.setText("Nombre:");
 
         jtfNombre.setEnabled(false);
@@ -81,6 +87,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(jPanel1.getFont());
+        jLabel2.setForeground(jPanel1.getForeground());
         jLabel2.setText("Apellidos:");
 
         jtfApellidos.setEnabled(false);
@@ -90,6 +98,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(jPanel1.getFont());
+        jLabel3.setForeground(jPanel1.getForeground());
         jLabel3.setText("Nº Col.");
 
         jtfCol.setEnabled(false);
@@ -99,6 +109,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel4.setFont(jPanel1.getFont());
+        jLabel4.setForeground(jPanel1.getForeground());
         jLabel4.setText("Nombre clínica:");
 
         jtfClinica.setEnabled(false);
@@ -108,6 +120,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(jPanel1.getFont());
+        jLabel5.setForeground(jPanel1.getForeground());
         jLabel5.setText("Dirección:");
 
         jtfDireccion.setEnabled(false);
@@ -117,6 +131,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(jPanel1.getFont());
+        jLabel6.setForeground(jPanel1.getForeground());
         jLabel6.setText("Teléfono:");
 
         jtfTelefono.setEnabled(false);
@@ -126,6 +142,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel7.setFont(jPanel1.getFont());
+        jLabel7.setForeground(jPanel1.getForeground());
         jLabel7.setText("Usuario:");
 
         jtfUsuario.setEnabled(false);
@@ -135,10 +153,16 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setFont(jPanel1.getFont());
+        jLabel8.setForeground(jPanel1.getForeground());
         jLabel8.setText("Nueva contraseña:");
 
+        jLabel9.setFont(jPanel1.getFont());
+        jLabel9.setForeground(jPanel1.getForeground());
         jLabel9.setText("Repetir contraseña:");
 
+        jbGuardar.setFont(jbEditar.getFont());
+        jbGuardar.setForeground(jbEditar.getForeground());
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,6 +170,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jbVolver.setFont(jbEditar.getFont());
+        jbVolver.setForeground(jbEditar.getForeground());
         jbVolver.setText("Volver");
         jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,6 +179,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jbEditar.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+        jbEditar.setForeground(new java.awt.Color(51, 102, 0));
         jbEditar.setText("Editar datos");
         jbEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +188,8 @@ public class MiPerfil extends javax.swing.JDialog {
             }
         });
 
+        jbEliminar.setFont(jbEditar.getFont());
+        jbEliminar.setForeground(jbEditar.getForeground());
         jbEliminar.setText("Eliminar cuenta");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,7 +201,7 @@ public class MiPerfil extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -180,54 +210,57 @@ public class MiPerfil extends javax.swing.JDialog {
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfClinica, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfCol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jpfPassword))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jpfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jpfPasswordRepeat)))
+                        .addComponent(jpfPasswordRepeat))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfClinica, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbEditar))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbVolver))
+                    .addComponent(jtfApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jbEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbVolver))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jbEditar)
-                        .addComponent(jtfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap()))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(246, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbEditar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jtfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtfCol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtfClinica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,17 +289,11 @@ public class MiPerfil extends javax.swing.JDialog {
                     .addComponent(jbVolver)
                     .addComponent(jbGuardar)
                     .addComponent(jbEliminar))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jbEditar))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jtfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(62, 62, 62)
+                    .addComponent(jLabel2)
                     .addContainerGap(318, Short.MAX_VALUE)))
         );
 
@@ -277,7 +304,7 @@ public class MiPerfil extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,6 +315,7 @@ public class MiPerfil extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNombreActionPerformed
@@ -300,6 +328,8 @@ public class MiPerfil extends javax.swing.JDialog {
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
         this.dispose();
+//        VentanaPrincipal vp = new VentanaPrincipal();
+//        vp.setVisible(true);
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
@@ -339,7 +369,7 @@ public class MiPerfil extends javax.swing.JDialog {
     private void changeVet() throws HeadlessException, NumberFormatException {
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfPasswordRepeat.getPassword());
-        
+
         vet.setNombre(jtfNombre.getText());
         vet.setApellidos(jtfApellidos.getText());
         vet.setNumColegiado(Integer.parseInt(jtfCol.getText()));
@@ -347,13 +377,17 @@ public class MiPerfil extends javax.swing.JDialog {
         vet.setDireccion(jtfDireccion.getText());
         vet.setTelefono(jtfTelefono.getText());
         vet.setUsuario(jtfUsuario.getText());
-        
+
         if (password.equals(password2)) {
             vet.setPassword(password);
-            vc.updateVeterinario(vet);
-            this.dispose();
+            if (!vc.updateVeterinario(vet)) {
+                JOptionPane.showMessageDialog(this, "Puede que el nombre de usuario ya exista", "ERROR ACTUALIZACIÓN", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente", "ACTUALIZACIÓN PERFIL", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "ERROR ACTUALIZACIÓN", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -382,7 +416,7 @@ public class MiPerfil extends javax.swing.JDialog {
             vc.deleteVeterinario(vet);
             this.dispose();
             this.getOwner().dispose();
-            Login1 login = new Login1();
+            Login login = new Login();
             login.setVisible(true);
 
         } else {
@@ -428,6 +462,8 @@ public class MiPerfil extends javax.swing.JDialog {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
+//                        VentanaPrincipal vp = new VentanaPrincipal();
+//                        vp.setVisible(true);
                     }
                 });
                 dialog.setVisible(true);
