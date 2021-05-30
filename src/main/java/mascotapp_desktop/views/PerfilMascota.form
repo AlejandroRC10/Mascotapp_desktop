@@ -30,7 +30,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
+          <Component id="jTabbedPane1" min="-2" pref="542" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -43,7 +43,7 @@
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="66" red="0" type="rgb"/>
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="66" red="33" type="rgb"/>
@@ -57,8 +57,8 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jpPerfil">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="jTabbedPane1" name="background" type="property"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="37" green="80" red="0" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -76,100 +76,108 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jbEliminarMascota" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jbEliminarMascota" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="jLabel4" alignment="1" max="32767" attributes="0"/>
                                   <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
                                   <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel7" alignment="0" pref="101" max="32767" attributes="0"/>
+                                  <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jtfNombre" min="-2" pref="100" max="-2" attributes="0"/>
-                                      <EmptySpace pref="127" max="32767" attributes="0"/>
-                                      <Component id="jbEditarMascota" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jbGuardarMascota" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jrbMacho" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jbVolver" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jrbHembra" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jrbMacho" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jrbHembra" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jdcFechaNac" min="-2" pref="118" max="-2" attributes="0"/>
-                                          <Component id="jtfChip" pref="200" max="32767" attributes="0"/>
-                                          <Component id="jtfRaza" pref="200" max="32767" attributes="0"/>
-                                          <Component id="jtfPeso" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="jtfEspecie" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jdcFechaNac" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
+                                  <Component id="jtfChip" max="32767" attributes="0"/>
+                                  <Component id="jtfRaza" max="32767" attributes="0"/>
+                                  <Component id="jtfPeso" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="jtfEspecie" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="jtfNombre" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                              <Component id="jbEditarMascota" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jbGuardarMascota" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jbVolver" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="214" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbEditarMascota" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jbEditarMascota" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jbVolver" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbGuardarMascota" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtfNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtfChip" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtfEspecie" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtfRaza" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtfPeso" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jrbMacho" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jrbHembra" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jdcFechaNac" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel7" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jbEliminarMascota" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfChip" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfEspecie" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfRaza" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfPeso" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jrbMacho" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jrbHembra" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel7" min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="jdcFechaNac" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jbVolver" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbGuardarMascota" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbEliminarMascota" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -306,7 +314,7 @@
             <Component class="javax.swing.JRadioButton" name="jrbMacho">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpPerfil" name="background" type="property"/>
                 </Property>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="bgGrupoBotones"/>
@@ -327,7 +335,7 @@
             <Component class="javax.swing.JRadioButton" name="jrbHembra">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpPerfil" name="background" type="property"/>
                 </Property>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="bgGrupoBotones"/>
@@ -385,7 +393,7 @@
         <Container class="javax.swing.JPanel" name="jpHistorias">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="jTabbedPane1" name="background" type="property"/>
+              <Connection component="jpPerfil" name="background" type="property"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -402,29 +410,27 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                              <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jPanel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="87" max="32767" attributes="0"/>
+                      <EmptySpace pref="124" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="jPanel7" min="-2" pref="283" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="65" max="32767" attributes="0"/>
+                      <EmptySpace pref="207" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -433,7 +439,7 @@
             <Container class="javax.swing.JPanel" name="jPanel7">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpHistorias" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -443,20 +449,20 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel9" min="-2" pref="268" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jScrollPane4" min="-2" pref="95" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jbBorrarHistoria" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jbNuevaHistoria" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jbEditarHistoria" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jbEditarHistoria" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jbNuevaHistoria" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="15" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -464,18 +470,18 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jScrollPane4" alignment="1" min="-2" pref="97" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jbBorrarHistoria" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jbNuevaHistoria" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jbEditarHistoria" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jbBorrarHistoria" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jbNuevaHistoria" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jbEditarHistoria" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel14" min="-2" pref="28" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane4" min="-2" pref="97" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
@@ -488,7 +494,7 @@
                 <Container class="javax.swing.JPanel" name="jPanel9">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection component="jTabbedPane1" name="background" type="property"/>
+                      <Connection component="jpHistorias" name="background" type="property"/>
                     </Property>
                   </Properties>
 
@@ -498,11 +504,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel10" min="-2" pref="61" max="-2" attributes="0"/>
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel10" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jScrollPane3" max="32767" attributes="0"/>
                                   <Component id="jtfEnfermedad" alignment="0" max="32767" attributes="0"/>
@@ -515,25 +521,32 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel10" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Component id="jdcFechaHistoria" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jtfEnfermedad" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jtfEnfermedad" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel12" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane3" pref="104" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel13" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -677,7 +690,7 @@
             <Container class="javax.swing.JPanel" name="jPanel10">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpHistorias" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -746,7 +759,7 @@
         <Container class="javax.swing.JPanel" name="jpCitas">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="jTabbedPane1" name="background" type="property"/>
+              <Connection component="jpPerfil" name="background" type="property"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -763,24 +776,27 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="89" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel5" alignment="0" min="-2" pref="267" max="-2" attributes="0"/>
+                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jPanel5" min="-2" pref="267" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="jPanel5" min="-2" pref="146" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="90" max="32767" attributes="0"/>
+                      <EmptySpace pref="201" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -789,7 +805,7 @@
             <Container class="javax.swing.JPanel" name="jPanel5">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpCitas" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -848,7 +864,7 @@
                 <Container class="javax.swing.JPanel" name="jPanel6">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection component="jTabbedPane1" name="background" type="property"/>
+                      <Connection component="jpCitas" name="background" type="property"/>
                     </Property>
                   </Properties>
 
@@ -940,7 +956,7 @@
             <Container class="javax.swing.JPanel" name="jPanel4">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpCitas" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -1107,7 +1123,7 @@
         <Container class="javax.swing.JPanel" name="jpVacunas">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="jTabbedPane1" name="background" type="property"/>
+              <Connection component="jpPerfil" name="background" type="property"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1124,24 +1140,24 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace pref="116" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel12" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel8" alignment="0" min="-2" pref="267" max="-2" attributes="0"/>
+                          <Component id="jPanel12" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="123" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="jPanel8" min="-2" pref="146" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel12" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="175" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1150,7 +1166,7 @@
             <Container class="javax.swing.JPanel" name="jPanel8">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpVacunas" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -1158,7 +1174,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="166" max="-2" attributes="0"/>
@@ -1174,12 +1190,11 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane5" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel16" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jScrollPane5" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -1209,7 +1224,7 @@
                 <Container class="javax.swing.JPanel" name="jPanel11">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection component="jTabbedPane1" name="background" type="property"/>
+                      <Connection component="jpVacunas" name="background" type="property"/>
                     </Property>
                   </Properties>
 
@@ -1301,7 +1316,7 @@
             <Container class="javax.swing.JPanel" name="jPanel12">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpVacunas" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -1309,37 +1324,46 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jbGuardarVacuna" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jbVolverVacuna" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jbGuardarVacuna" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jbVolverVacuna" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="jLabel17" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jLabel18" alignment="0" pref="87" max="32767" attributes="0"/>
+                                              <Component id="jLabel18" alignment="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="jLabel19" alignment="1" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jcbEnfermedadVacuna" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="jScrollPane6" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jdcFechaVacuna" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel20" max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel19" min="-2" pref="91" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel20" min="-2" pref="82" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jdcProximaVacuna" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jcbEnfermedadVacuna" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="jScrollPane6" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jdcFechaVacuna" alignment="0" min="-2" pref="166" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="jdcProximaVacuna" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="24" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1358,15 +1382,20 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jdcFechaVacuna" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel19" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jdcFechaVacuna" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabel19" min="-2" pref="28" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jdcProximaVacuna" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel20" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jdcProximaVacuna" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel20" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="71" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jbVolverVacuna" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jbGuardarVacuna" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1385,7 +1414,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="jpPerfil" name="foreground" type="property"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Enfermedad:"/>
+                    <Property name="text" type="java.lang.String" value="Enfermedad*:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel18">
@@ -1397,17 +1426,6 @@
                       <Connection component="jpPerfil" name="foreground" type="property"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Observaciones:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel19">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection component="jTabbedPane1" name="font" type="property"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection component="jpPerfil" name="foreground" type="property"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Fecha Vacuna:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jbVolverVacuna">
@@ -1480,12 +1498,23 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="jpPerfil" name="foreground" type="property"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Pr&#xf3;xima Vacuna:"/>
+                    <Property name="text" type="java.lang.String" value="Pr&#xf3;xima Vacuna*:"/>
                   </Properties>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="jdcProximaVacuna">
                   <Properties>
                     <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel19">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jTabbedPane1" name="font" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jpPerfil" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Fecha Vacuna*:"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1495,7 +1524,7 @@
         <Container class="javax.swing.JPanel" name="jpDesparasitaciones">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="jTabbedPane1" name="background" type="property"/>
+              <Connection component="jpPerfil" name="background" type="property"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1512,26 +1541,30 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jPanel13" min="-2" pref="342" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="98" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="91" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jPanel13" min="-2" pref="342" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="127" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="jPanel15" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1540,7 +1573,7 @@
             <Container class="javax.swing.JPanel" name="jPanel13">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpDesparasitaciones" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -1613,7 +1646,7 @@
                 <Container class="javax.swing.JPanel" name="jPanel14">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection component="jTabbedPane1" name="background" type="property"/>
+                      <Connection component="jpDesparasitaciones" name="background" type="property"/>
                     </Property>
                   </Properties>
 
@@ -1693,7 +1726,7 @@
             <Container class="javax.swing.JPanel" name="jPanel15">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="jTabbedPane1" name="background" type="property"/>
+                  <Connection component="jpDesparasitaciones" name="background" type="property"/>
                 </Property>
               </Properties>
 
@@ -1783,7 +1816,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="jpDesparasitaciones" name="foreground" type="property"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Fecha Vacuna:"/>
+                    <Property name="text" type="java.lang.String" value="Fecha Vacuna*:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jbVolverDesp">
@@ -1850,7 +1883,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="jpDesparasitaciones" name="foreground" type="property"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Pr&#xf3;xima Vacuna:"/>
+                    <Property name="text" type="java.lang.String" value="Pr&#xf3;xima Vacuna*:"/>
                   </Properties>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="jdcProximaDesp">
@@ -1866,7 +1899,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="jpDesparasitaciones" name="foreground" type="property"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Presentaci&#xf3;n:"/>
+                    <Property name="text" type="java.lang.String" value="Presentaci&#xf3;n*:"/>
                   </Properties>
                 </Component>
               </SubComponents>

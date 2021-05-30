@@ -5,7 +5,6 @@
  */
 package mascotapp_desktop.views;
 
-import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -14,22 +13,31 @@ import mascotapp_desktop.controllers.VeterinarioController;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la aplicación desde la pantalla de Login
  */
 public class Login extends javax.swing.JFrame {
 
     /**
-     * Creates new form Login1
+     * Crea un formulario de Login
      */
     public Login() {
         initComponents();
 
         setTitle("MASCOTAPP");
-        
+
+        initImage();
+    }
+
+    /**
+     * Mëtodo que inicializa la imagen del Logotipo
+     */
+    private void initImage() {
         ImageIcon img = new ImageIcon(getClass().getResource("../resources/mascotapp.png"));
         jlabelImagen.setIcon(img);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -176,6 +184,14 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jpfRepeatPasswordActionPerformed
 
     private void jbInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInicioSesionActionPerformed
+        iniciarSesion();
+    }//GEN-LAST:event_jbInicioSesionActionPerformed
+
+    /**
+     * Mëtodo para iniciar sesión
+     * Crea un HashMap con el usuario y contraseña que será enviado en la petición 
+     */
+    private void iniciarSesion() {
         VeterinarioController vc = new VeterinarioController();
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfRepeatPassword.getPassword());
@@ -196,8 +212,8 @@ public class Login extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jbInicioSesionActionPerformed
-
+    }
+    
     private void jbRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistroActionPerformed
         RegistroVeterinario ruser = new RegistroVeterinario(this, true);
         ruser.setVisible(true);

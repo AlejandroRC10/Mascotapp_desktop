@@ -8,7 +8,6 @@ package mascotapp_desktop.views;
 import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.util.List;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import mascotapp_desktop.controllers.MascotaController;
@@ -16,12 +15,15 @@ import mascotapp_desktop.models.Mascota;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ * 
+ * Clase que inicia la aplicación desde la pantalla de Login
  */
 public class ListadoBusquedaMascotas extends javax.swing.JDialog {
 
     /**
-     * Creates new form ListadoBusquedaMascotas
+     * Crea una pantalla para mostrar el ListadoBusquedaMascotas
      *
      * @param parent
      * @param modal
@@ -34,7 +36,6 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
 
         mc = new MascotaController();
         listaMascotas = mc.getMascotas();
-        //System.out.println(mc.getMascotas());
         jtTabla.setModel(getModeloTablaMascota(listaMascotas));
     }
 
@@ -147,6 +148,11 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
         verMascota();
     }//GEN-LAST:event_jbVerActionPerformed
 
+    /**
+     * Método que abre la pantalla 'PerfilMascota' para la Mascota seleccionada
+     * 
+     * @throws HeadlessException 
+     */
     private void verMascota() throws HeadlessException {
         Mascota m = selectMascotaList();
 
@@ -160,7 +166,6 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
 
     private Mascota selectMascotaList() {
 
-//        DefaultListModel modelList = (DefaultListModel) jtTabla.getModel();
         int index = jtTabla.getSelectedRow();
 
         if (index != -1) {
@@ -176,11 +181,16 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
 
         return null;
     }
-
+    
+/**
+ * Mëtodo para obtener el modelo de la tabla
+ * @param listaMascotas la lista de mascotas
+ * @return el modelo de tabla
+ */
     public AbstractTableModel getModeloTablaMascota(List<Mascota> listaMascotas) {
         final int COLUMNAS_NUMERO = 3;
         final String[] COLUMNAS_NOMBRES = {"Nombre", "Nº Chip", "Propietario"};
-//		final int COLUMNA_ID = 0;
+
         final int COLUMNA_NOMBRE = 0;
         final int COLUMNA_CHIP = 1;
         final int COLUMNA_PROPIETARIO = 2;

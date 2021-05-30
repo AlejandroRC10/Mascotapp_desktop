@@ -14,12 +14,15 @@ import mascotapp_desktop.models.Veterinario;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la aplicación desde la pantalla de Login
  */
 public class MiPerfil extends javax.swing.JDialog {
 
     /**
-     * Creates new form MiPerfil
+     * Crea la pantalla para MiPerfil
      *
      * @param parent
      * @param modal
@@ -27,14 +30,23 @@ public class MiPerfil extends javax.swing.JDialog {
     public MiPerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        setTitle("MI PERFIL");
+        
+        initController();
+        getAtributosVet();
+    }
+
+    /**
+     * Inicializa el VeterinarioController y obtiene el Veterinario logueado
+     */
+    private void initController() {
         vc = new VeterinarioController();
         try {
             vet = vc.getVeterinario();
-            //  System.out.println("VetMiPerfil -- " + vet.toString());
         } catch (Exception ex) {
             Logger.getLogger(MiPerfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-        getAtributosVet();
     }
 
     /**
@@ -257,8 +269,8 @@ public class MiPerfil extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jtfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jtfCol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -328,14 +340,16 @@ public class MiPerfil extends javax.swing.JDialog {
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
         this.dispose();
-//        VentanaPrincipal vp = new VentanaPrincipal();
-//        vp.setVisible(true);
+
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         editParams();
     }//GEN-LAST:event_jbEditarActionPerformed
 
+    /**
+     * Mëtodo para hacer editables los campos del formulario
+     */
     private void editParams() {
         jtfNombre.setEnabled(true);
         jtfApellidos.setEnabled(true);
@@ -348,6 +362,9 @@ public class MiPerfil extends javax.swing.JDialog {
         jpfPasswordRepeat.setEnabled(true);
     }
 
+    /**
+     * Mëtodo para obtener los atributos del Veterinario y mostralos al usuario en los campos del formulario
+     */
     private void getAtributosVet() {
         jtfNombre.setText(vet.getNombre());
         jtfApellidos.setText(vet.getApellidos());
@@ -366,6 +383,12 @@ public class MiPerfil extends javax.swing.JDialog {
         changeVet();
     }//GEN-LAST:event_jbGuardarActionPerformed
 
+    /**
+     * Método para modificar los atributos del usuario
+     * 
+     * @throws HeadlessException
+     * @throws NumberFormatException 
+     */
     private void changeVet() throws HeadlessException, NumberFormatException {
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfPasswordRepeat.getPassword());
@@ -408,23 +431,32 @@ public class MiPerfil extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfTelefonoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        // int ok = JOptionPane.YES_NO_OPTION;
-        // JOptionPane.showMessageDialog(this, "¿Estás seguro/a  de eliminar tu cuenta de usuario?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
-        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a  de eliminar tu cuenta de usuario?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
 
+        eliminarCuenta();
+
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    /**
+     * Mëtodo para eliminar la cuenta del usuario logueado
+     * 
+     * @throws HeadlessException 
+     */
+    private void eliminarCuenta() throws HeadlessException {
+        int ok = JOptionPane.showConfirmDialog(this, "¿Estás seguro/a  de eliminar tu cuenta de usuario?", "¡¡¡ ATENCIÓN !!!", JOptionPane.YES_NO_OPTION);
+        
         if (ok == 0) {
             vc.deleteVeterinario(vet);
             this.dispose();
             this.getOwner().dispose();
             Login login = new Login();
             login.setVisible(true);
-
-        } else {
-            this.dispose();
-
-        }
-
-    }//GEN-LAST:event_jbEliminarActionPerformed
+            
+        } 
+//        else {
+//            this.dispose();
+//            
+//        }
+    }
 
     /**
      * @param args the command line arguments
@@ -462,8 +494,6 @@ public class MiPerfil extends javax.swing.JDialog {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
-//                        VentanaPrincipal vp = new VentanaPrincipal();
-//                        vp.setVisible(true);
                     }
                 });
                 dialog.setVisible(true);
@@ -496,7 +526,7 @@ public class MiPerfil extends javax.swing.JDialog {
     private javax.swing.JTextField jtfTelefono;
     private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
-    VeterinarioController vc;
-    Veterinario vet;
+    private VeterinarioController vc;
+    private Veterinario vet;
 
 }

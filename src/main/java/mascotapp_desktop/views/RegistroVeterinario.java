@@ -5,7 +5,6 @@
  */
 package mascotapp_desktop.views;
 
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.VeterinarioController;
 import mascotapp_desktop.models.Veterinario;
@@ -63,7 +62,7 @@ public class RegistroVeterinario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 55));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
 
@@ -228,14 +227,13 @@ public class RegistroVeterinario extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -301,16 +299,16 @@ public class RegistroVeterinario extends javax.swing.JDialog {
                                     JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Registro", JOptionPane.ERROR_MESSAGE);
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato incorrecto o caracteres no numéricos\n\t*Formatos válidos: 'X' o 'X.X'", "CAMPO PESO", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "El teléfono de tener 9 dígitos", "CAMPO TELÉFONO", JOptionPane.ERROR_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no numéricos", "CAMPO CHIP", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no numéricos", "CAMPO NºCol.", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO RAZA", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO DIRECCIÓN", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO ESPECIE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO APELLIDOS", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);

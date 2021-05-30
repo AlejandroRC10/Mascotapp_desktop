@@ -17,7 +17,7 @@
         <maven.compiler.source>13</maven.compiler.source>
         <maven.compiler.target>13</maven.compiler.target>
     </properties>
-    <build>
+<!--    <build>
         <resources>
             <resource>
                 <directory>src/main/source-templates</directory>
@@ -46,7 +46,7 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
     <dependencies>
         <dependency>

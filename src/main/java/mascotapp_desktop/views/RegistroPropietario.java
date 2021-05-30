@@ -28,6 +28,7 @@ public class RegistroPropietario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setParent(parent);
+        setTitle("REGISTRO PROPIETARIO");
         pc = new PropietarioController();
         mui = new MascotappUtilImpl();
     }
@@ -61,7 +62,7 @@ public class RegistroPropietario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 55));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
 
@@ -162,8 +163,8 @@ public class RegistroPropietario extends javax.swing.JDialog {
                                 .addComponent(jtfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                                 .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(45, 45, 45)
-                                    .addComponent(jpfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))))
+                                    .addGap(38, 38, 38)
+                                    .addComponent(jpfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)))))
                     .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
@@ -173,7 +174,7 @@ public class RegistroPropietario extends javax.swing.JDialog {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(92, 92, 92)
                 .addComponent(jLabel5)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(12, 12, 12)
@@ -219,9 +220,9 @@ public class RegistroPropietario extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(1, 1, 1))
         );
 
         pack();
@@ -282,16 +283,16 @@ public class RegistroPropietario extends javax.swing.JDialog {
                                     JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato incorrecto o caracteres no numéricos\n\t*Formatos válidos: 'X' o 'X.X'", "CAMPO PESO", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(this, "El teléfono de tener 9 dígitos", "CAMPO TELÉFONO", JOptionPane.ERROR_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no numéricos", "CAMPO CHIP", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato de email incorrecto", "CAMPO EMAIL", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO RAZA", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato de DNI incorrecto", "CAMPO DNI", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO ESPECIE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO APELLIDOS", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);

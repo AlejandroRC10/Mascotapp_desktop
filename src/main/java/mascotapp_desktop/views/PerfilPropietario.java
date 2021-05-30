@@ -13,10 +13,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.controllers.PropietarioController;
-import mascotapp_desktop.controllers.VeterinarioController;
 import mascotapp_desktop.models.Mascota;
 import mascotapp_desktop.models.Propietario;
-import mascotapp_desktop.models.Veterinario;
 
 /**
  *
@@ -38,6 +36,16 @@ public class PerfilPropietario extends javax.swing.JDialog {
         initComponents();
 
         setParent(parent);
+        setTitle("PERFIL PROPIETARIO");
+        
+        initControllers();
+        getAtributosProp();
+    }
+
+    /**
+     * Inicializa los controllers y obtiene los datos del Propietario seleccionado
+     */
+    private void initControllers() {
         pc = new PropietarioController();
         mc = new MascotaController();
         try {
@@ -45,7 +53,6 @@ public class PerfilPropietario extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(MiPerfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-        getAtributosProp();
     }
 
     /**
@@ -80,7 +87,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 55));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
 
@@ -276,16 +283,16 @@ public class PerfilPropietario extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         pack();

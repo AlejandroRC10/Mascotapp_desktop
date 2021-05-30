@@ -5,8 +5,6 @@
  */
 package mascotapp_desktop.views;
 
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -26,10 +24,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        initControllers();
+
+        initImages();
+    }
+
+    private void initControllers() {
         pc = new PropietarioController();
         mc = new MascotaController();
         vc = new VeterinarioController();
+    }
 
+    private void initImages() {
         ImageIcon perro = new ImageIcon(getClass().getResource("../resources/perro.png"));
         jlPerro.setIcon(perro);
 
@@ -226,7 +232,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             PerfilPropietario pc = new PerfilPropietario(this, true);
             pc.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "DNI incorrecto, el propietario no existe", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No existe ningún propietario con ese DNI", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jmiBuscarActionPerformed
@@ -292,15 +298,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new VentanaPrincipal().setVisible(true);
-//            }
-//        });
     }
 
     public VentanaPrincipal getFrame() {
@@ -324,7 +322,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiNuevo;
     private javax.swing.JTextField jtfBuscar;
     // End of variables declaration//GEN-END:variables
-  private PropietarioController pc;
+    private PropietarioController pc;
     private MascotaController mc;
     private Mascota masc;
     private VeterinarioController vc;

@@ -29,6 +29,8 @@ public class RegistroMascota extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setParent(parent);
+        setTitle("REGISTRO MASCOTA");
+
         mc = new MascotaController();
         mui = new MascotappUtilImpl();
     }
@@ -67,7 +69,7 @@ public class RegistroMascota extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 55));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
 
@@ -228,17 +230,14 @@ public class RegistroMascota extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -279,33 +278,37 @@ public class RegistroMascota extends javax.swing.JDialog {
                     if (jtfRaza.getText().isBlank() || mui.validarTexto(jtfRaza.getText())) {
                         if (mui.validarAlfanumerico(jtfChip.getText())) {
                             if (jtfPeso.getText().isBlank() || mui.validarPeso(jtfPeso.getText())) {
+                                if (jdcFechaNac.getCalendar().equals(Calendar.getInstance()) || jdcFechaNac.getCalendar().before(Calendar.getInstance())) {
 
-                                masc.setNombre(jtfNombre.getText());
-                                masc.setEspecie(jtfEspecie.getText());
-                                masc.setRaza(jtfRaza.getText());
-                                masc.setNum_chip(jtfChip.getText());
-                                if(!jtfPeso.getText().isBlank()){
-                                    masc.setPeso(Double.parseDouble(jtfPeso.getText()));
-                                }else{
-                                    masc.setPeso(0.0);
+                                    masc.setNombre(jtfNombre.getText());
+                                    masc.setEspecie(jtfEspecie.getText());
+                                    masc.setRaza(jtfRaza.getText());
+                                    masc.setNum_chip(jtfChip.getText());
+                                    if (!jtfPeso.getText().isBlank()) {
+                                        masc.setPeso(Double.parseDouble(jtfPeso.getText()));
+                                    } else {
+                                        masc.setPeso(0.0);
+                                    }
+
+                                    if (jrbMacho.isSelected()) {
+                                        masc.setSexo("M");
+                                    } else if (jrbHembra.isSelected()) {
+                                        masc.setSexo("H");
+                                    }
+
+                                    masc.setFecha_nac(jdcFechaNac.getCalendar());
+
+                                    mc.addMascota(masc);
+                                    mc.setMascota(masc);
+
+                                    this.dispose();
+
+                                    PerfilMascota pm = new PerfilMascota(parent, true);
+                                    pm.setVisible(true);
+
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "La fecha de nacimiento debe ser igual o anterior a la fecha de hoy", "Campos fecha", JOptionPane.ERROR_MESSAGE);
                                 }
-                                
-                                if (jrbMacho.isSelected()) {
-                                    masc.setSexo("M");
-                                } else if (jrbHembra.isSelected()) {
-                                    masc.setSexo("H");
-                                }
-
-                                masc.setFecha_nac(jdcFechaNac.getCalendar());
-
-                                mc.addMascota(masc);
-                                mc.setMascota(masc);
-
-                                this.dispose();
-
-                                PerfilMascota pm = new PerfilMascota(parent, true);
-                                pm.setVisible(true);
-
                             } else {
                                 JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato incorrecto o caracteres no numéricos\n\t*Formatos válidos: 'X' o 'X.X'", "CAMPO PESO", JOptionPane.ERROR_MESSAGE);
                             }
