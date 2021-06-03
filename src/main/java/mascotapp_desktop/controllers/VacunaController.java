@@ -15,16 +15,25 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mascotapp_desktop.controllers.interfaces.VacunaControllerInterface;
+import mascotapp_desktop.models.Mascota;
 import mascotapp_desktop.models.Vacuna;
 import mascotapp_desktop.util.MascotappUtilImpl;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase controladora que implementa las operaciones de la entidad Vacuna
+ *
+ * Implementa la interface VacunaControllerInterface
+ *
  */
 public class VacunaController implements VacunaControllerInterface {
 
-    private MascotappUtilImpl curl = new MascotappUtilImpl();
+    private MascotappUtilImpl mui;
     private ObjectMapper om;
     private URL url;
     private static Vacuna vacuna;
@@ -34,22 +43,28 @@ public class VacunaController implements VacunaControllerInterface {
     public VacunaController() {
         this.mc = new MascotaController();
         this.vacunas = new ArrayList();
+        mui = new MascotappUtilImpl();
     }
 
     /**
+     * Obtiene una Vacuna por su ID Utiliza el método readValue() de
+     * ObjectMapper para deserializar objetos JSON
      *
      * @param id
-     * @return
+     * @return Vacuna obtenida
      */
+    @Override
     public Vacuna getVacuna(String id) {
         Vacuna vac = null;
 
         try {
-            //URL url = curl.getURL("mascotas/", id);
-            if (!id.isEmpty() && id!=null) {
-                URL url = curl.getURL("vacunas", id);
-                vac = curl.getJSON_MAPPER().readValue(url, Vacuna.class);
-            } else {
+
+            URL url = mui.getURL("vacunas", id);
+
+            CloseableHttpResponse chr = mui.peticionGET(url.toString());
+            int status = chr.getStatusLine().getStatusCode();
+            if (status == HttpStatus.SC_OK) {
+                vac = mui.getJSON_MAPPER().readValue(url, Vacuna.class);
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,71 +74,109 @@ public class VacunaController implements VacunaControllerInterface {
         return vac;
     }
 
+    /**
+     * Añade una Vacuna a la Mascota
+     *
+     * Utiliza el método 'peticionPOST()' de MascotapUtilImpl
+     *
+     * @param vac
+     */
     @Override
     public void addVacuna(Vacuna vac) {
-        //pc = new PropietarioController();
-        String mascId = Long.toString(mc.getMascota().getId());
+        Mascota m = mc.getMascota();
 
-        try {
-
-            url = curl.getURL("vacunas/", mascId);
+        if (m != null) {
+            String mascId = Long.toString(m.getId());
 
             try {
-                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
-            } catch (IOException ex) {
+                if (vac != null) {
+                    url = mui.getURL("vacunas/", mascId);
+
+                    try {
+                        mui.peticionPOST(url.toString(), mui.getJSON_MAPPER().writeValueAsString(vac));
+                    } catch (IOException ex) {
+                        Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } catch (MalformedURLException ex) {
                 Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //curl.getJSON_MAPPER().writeValueAsString(vet);
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Actualiza una Vacuna con los datos de la Vacuna que entra por parámetro
+     * Utiliza el método 'peticionPUT()' de MascotapUtilImpl
+     *
+     * @param vac
+     */
     @Override
     public void updateVacuna(Vacuna vac) {
         try {
-            url = curl.getURL("vacunas/", Long.toString(vac.getId()));
-            try {
-                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+            if (vac != null) {
+                url = mui.getURL("vacunas/", Long.toString(vac.getId()));
+                try {
+                    mui.peticionPUT(url.toString(), mui.getJSON_MAPPER().writeValueAsString(vac));
+                } catch (JsonProcessingException ex) {
+                    Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Borra la Vacuna que le entra por parámetro Utiliza el método
+     * 'peticionDELETE()' de MascotappUtilImpl
+     *
+     * @param vac
+     */
+    @Override
     public void deleteVacuna(Vacuna vac) {
         try {
-            url = curl.getURL("vacunas/", Long.toString(vac.getId()));
-            try {
-                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(vac));
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+            if (vac != null) {
+                url = mui.getURL("vacunas/", Long.toString(vac.getId()));
+                try {
+                    mui.peticionDELETE(url.toString(), mui.getJSON_MAPPER().writeValueAsString(vac));
+                } catch (JsonProcessingException ex) {
+                    Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Obtiene una lista de vacunas por el id de Mascota Utiliza el método
+     * readValue de ObjectMapper(), en lugar de deserializar un objeto, lo hace
+     * con una colección
+     *
+     * @param id
+     * @return lista
+     */
     @Override
     public List<Vacuna> getVacunasByMascota(Long id) {
-        System.out.println("holaaa estoy en --> getVacunasByMascota");
         try {
             String peticion = "vacunas?mascota_id=";
             if (id != null) {
                 String recurso = Long.toString(id);
 
-                om = curl.getJSON_MAPPER();
+                om = mui.getJSON_MAPPER();
 
-                URL url = curl.getURL(peticion, recurso);
-                vacunas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Vacuna.class));
-                //System.out.println(clientes.toString());
+                URL url = mui.getURL(peticion, recurso);
+
+                CloseableHttpResponse chr = mui.peticionGET(url.toString());
+                int status = chr.getStatusLine().getStatusCode();
+
+                if (status == HttpStatus.SC_OK) {
+                    vacunas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Vacuna.class));
+                }
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(VacunaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,10 +187,21 @@ public class VacunaController implements VacunaControllerInterface {
         return vacunas;
     }
 
+    /**
+     * Obtiene la Vacuna que está almacenada en la variable estática, para que
+     * pueda ser utilizada donde sea necesaria
+     *
+     * @return Vacuna
+     */
     public Vacuna getVacuna() {
         return vacuna;
     }
 
+    /**
+     * Cambia la variable estática de Vacuna por la que le entra por parámetro
+     *
+     * @param vac
+     */
     public void setVacuna(Vacuna vac) {
         this.vacuna = vac;
     }

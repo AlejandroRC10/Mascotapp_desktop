@@ -12,10 +12,14 @@ import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.controllers.PropietarioController;
 import mascotapp_desktop.controllers.VeterinarioController;
 import mascotapp_desktop.models.Mascota;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la ventana de Registro de Veterinario
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
@@ -29,20 +33,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initImages();
     }
 
+    /**
+     * Inicializa los controllers y clases necesarias
+     */
     private void initControllers() {
         pc = new PropietarioController();
         mc = new MascotaController();
         vc = new VeterinarioController();
+        mui = new MascotappUtilImpl();
     }
-
+    /**
+     * Inicializa las imágenes utilizadas en la ventana
+     */
     private void initImages() {
-        ImageIcon perro = new ImageIcon(getClass().getResource("../resources/perro.png"));
+        ImageIcon perro = new ImageIcon(getClass().getResource("/mascotapp_desktop/resources/perro.png"));
         jlPerro.setIcon(perro);
 
-        ImageIcon huellas = new ImageIcon(getClass().getResource("../resources/huellas.png"));
+        ImageIcon huellas = new ImageIcon(getClass().getResource("/mascotapp_desktop/resources/huellas.png"));
         jlHuellas.setIcon(huellas);
 
-        ImageIcon lupa = new ImageIcon(getClass().getResource("../resources/lupa.png"));
+        ImageIcon lupa = new ImageIcon(getClass().getResource("/mascotapp_desktop/resources/lupa.png"));
         jbBusca.setIcon(lupa);
     }
 
@@ -68,7 +78,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jmiNuevo = new javax.swing.JMenuItem();
         jmiBuscar = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -199,10 +208,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Ayuda");
-        jMenu3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jMenuBar1.add(jMenu3);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,12 +232,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jmiBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiBuscarActionPerformed
         String jop = JOptionPane.showInputDialog("Ingresa el DNI de propietario: ");
-
-        if (pc.getPropietarioByDniAndVetId(jop, vc.getVeterinario().getId())) {
-            PerfilPropietario pc = new PerfilPropietario(this, true);
-            pc.setVisible(true);
+        if (!jop.isBlank() && mui.validarDni(jop)) {
+            if (pc.getPropietarioByDniAndVetId(jop, vc.getVeterinario().getId())) {
+                PerfilPropietario pc = new PerfilPropietario(this, true);
+                pc.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe ningún propietario con ese DNI", "BUSCA PROPIETARIO", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "No existe ningún propietario con ese DNI", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Parece que ha introducido un DNI incorrecto", "WARNING", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jmiBuscarActionPerformed
@@ -252,14 +260,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         String busqueda = jtfBuscar.getText();
         List<Mascota> list = mc.getMascotaByNombre(busqueda);
 
-        if (!busqueda.isBlank() // && busqueda != ""
-                ) {
-            if (!list.isEmpty()) {
-                mc.setMascotas(mc.getMascotaByNombre(busqueda));
-                ListadoBusquedaMascotas lbm = new ListadoBusquedaMascotas(this, true);
-                lbm.setVisible(true);
+        if (!busqueda.isBlank()) {
+            if (mui.validarTexto(busqueda)) {
+                if (!list.isEmpty()) {
+                    // mc.setMascotas(mc.getMascotaByNombre(busqueda));
+                    mc.setMascotas(list);
+                    ListadoBusquedaMascotas lbm = new ListadoBusquedaMascotas(this, true);
+                    lbm.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No hay mascotas con ese nombre", "WARNING", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "No hay mascotas con ese nombre", "WARNING", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "WARNING", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Introduzca un nombre de mascota", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -310,7 +322,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
@@ -326,4 +337,5 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private MascotaController mc;
     private Mascota masc;
     private VeterinarioController vc;
+    private MascotappUtilImpl mui;
 }

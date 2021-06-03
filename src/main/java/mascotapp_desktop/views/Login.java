@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.VeterinarioController;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
 
         setTitle("MASCOTAPP");
-
+                
         initImage();
     }
 
@@ -35,7 +36,7 @@ public class Login extends javax.swing.JFrame {
      * Mëtodo que inicializa la imagen del Logotipo
      */
     private void initImage() {
-        ImageIcon img = new ImageIcon(getClass().getResource("../resources/mascotapp.png"));
+        ImageIcon img = new ImageIcon(getClass().getResource("/mascotapp_desktop/resources/mascotapp.png"));
         jlabelImagen.setIcon(img);
     }
 
@@ -184,18 +185,27 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jpfRepeatPasswordActionPerformed
 
     private void jbInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInicioSesionActionPerformed
-        iniciarSesion();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+                iniciarSesion();
+//            }
+//        }).start();
+
     }//GEN-LAST:event_jbInicioSesionActionPerformed
 
     /**
-     * Mëtodo para iniciar sesión
-     * Crea un HashMap con el usuario y contraseña que será enviado en la petición 
+     * Mëtodo para iniciar sesión Crea un HashMap con el usuario y contraseña
+     * que será enviado en la petición
      */
     private void iniciarSesion() {
         VeterinarioController vc = new VeterinarioController();
+        
+        
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfRepeatPassword.getPassword());
 
+        
         Map<String, String> loginMap = new HashMap();
 
         loginMap.put("password", password);
@@ -213,7 +223,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void jbRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistroActionPerformed
         RegistroVeterinario ruser = new RegistroVeterinario(this, true);
         ruser.setVisible(true);
@@ -249,6 +259,7 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Login().setVisible(true);
             }

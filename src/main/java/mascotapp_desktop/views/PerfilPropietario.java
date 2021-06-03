@@ -6,6 +6,8 @@
 package mascotapp_desktop.views;
 
 import java.awt.Frame;
+import java.awt.HeadlessException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,7 @@ import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.controllers.PropietarioController;
 import mascotapp_desktop.models.Mascota;
 import mascotapp_desktop.models.Propietario;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
@@ -37,13 +40,14 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         setParent(parent);
         setTitle("PERFIL PROPIETARIO");
-        
+
         initControllers();
         getAtributosProp();
     }
 
     /**
-     * Inicializa los controllers y obtiene los datos del Propietario seleccionado
+     * Inicializa los controllers y obtiene los datos del Propietario
+     * seleccionado
      */
     private void initControllers() {
         pc = new PropietarioController();
@@ -53,6 +57,9 @@ public class PerfilPropietario extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(MiPerfil.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        mascotasProp = new ArrayList();
+        mui = new MascotappUtilImpl();
     }
 
     /**
@@ -93,7 +100,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         jLabel1.setFont(jPanel1.getFont());
         jLabel1.setForeground(jPanel1.getForeground());
-        jLabel1.setText("Nombre:");
+        jLabel1.setText("Nombre*:");
 
         jtfNombre.setEditable(false);
         jtfNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -104,13 +111,13 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         jLabel2.setFont(jPanel1.getFont());
         jLabel2.setForeground(jPanel1.getForeground());
-        jLabel2.setText("Apellidos:");
+        jLabel2.setText("Apellidos*:");
 
         jtfApellidos.setEditable(false);
 
         jLabel5.setFont(jPanel1.getFont());
         jLabel5.setForeground(jPanel1.getForeground());
-        jLabel5.setText("Email:");
+        jLabel5.setText("Email*:");
 
         jtfEmail.setEditable(false);
 
@@ -122,13 +129,18 @@ public class PerfilPropietario extends javax.swing.JDialog {
 
         jLabel7.setFont(jPanel1.getFont());
         jLabel7.setForeground(jPanel1.getForeground());
-        jLabel7.setText("DNI:");
+        jLabel7.setText("DNI*:");
 
         jtfDni.setEditable(false);
 
         jbGuardar.setFont(jPanel1.getFont());
         jbGuardar.setForeground(jbEditar.getForeground());
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbVolver.setFont(jPanel1.getFont());
         jbVolver.setText("Volver");
@@ -214,7 +226,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(0, 70, Short.MAX_VALUE)))
+                                .addGap(0, 69, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,6 +318,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
             mc.setMascota(m);
             PerfilMascota pm = new PerfilMascota(parent, true);
             pm.setVisible(true);
+            dispose();
         }
 
     }//GEN-LAST:event_jvVerActionPerformed
@@ -321,6 +334,7 @@ public class PerfilPropietario extends javax.swing.JDialog {
     private void jbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddActionPerformed
         RegistroMascota rp = new RegistroMascota(parent, true);
         rp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jbAddActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
@@ -344,6 +358,63 @@ public class PerfilPropietario extends javax.swing.JDialog {
             dispose();
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+
+        updatePropietario();
+
+    }//GEN-LAST:event_jbGuardarActionPerformed
+    /**
+     * Método que valida los campos introducidos por el usuario y si son
+     * correctos actualiza el Propietario
+     *
+     * @throws HeadlessException
+     */
+    private void updatePropietario() throws HeadlessException {
+        if (!jtfNombre.getText().isBlank()
+                && !jtfApellidos.getText().isBlank()
+                && !jtfDni.getText().isBlank()
+                && !jtfEmail.getText().isBlank()
+                && !jtfTelefono.getText().isBlank()) {
+
+            if (mui.validarTexto(jtfNombre.getText())) {
+                if (mui.validarTexto(jtfApellidos.getText())) {
+                    if (mui.validarDni(jtfDni.getText())) {
+                        if (mui.validarEmail(jtfEmail.getText())) {
+                            if (mui.validarTelefono(jtfTelefono.getText())) {
+
+                                prop.setNombre(jtfNombre.getText());
+                                prop.setApellidos(jtfApellidos.getText());
+                                prop.setDni(jtfDni.getText());
+                                prop.setEmail(jtfEmail.getText());
+                                prop.setTelefono(jtfTelefono.getText());
+
+                                if (pc.updatePropietario(prop)) {
+                                    JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Mascotapp Registro", JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Es posible que el DNI o email ya existan", "Mascotapp Registro", JOptionPane.ERROR_MESSAGE);
+                                }
+                                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente", "ACTUALIZACIÓN PERFIL", JOptionPane.INFORMATION_MESSAGE);
+                                this.dispose();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "El teléfono de tener 9 dígitos", "CAMPO TELÉFONO", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato de email incorrecto", "CAMPO EMAIL", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Parece que ha introducido un formato de DNI incorrecto", "CAMPO DNI", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO APELLIDOS", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * Método que obtiene los atributos del Propietario y los muestra al usuario
@@ -379,20 +450,21 @@ public class PerfilPropietario extends javax.swing.JDialog {
         DefaultListModel modelList = new DefaultListModel();
         jlListado.setModel(modelList);
 
-        mascotasProp = mc.getMascotasByPropietario(prop.getId());
-
-        if (!mascotasProp.isEmpty()) {
-            for (Mascota m : mascotasProp) {
-                if (m != null) {
-                    modelList.addElement(m.getNombre());
-                } else {
-                    modelList.addElement("");
+        if (prop != null) {
+            mascotasProp = mc.getMascotasByPropietario(prop.getId());
+           
+            if (!mascotasProp.isEmpty()) {
+                for (Mascota m : mascotasProp) {
+                    if (m != null) {
+                        modelList.addElement(m.getNombre());
+                    } else {
+                        modelList.addElement("");
+                    }
                 }
+            } else {
+                modelList.addElement("");
             }
-        } else {
-            modelList.addElement("");
         }
-
         return modelList;
     }
 
@@ -417,7 +489,6 @@ public class PerfilPropietario extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una mascota de la lista");
         }
-        System.out.println("-----------> index lista: " + index);
         return null;
     }
 
@@ -435,16 +506,21 @@ public class PerfilPropietario extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PerfilPropietario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PerfilPropietario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PerfilPropietario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PerfilPropietario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PerfilPropietario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PerfilPropietario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PerfilPropietario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PerfilPropietario.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -491,4 +567,5 @@ public class PerfilPropietario extends javax.swing.JDialog {
     private MascotaController mc;
     private Frame parent;
     private List<Mascota> mascotasProp;
+    private MascotappUtilImpl mui;
 }

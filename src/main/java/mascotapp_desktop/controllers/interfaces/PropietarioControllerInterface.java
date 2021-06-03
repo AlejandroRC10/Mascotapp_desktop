@@ -14,15 +14,13 @@ import mascotapp_desktop.models.Propietario;
  */
 public interface PropietarioControllerInterface {
 
-    public void addPropietario(Propietario prop);
+    public boolean addPropietario(Propietario prop);
 
-    public void updatePropietario(Propietario prop);
+    public boolean updatePropietario(Propietario prop);
 
     public Propietario getPropietario(String id);
 
     public void deletePropietario(Propietario prop);
-
-    public boolean login(Map<String, String> login);
     
     public boolean getPropietarioByDniAndVetId(String dni, Long id);
 }

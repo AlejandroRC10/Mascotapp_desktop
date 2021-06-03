@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.VeterinarioController;
 import mascotapp_desktop.models.Veterinario;
+import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
@@ -30,9 +31,9 @@ public class MiPerfil extends javax.swing.JDialog {
     public MiPerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         setTitle("MI PERFIL");
-        
+
         initController();
         getAtributosVet();
     }
@@ -41,6 +42,7 @@ public class MiPerfil extends javax.swing.JDialog {
      * Inicializa el VeterinarioController y obtiene el Veterinario logueado
      */
     private void initController() {
+        mui = new MascotappUtilImpl();
         vc = new VeterinarioController();
         try {
             vet = vc.getVeterinario();
@@ -84,13 +86,13 @@ public class MiPerfil extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 55));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
 
         jLabel1.setFont(jPanel1.getFont());
         jLabel1.setForeground(jPanel1.getForeground());
-        jLabel1.setText("Nombre:");
+        jLabel1.setText("Nombre*:");
 
         jtfNombre.setEnabled(false);
         jtfNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +103,7 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel2.setFont(jPanel1.getFont());
         jLabel2.setForeground(jPanel1.getForeground());
-        jLabel2.setText("Apellidos:");
+        jLabel2.setText("Apellidos*:");
 
         jtfApellidos.setEnabled(false);
         jtfApellidos.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +114,7 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel3.setFont(jPanel1.getFont());
         jLabel3.setForeground(jPanel1.getForeground());
-        jLabel3.setText("Nº Col.");
+        jLabel3.setText("Nº Col*.");
 
         jtfCol.setEnabled(false);
         jtfCol.addActionListener(new java.awt.event.ActionListener() {
@@ -123,7 +125,7 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel4.setFont(jPanel1.getFont());
         jLabel4.setForeground(jPanel1.getForeground());
-        jLabel4.setText("Nombre clínica:");
+        jLabel4.setText("Nombre clínica*:");
 
         jtfClinica.setEnabled(false);
         jtfClinica.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +136,7 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel5.setFont(jPanel1.getFont());
         jLabel5.setForeground(jPanel1.getForeground());
-        jLabel5.setText("Dirección:");
+        jLabel5.setText("Dirección*:");
 
         jtfDireccion.setEnabled(false);
         jtfDireccion.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +147,7 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel6.setFont(jPanel1.getFont());
         jLabel6.setForeground(jPanel1.getForeground());
-        jLabel6.setText("Teléfono:");
+        jLabel6.setText("Teléfono*:");
 
         jtfTelefono.setEnabled(false);
         jtfTelefono.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +158,7 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel7.setFont(jPanel1.getFont());
         jLabel7.setForeground(jPanel1.getForeground());
-        jLabel7.setText("Usuario:");
+        jLabel7.setText("Usuario*:");
 
         jtfUsuario.setEnabled(false);
         jtfUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -167,11 +169,11 @@ public class MiPerfil extends javax.swing.JDialog {
 
         jLabel8.setFont(jPanel1.getFont());
         jLabel8.setForeground(jPanel1.getForeground());
-        jLabel8.setText("Nueva contraseña:");
+        jLabel8.setText("Nueva contraseña*:");
 
         jLabel9.setFont(jPanel1.getFont());
         jLabel9.setForeground(jPanel1.getForeground());
-        jLabel9.setText("Repetir contraseña:");
+        jLabel9.setText("Repetir contraseña*:");
 
         jbGuardar.setFont(jbEditar.getFont());
         jbGuardar.setForeground(jbEditar.getForeground());
@@ -217,24 +219,31 @@ public class MiPerfil extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jpfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jpfPasswordRepeat))
+                        .addComponent(jbEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbVolver))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jpfPassword)
+                            .addComponent(jpfPasswordRepeat)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfApellidos, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,14 +252,7 @@ public class MiPerfil extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbEditar))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbVolver))
-                    .addComponent(jtfApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jbEditar)))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -286,7 +288,7 @@ public class MiPerfil extends javax.swing.JDialog {
                     .addComponent(jtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
                     .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -363,7 +365,8 @@ public class MiPerfil extends javax.swing.JDialog {
     }
 
     /**
-     * Mëtodo para obtener los atributos del Veterinario y mostralos al usuario en los campos del formulario
+     * Mëtodo para obtener los atributos del Veterinario y mostralos al usuario
+     * en los campos del formulario
      */
     private void getAtributosVet() {
         jtfNombre.setText(vet.getNombre());
@@ -385,32 +388,66 @@ public class MiPerfil extends javax.swing.JDialog {
 
     /**
      * Método para modificar los atributos del usuario
-     * 
+     *
      * @throws HeadlessException
-     * @throws NumberFormatException 
+     * @throws NumberFormatException
      */
     private void changeVet() throws HeadlessException, NumberFormatException {
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfPasswordRepeat.getPassword());
 
-        vet.setNombre(jtfNombre.getText());
-        vet.setApellidos(jtfApellidos.getText());
-        vet.setNumColegiado(Integer.parseInt(jtfCol.getText()));
-        vet.setNom_clinica(jtfClinica.getText());
-        vet.setDireccion(jtfDireccion.getText());
-        vet.setTelefono(jtfTelefono.getText());
-        vet.setUsuario(jtfUsuario.getText());
+        if (!jtfNombre.getText().isBlank()
+                && !jtfApellidos.getText().isBlank()
+                && !jtfDireccion.getText().isBlank()
+                && !jtfCol.getText().isBlank()
+                && !jtfUsuario.getText().isBlank()
+                && !jtfTelefono.getText().isBlank()
+                && !password.isBlank()
+                && !password2.isBlank()) {
 
-        if (password.equals(password2)) {
-            vet.setPassword(password);
-            if (!vc.updateVeterinario(vet)) {
-                JOptionPane.showMessageDialog(this, "Puede que el nombre de usuario ya exista", "ERROR ACTUALIZACIÓN", JOptionPane.ERROR_MESSAGE);
+            if (mui.validarTexto(jtfNombre.getText())) {
+                if (mui.validarTexto(jtfApellidos.getText())) {
+                    if (mui.validarDireccion(jtfDireccion.getText())) {
+                        if (mui.validarDigitos(jtfCol.getText())) {
+                            if (mui.validarTelefono(jtfTelefono.getText())) {
+
+                            
+                            vet.setNombre(jtfNombre.getText());
+                            vet.setApellidos(jtfApellidos.getText());
+                            vet.setNumColegiado(Integer.parseInt(jtfCol.getText()));
+                            vet.setNom_clinica(jtfClinica.getText());
+                            vet.setDireccion(jtfDireccion.getText());
+                            vet.setTelefono(jtfTelefono.getText());
+                            vet.setUsuario(jtfUsuario.getText());
+
+                            if (password.equals(password2)) {
+                                vet.setPassword(password);
+                                if (!vc.updateVeterinario(vet)) {
+                                    JOptionPane.showMessageDialog(this, "Puede que el nombre de usuario o NºCol. ya exista", "ERROR ACTUALIZACIÓN", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Datos actualizados correctamente", "ACTUALIZACIÓN PERFIL", JOptionPane.INFORMATION_MESSAGE);
+                                    this.dispose();
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "ERROR ACTUALIZACIÓN", JOptionPane.ERROR_MESSAGE);
+                            }
+                } else {
+                    JOptionPane.showMessageDialog(this, "El teléfono de tener 9 dígitos", "CAMPO TELÉFONO", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente", "ACTUALIZACIÓN PERFIL", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
+                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no numéricos", "CAMPO NºCol.", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "ERROR ACTUALIZACIÓN", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO DIRECCIÓN", JOptionPane.ERROR_MESSAGE);
+        }
+    }else {
+                    JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO APELLIDOS", JOptionPane.ERROR_MESSAGE);
+    }
+}else {
+                JOptionPane.showMessageDialog(this, "Parece que ha introducido caracteres no alfabéticos", "CAMPO NOMBRE", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduzca los campos obligatorios (*)", "Campos obligatorios", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -452,10 +489,6 @@ public class MiPerfil extends javax.swing.JDialog {
             login.setVisible(true);
             
         } 
-//        else {
-//            this.dispose();
-//            
-//        }
     }
 
     /**
@@ -472,27 +505,42 @@ public class MiPerfil extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MiPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MiPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MiPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MiPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MiPerfil.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MiPerfil.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MiPerfil.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MiPerfil.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {
+public void run() {
                 MiPerfil dialog = new MiPerfil(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
+public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
                 });
@@ -528,5 +576,6 @@ public class MiPerfil extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     private VeterinarioController vc;
     private Veterinario vet;
+    private MascotappUtilImpl mui;
 
 }

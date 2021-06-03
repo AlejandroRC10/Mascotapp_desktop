@@ -42,14 +42,18 @@ import org.apache.http.util.EntityUtils;
  */
 public class MascotappUtilImpl implements MascotappUtilInterface {
 
-    //Variable estática que almacena la url del servicio
+    /**
+     * Variable estática que almacena la url del servicio
+     */
+    public static final String URL = "http://mascotappapirest-env-1.eba-nmjyixpm.us-east-2.elasticbeanstalk.com/api/";
     //public static final String URL = "http://localhost:8080/api/";
-    public static final String URL = "http://mascotappapi-env.eba-vvuqfse3.us-east-2.elasticbeanstalk.com/api/";
 
-    //variable estática ObjectMapper para serializar y deserializar objetos Java en JSON y viceversa
+    /**
+     * variable estática ObjectMapper para serializar y deserializar objetos Java en JSON y viceversa
+     */
     public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
-    VeterinarioController vc; 
+    VeterinarioController vc;
 
     /**
      * Método público para obtener la constante JSON_MAPPER desde cualquier
@@ -118,15 +122,12 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
         put.addHeader("Content-Type", "application/json;charset=UTF-8");
         StringEntity se = new StringEntity(json, "UTF-8");
         put.setEntity(se);
-        System.out.println("0----------->" + json);
         CloseableHttpResponse httpResponse = null;
         try {
             httpResponse = httpClient.execute(put);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
-            System.out.println("1---------->" + statusCode);
             if (httpResponse != null && statusCode == HttpStatus.SC_CREATED) {
                 HttpEntity entity = httpResponse.getEntity();
-                System.out.println("2---------->" + entity);
                 if (entity != null) {
                     return EntityUtils.toString(entity, "utf-8");
                 }
@@ -193,6 +194,7 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
      * @param url de la petición al servicio
      * @return el código de respuesta del servicio
      */
+    @Override
     public CloseableHttpResponse peticionGET(String url) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet get = new HttpGet(url);
@@ -203,7 +205,7 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
 
             httpResponse = httpClient.execute(get);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
-
+            
         } catch (IOException ex) {
             Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -217,47 +219,6 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
         return httpResponse;
     }
 
-//    /**
-//     * Método que realiza una petición de búsqueda de una entidad al servicio
-//     * 
-//     * @param url de la petición
-//     * @return boolean true si el código de respuesta es SC_OK
-//     */
-//    @Override
-//    public boolean existEntity(String url) {
-//        CloseableHttpClient httpClient = HttpClients.createDefault();
-//        HttpGet get = new HttpGet(url);
-//        get.addHeader("Content-Type", "application/json;charset=UTF-8");
-//
-//        CloseableHttpResponse httpResponse = null;
-//        try {
-//            httpResponse = httpClient.execute(get);
-//            int statusCode = httpResponse.getStatusLine().getStatusCode();
-//            
-//            if (httpResponse != null && statusCode == HttpStatus.SC_OK) {
-//                HttpEntity entity = httpResponse.getEntity();
-//
-//                if (entity != null) {
-//                    Propietario prop = getJSON_MAPPER().readValue(EntityUtils.toString(entity, "utf-8"), Propietario.class);
-//                    PropietarioController pc = new PropietarioController();
-//
-//                    pc.setPropietario(prop);
-//                }
-//                return true;
-//            }
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                closeHttpClient(httpClient);
-//            } catch (IOException ex) {
-//                Logger.getLogger(MascotappUtilImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//
-//        return false;
-//    }
     /**
      * Método para realizar una petición de 'login' (usuario veterinario) al
      * servicio
@@ -280,12 +241,12 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
                 HttpEntity entity = httpResponse.getEntity();
 
                 if (entity != null) {
-                    
+
                     vc = new VeterinarioController();
                     /* Si la respuesta es positiva se inicializa el objeto Vetenerinario de la clase VeterinarioController con el cuerpo de la respuesta obtenida.
                        Dicho objeto Veterinario será el utilizado para el resto de peticiones una vez iniciada la sesión.*/
                     Veterinario vet = getJSON_MAPPER().readValue(EntityUtils.toString(entity, "utf-8"), Veterinario.class);
-
+                    System.out.println(" id de VET" + vet.toString());
                     vc.setVeterinario(vet);
 
                 }
@@ -363,10 +324,10 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
      * @return true si el texto es correcto
      */
     public boolean validarTexto(String texto) {
-        String nombre = "";
+
         boolean valida = false;
 
-        Pattern patron = Pattern.compile("[a-zA-Z]+");
+        Pattern patron = Pattern.compile("[a-zA-Z ]+");
 
         Matcher mat = null;
 
@@ -378,22 +339,46 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
 
         return valida;
     }
-    
-        /**
-     * Método que valida los campos de tipo alfanuméricos introducidos por el usuario
+
+    /**
+     * Método que valida los campos de tipo alfanuméricos introducidos por el
+     * usuario
      *
      * @param texto a validar
      * @return true si el texto es correcto
      */
     public boolean validarAlfanumerico(String texto) {
-        String nombre = "";
+
         boolean valida = false;
 
-        Pattern patron = Pattern.compile("[a-zA-Z0-9]+");
+        Pattern patron = Pattern.compile("[a-zA-Z0-9 ]+");
 
         Matcher mat = null;
 
         mat = patron.matcher(texto);
+
+        if (mat.matches()) {
+            valida = true;
+        }
+
+        return valida;
+    }
+
+    /**
+     * Método que valida los campos dirección introducidos por el usuario
+     *
+     * @param direccion a validar
+     * @return true si el texto es correcto
+     */
+    public boolean validarDireccion(String direccion) {
+
+        boolean valida = false;
+
+        Pattern patron = Pattern.compile("[a-zA-Z0-9\\,\\/ ]+");
+
+        Matcher mat = null;
+
+        mat = patron.matcher(direccion);
 
         if (mat.matches()) {
             valida = true;
@@ -480,8 +465,7 @@ public class MascotappUtilImpl implements MascotappUtilInterface {
      * @return true si el peso es correcto
      */
     public boolean validarPeso(String peso) {
-        String precioTxt = "";
-        double precioDec = 0.0;
+
         boolean valido = false;
 
         Pattern patron = Pattern.compile("\\d+(\\.\\d{1,2})?");

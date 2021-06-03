@@ -7,15 +7,22 @@ package mascotapp_desktop.views;
 
 import java.awt.Frame;
 import java.awt.HeadlessException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 import mascotapp_desktop.controllers.MascotaController;
+import mascotapp_desktop.controllers.PropietarioController;
 import mascotapp_desktop.models.Mascota;
+import mascotapp_desktop.models.Propietario;
 import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la ventana de Registro de Mascota
  */
 public class RegistroMascota extends javax.swing.JDialog {
 
@@ -31,8 +38,18 @@ public class RegistroMascota extends javax.swing.JDialog {
         setParent(parent);
         setTitle("REGISTRO MASCOTA");
 
+        initControllers();
+    }
+
+    /**
+     * Inicializa los controllers y clases necesarias
+     */
+    private void initControllers() {
         mc = new MascotaController();
         mui = new MascotappUtilImpl();
+        mascList = new ArrayList();
+        pc = new PropietarioController();
+        prop = pc.getPropietario();
     }
 
     /**
@@ -264,6 +281,13 @@ public class RegistroMascota extends javax.swing.JDialog {
         guardarMascota();
     }//GEN-LAST:event_jbGuardarActionPerformed
 
+    /**
+     * Método que valida todos los campos introducidos por el usuario y si son
+     * correctos guarda la Mascota
+     *
+     * @throws NumberFormatException
+     * @throws HeadlessException
+     */
     private void guardarMascota() throws NumberFormatException, HeadlessException {
         masc = new Mascota();
 
@@ -299,7 +323,19 @@ public class RegistroMascota extends javax.swing.JDialog {
                                     masc.setFecha_nac(jdcFechaNac.getCalendar());
 
                                     mc.addMascota(masc);
-                                    mc.setMascota(masc);
+
+                                    //Obtiene la lista de mascotas del Propietario 
+                                    mascList = mc.getMascotasByPropietario(prop.getId());
+
+                                    /*Recorre la lista de mascotas y si coincide el Nº de chip con la mascota creada, 
+                                    se modifica el objeto Mascota de MascotaController*/
+                                    for (Mascota m : mascList) {
+                                        if (m != null) {
+                                            if (m.getNum_chip().equals(masc.getNum_chip())) {
+                                                mc.setMascota(m);
+                                            }
+                                        }
+                                    }
 
                                     this.dispose();
 
@@ -329,6 +365,11 @@ public class RegistroMascota extends javax.swing.JDialog {
         }
     }
 
+        /**
+     * Método que cambia el Frame padre por el que le entra por parámetro
+     *
+     * @param parent
+     */
     private void setParent(Frame parent) {
         this.parent = parent;
     }
@@ -401,4 +442,7 @@ public class RegistroMascota extends javax.swing.JDialog {
     private MascotaController mc;
     private Frame parent;
     private MascotappUtilImpl mui;
+    private List<Mascota> mascList;
+    private Propietario prop;
+    private PropietarioController pc;
 }

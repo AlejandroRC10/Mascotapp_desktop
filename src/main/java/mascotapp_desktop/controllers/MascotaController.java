@@ -16,41 +16,57 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mascotapp_desktop.controllers.interfaces.MascotaControllerInterface;
 import mascotapp_desktop.models.Mascota;
+import mascotapp_desktop.models.Propietario;
 import mascotapp_desktop.util.MascotappUtilImpl;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase controladora que implementa las operaciones de la entidad Mascota
+ *
+ * Implementa la interface MascotaControllerInterface
+ *
  */
 public class MascotaController implements MascotaControllerInterface {
 
-    private MascotappUtilImpl curl = new MascotappUtilImpl();
+    private MascotappUtilImpl mui;
     private ObjectMapper om;
     private URL url;
     private static Mascota mascota;
     private PropietarioController pc;
+    private VeterinarioController vc;
     private static List<Mascota> mascotas;
 
     public MascotaController() {
         this.pc = new PropietarioController();
-        //this.mascotas = new ArrayList<>();
+        this.vc = new VeterinarioController();
+        mui = new MascotappUtilImpl();
     }
 
     /**
+     * Obtiene una Mascota por su ID Utiliza el método readValue() de
+     * ObjectMapper para deserializar objetos JSON
      *
      * @param id
-     * @return
+     * @return Mascota obtenida
      */
     @Override
     public Mascota getMascota(String id) {
         Mascota masc = null;
 
         try {
-            //URL url = curl.getURL("mascotas/", id);
-            URL url = curl.getURL("mascotas", id);
-            System.out.println("-----------> url "+ url.toString());
-            masc = curl.getJSON_MAPPER().readValue(url, Mascota.class);
+            URL url = mui.getURL("mascotas", id);
 
+            CloseableHttpResponse chr = mui.peticionGET(url.toString());
+            int status = chr.getStatusLine().getStatusCode();
+            if (status == HttpStatus.SC_OK) {
+                masc = mui.getJSON_MAPPER().readValue(url, Mascota.class);
+                mascota = masc;
+            }
         } catch (MalformedURLException ex) {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -59,75 +75,114 @@ public class MascotaController implements MascotaControllerInterface {
         return masc;
     }
 
+    /**
+     * Añade una Mascota al Propietario
+     *
+     * Utiliza el método 'peticionPOST()' de MascotapUtilImpl
+     *
+     * @param masc
+     */
     @Override
     public void addMascota(Mascota masc) {
-        //pc = new PropietarioController();
-        String propId = Long.toString(pc.getPropietario().getId());
 
-        try {
+        Propietario p = pc.getPropietario();
 
-            url = curl.getURL("mascotas/", propId);
+        if (p != null) {
+            String propId = Long.toString(p.getId());
 
             try {
-                curl.peticionPOST(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
-            } catch (IOException ex) {
+                if (masc != null) {
+                    url = mui.getURL("mascotas/", propId);
+
+                    try {
+                        mui.peticionPOST(url.toString(), mui.getJSON_MAPPER().writeValueAsString(masc));
+                    } catch (IOException ex) {
+                        Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            } catch (MalformedURLException ex) {
                 Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //curl.getJSON_MAPPER().writeValueAsString(vet);
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Actualiza una Mascota con los datos de la Mascota que entra por parámetro
+     * Utiliza el método 'peticionPUT()' de MascotapUtilImpl
+     *
+     * @param masc
+     */
     @Override
     public void updateMascota(Mascota masc) {
         try {
-            String id = Long.toString(masc.getId());
-            url = curl.getURL("mascotas/", id);
-            try {
-                curl.peticionPUT(url.toString(), curl.getJSON_MAPPER().writeValueAsString(masc));
-                
-                System.out.println("Estoy en update Mascota para ver la fecha que mando --> "+masc.getFecha_nac().toString());
-                System.out.println("Estoy en update Mascota para ver la fecha que mando --> "+masc.getFecha_nac());
 
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+            if (masc != null) {
+                String id = Long.toString(masc.getId());
+                url = mui.getURL("mascotas/", id);
+                try {
+                    mui.peticionPUT(url.toString(), mui.getJSON_MAPPER().writeValueAsString(masc));
+                } catch (JsonProcessingException ex) {
+                    Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Borra la Mascota que le entra por parámetro Utiliza el método
+     * 'peticionDELETE()' de MascotappUtilImpl
+     *
+     * @param masc
+     */
     @Override
-    public void deleteMascota(Mascota prop) {
+    public void deleteMascota(Mascota masc) {
         try {
-            url = curl.getURL("mascotas/", Long.toString(prop.getId()));
-            try {
-                curl.peticionDELETE(url.toString(), curl.getJSON_MAPPER().writeValueAsString(prop));
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+            if (masc != null) {
+                url = mui.getURL("mascotas/", Long.toString(masc.getId()));
+                try {
+                    mui.peticionDELETE(url.toString(), mui.getJSON_MAPPER().writeValueAsString(masc));
+                } catch (JsonProcessingException ex) {
+                    Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (MalformedURLException ex) {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Obtiene una lista de mascotas por su nombre y el id de su Veterinario
+     * Utiliza el método readValue de ObjectMapper(), en lugar de deserializar
+     * un objeto, lo hace con una colección
+     *
+     * @param nombre
+     * @return lista
+     */
     @Override
     public List<Mascota> getMascotaByNombre(String nombre) {
+        String vetId = Long.toString(vc.getVeterinario().getId());
+
         try {
             String peticion = "mascotas";
-            String recurso = "?name=" + nombre;
+            String recurso = "?vet_id=" + vetId + "&nombre=" + nombre;
 
-            om = curl.getJSON_MAPPER();
+            om = mui.getJSON_MAPPER();
 
-            URL url = curl.getURL(peticion, recurso);
-            mascotas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Mascota.class));
-            System.out.println("++++++-----getMascotaByNombre------>>>>>>>>>>>"+mascotas.toString());
+            URL url = mui.getURL(peticion, recurso);
+
+            CloseableHttpResponse chr = mui.peticionGET(url.toString());
+            int status = chr.getStatusLine().getStatusCode();
+
+            if (status == HttpStatus.SC_OK) {
+                mascotas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Mascota.class));
+            }
         } catch (MalformedURLException ex) {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -137,24 +192,36 @@ public class MascotaController implements MascotaControllerInterface {
         return mascotas;
     }
 
+    /**
+     * Obtiene una lista de mascotas por el id de su Propietario Utiliza el
+     * método readValue de ObjectMapper(), en lugar de deserializar un objeto,
+     * lo hace con una colección
+     *
+     * @param id
+     * @return lista
+     */
     @Override
     public List<Mascota> getMascotasByPropietario(Long id) {
-        System.out.println("holaaa estoy en --> getMascotasByPropietario");
-        List<Mascota>listaMascotas = null;
+        List<Mascota> listaMascotas = new ArrayList<>();
         try {
             String peticion = "mascotas";
-            String recurso = "?prop_id=" + Long.toString(id);
+            String recurso = "?prop_id=" + String.valueOf(id);
 
-            om = curl.getJSON_MAPPER();
+            om = mui.getJSON_MAPPER();
 
-            URL url = curl.getURL(peticion, recurso);
-            mascotas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Mascota.class));
-            if(mascotas!=null){
-                listaMascotas = mascotas;
-            }else{
-                listaMascotas = new ArrayList();
+            URL url = mui.getURL(peticion, recurso);
+
+            CloseableHttpResponse chr = mui.peticionGET(url.toString());
+            int status = chr.getStatusLine().getStatusCode();
+
+            if (status == HttpStatus.SC_OK) {
+                mascotas = om.readValue(url, om.getTypeFactory().constructCollectionType(ArrayList.class, Mascota.class));
+                if (mascotas != null) {
+                    listaMascotas = mascotas;
+                } else {
+                    listaMascotas = new ArrayList();
+                }
             }
-            //System.out.println(clientes.toString());
         } catch (MalformedURLException ex) {
             Logger.getLogger(MascotaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -164,22 +231,43 @@ public class MascotaController implements MascotaControllerInterface {
         return listaMascotas;
     }
 
+    /**
+     * Obtiene la Mascota que está almacenada en la variable estática, para que
+     * pueda ser utilizada donde sea necesaria
+     *
+     * @return Mascota
+     */
     public Mascota getMascota() {
         return mascota;
     }
 
+    /**
+     * Cambia la variable estática de Mascota por la que le entra por parámetro
+     *
+     * @param masc
+     */
     public void setMascota(Mascota masc) {
         this.mascota = masc;
     }
 
+    /**
+     * Obtiene la lista de mascotas que está almacenada en la variable estática,
+     * para que pueda ser utilizada donde sea necesaria
+     *
+     * @return lista
+     */
     public List<Mascota> getMascotas() {
         return mascotas;
     }
 
+    /**
+     * Obtiene la lista de mascotas que está almacenada en la variable estática,
+     * para que pueda ser utilizada donde sea necesaria
+     *
+     * @param mascotas
+     */
     public void setMascotas(List<Mascota> mascotas) {
         this.mascotas = mascotas;
     }
-    
-    
-   
+
 }

@@ -25,5 +25,4 @@ public interface MascotappUtilInterface {
     
     public CloseableHttpResponse peticionGET(String url);
 
-    //public boolean existEntity(String var);
 }

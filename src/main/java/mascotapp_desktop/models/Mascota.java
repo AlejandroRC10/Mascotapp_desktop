@@ -6,6 +6,7 @@
 package mascotapp_desktop.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Calendar;
 
@@ -13,6 +14,7 @@ import java.util.Calendar;
  *
  * @author alex_
  */
+@JsonIgnoreProperties
 public class Mascota {
 
     private Long id;

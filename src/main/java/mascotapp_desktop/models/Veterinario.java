@@ -5,7 +5,6 @@
  */
 package mascotapp_desktop.models;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
@@ -15,16 +14,6 @@ import java.io.Serializable;
  * @author alex_
  */
 public class Veterinario implements Serializable{
-    
-//    public static void main(String[] args) throws Exception {
-//        ConnectionURL curl = new ConnectionURL();
-//        String peticion = "clientes/";
-//        String recurso = "2";
-//        String metodo = "GET";
-//        curl.peticionHttp(peticion, recurso, metodo);
-//        
-//        System.out.println(curl.peticionHttp(peticion, recurso, metodo));
-//    }
     
 	private Long id;
 	
@@ -144,7 +133,7 @@ public class Veterinario implements Serializable{
     @Override
     public String toString() {
         return "Veterinario{" 
-               // + "id=" + id
+                + "id=" + id
                 + ", nombre=" + nombre + ", apellidos=" + apellidos + ", nom_clinica=" + nom_clinica + ", num_colegio=" + num_colegiado + ", usuario=" + usuario + ", password=" + password + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
         

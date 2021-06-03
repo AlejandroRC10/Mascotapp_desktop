@@ -10,10 +10,17 @@ import mascotapp_desktop.models.Veterinario;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Interface que define los métodos más relevantes para hacer las operaciones de
+ * la entidad Veterinario
+ *
+ * Implementa la interface VeterinarioControllerInterface
+ *
  */
 public interface VeterinarioControllerInterface {
-    
+
     public boolean addVeterinario(Veterinario vet);
 
     public boolean updateVeterinario(Veterinario vet);

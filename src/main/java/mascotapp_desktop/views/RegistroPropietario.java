@@ -14,7 +14,10 @@ import mascotapp_desktop.util.MascotappUtilImpl;
 
 /**
  *
- * @author alex_
+ * @author Alejandro Rodríguez Campiñez
+ * @version 2021/05/30
+ *
+ * Clase que inicia la ventana de Registro de Propietario
  */
 public class RegistroPropietario extends javax.swing.JDialog {
 
@@ -234,7 +237,7 @@ public class RegistroPropietario extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNombreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -243,10 +246,21 @@ public class RegistroPropietario extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jbGuardarActionPerformed
 
+    /**
+     * Método que cambia el Frame padre por el que le entra por parámetro
+     *
+     * @param parent
+     */
     private void setParent(Frame parent) {
         this.parent = parent;
     }
 
+    /**
+     * Método que valida los campos introducidos por el usuario y si son
+     * correctos registra el Propietario
+     *
+     * @throws HeadlessException
+     */
     private void registerProp() throws HeadlessException {
         String password = new String(jpfPassword.getPassword());
         String password2 = new String(jpfRepeatPassword.getPassword());
@@ -274,13 +288,18 @@ public class RegistroPropietario extends javax.swing.JDialog {
 
                                 if (password.equals(password2)) {
                                     prop.setPassword(password);
-                                    pc.addPropietario(prop);
-                                    this.dispose();
+                                    if (pc.addPropietario(prop)) {
+                                        JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Mascotapp Registro", JOptionPane.INFORMATION_MESSAGE);
 
+                                    } else {
+                                        JOptionPane.showMessageDialog(this, "Es posible que el DNI o email ya existan", "Mascotapp Registro", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                    
                                     PerfilPropietario pp = new PerfilPropietario(parent, true);
                                     pp.setVisible(true);
+                                    this.dispose();
                                 } else {
-                                    JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Login", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Mascotapp Registro", JOptionPane.ERROR_MESSAGE);
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(this, "El teléfono de tener 9 dígitos", "CAMPO TELÉFONO", JOptionPane.ERROR_MESSAGE);

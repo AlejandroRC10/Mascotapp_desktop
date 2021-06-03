@@ -9,7 +9,9 @@ import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import mascotapp_desktop.controllers.MascotaController;
 import mascotapp_desktop.models.Mascota;
 
@@ -17,7 +19,7 @@ import mascotapp_desktop.models.Mascota;
  *
  * @author Alejandro Rodríguez Campiñez
  * @version 2021/05/30
- * 
+ *
  * Clase que inicia la aplicación desde la pantalla de Login
  */
 public class ListadoBusquedaMascotas extends javax.swing.JDialog {
@@ -52,6 +54,7 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabla = new javax.swing.JTable();
         jbVer = new javax.swing.JButton();
+        jbVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 0));
@@ -64,7 +67,7 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
         jScrollPane1.setForeground(new java.awt.Color(51, 102, 0));
 
         jtTabla.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(51, 102, 0)));
-        jtTabla.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+        jtTabla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jtTabla.setForeground(new java.awt.Color(0, 102, 0));
         jtTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,7 +85,7 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jtTabla.setAlignmentY(0.0F);
+        jtTabla.setToolTipText("");
         jtTabla.setGridColor(new java.awt.Color(51, 102, 0));
         jtTabla.setOpaque(false);
         jtTabla.setSelectionBackground(new java.awt.Color(51, 153, 0));
@@ -100,29 +103,44 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
             }
         });
 
+        jbVolver.setFont(new java.awt.Font("Sylfaen", 1, 14)); // NOI18N
+        jbVolver.setForeground(new java.awt.Color(51, 102, 0));
+        jbVolver.setText("Volver");
+        jbVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(251, Short.MAX_VALUE)
+                .addComponent(jbVer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbVolver)
+                .addGap(42, 42, 42))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jbVer)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(24, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(266, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbVer)
+                    .addComponent(jbVolver))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jbVer)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(52, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -148,10 +166,14 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
         verMascota();
     }//GEN-LAST:event_jbVerActionPerformed
 
+    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbVolverActionPerformed
+
     /**
      * Método que abre la pantalla 'PerfilMascota' para la Mascota seleccionada
-     * 
-     * @throws HeadlessException 
+     *
+     * @throws HeadlessException
      */
     private void verMascota() throws HeadlessException {
         Mascota m = selectMascotaList();
@@ -181,12 +203,13 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
 
         return null;
     }
-    
-/**
- * Mëtodo para obtener el modelo de la tabla
- * @param listaMascotas la lista de mascotas
- * @return el modelo de tabla
- */
+
+    /**
+     * Mëtodo para obtener el modelo de la tabla
+     *
+     * @param listaMascotas la lista de mascotas
+     * @return el modelo de tabla
+     */
     public AbstractTableModel getModeloTablaMascota(List<Mascota> listaMascotas) {
         final int COLUMNAS_NUMERO = 3;
         final String[] COLUMNAS_NOMBRES = {"Nombre", "Nº Chip", "Propietario"};
@@ -234,10 +257,15 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
                 return valor;
             }
 
+            @Override
             public String getColumnName(int column) {
                 return COLUMNAS_NOMBRES[column];
             }
         };
+
+        DefaultTableCellRenderer stringRenderer = (DefaultTableCellRenderer) jtTabla.getDefaultRenderer(String.class);
+        stringRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        
         return modeloTabla;
     }
 
@@ -291,6 +319,7 @@ public class ListadoBusquedaMascotas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbVer;
+    private javax.swing.JButton jbVolver;
     private javax.swing.JTable jtTabla;
     // End of variables declaration//GEN-END:variables
     private MascotaController mc;
